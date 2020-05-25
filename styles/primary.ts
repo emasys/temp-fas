@@ -38,9 +38,37 @@ theme.overrides = {
         fontSize: '1rem',
       },
     },
+    h4: {
+      color: '#181818',
+      fontSize: '3rem',
+      fontWeight: 'normal',
+      lineHeight: 1.5,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1rem',
+      },
+    },
+    h5: {
+      color: '#181818',
+      fontSize: '2rem',
+      fontWeight: 'normal',
+      lineHeight: 1.5,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1rem',
+      },
+    },
+    h6: {
+      color: '#181818',
+      fontSize: '1rem',
+      fontWeight: 'normal',
+      lineHeight: 1.5,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1rem',
+      },
+    },
     body1: {
       fontSize: '.8rem',
-      color: '#636363',
+      color: '#fff',
+      fontWeight: 300,
     },
     body2: {
       fontSize: '.7rem',
@@ -58,6 +86,46 @@ theme.overrides = {
       fontSize: '.5rem',
       fontWeight: 'normal',
       lineHeight: 1.5,
+    },
+  },
+  MuiInputBase: {
+    root: {
+      fontFamily: 'Lato',
+      color: '#5C5C5C !important',
+      fontSize: '0.92rem',
+      fontWeight: 500,
+      backgroundColor: 'rgba(186,215,214,0.12) !important',
+      height: '3.33rem',
+    },
+    input: {
+      '&::placeholder': {
+        color: '#5C5C5C !important',
+        fontSize: '0.92rem',
+      },
+    },
+  },
+  MuiFilledInput: {
+    root: {
+      background: '#F6F6F6 !important',
+      borderRadius: '0.375rem',
+      padding: 0,
+      '&:before': {
+        border: 'none !important',
+      },
+      '&:after': {
+        border: 'none !important',
+      },
+    },
+    input: {
+      padding: '1rem',
+    },
+    error: {
+      background: 'rgba(251,234,232,0.32) !important',
+    },
+    disabled: {
+      '&:before': {
+        borderBottomStyle: 'solid !important',
+      },
     },
   },
 };

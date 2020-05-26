@@ -7,15 +7,17 @@ interface IServiceAction {
 }
 
 export interface IServices {
-  allServices: any[],
-  popularServices: any[]
+  allServices: any[];
+  popularServices: any[];
+  searchOption: any[];
 }
 
 export type TServicesActions = IServiceAction | IResetAction;
 
 export const initialServicesState = {
   allServices: [],
-  popularServices: []
+  popularServices: [],
+  searchOption: [],
 };
 
 export default function services(
@@ -27,7 +29,8 @@ export default function services(
       return {
         ...state,
         allServices: action.payload,
-        popularServices: action.payload.filter((_, index) => index <= 5)
+        popularServices: action.payload.filter((_, index) => index <= 5),
+        searchOption: action.payload.map((option) => ({ title: option.name })),
       };
     case EActionTypes.RESET_STORE:
       return initialServicesState;

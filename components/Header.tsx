@@ -12,6 +12,7 @@ import SearchBox from './SearchBox';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      marginBottom: '10.7625rem',
     },
     container: {
       padding: '2.75rem',
@@ -37,8 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '0.9375rem',
       fontSize: '1.0254rem',
     },
-    searchBox: {
-    }
+    searchBox: {},
   })
 );
 

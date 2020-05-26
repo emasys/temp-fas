@@ -34,7 +34,7 @@ const Navbar: React.FC<Props> = (props) => {
       <Grid item xs={3}>
         <Typography variant='body1'>Service Finder</Typography>
       </Grid>
-      <Grid item xs={5} className={classes.linkWrapper}>
+      <Grid item xs={4} className={classes.linkWrapper}>
         <Link href='/'>
           <Typography variant='body1' className={classes.link}>About </Typography>
         </Link>

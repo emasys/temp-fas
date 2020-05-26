@@ -68,12 +68,13 @@ theme.overrides = {
     body1: {
       fontSize: '.8rem',
       color: '#fff',
+      fontFamily: 'Roboto',
       fontWeight: 300,
     },
     body2: {
-      fontSize: '.7rem',
-      fontWeight: 'bold',
-      color: '#636363',
+      fontSize: '1rem',
+      fontFamily: 'Lato',
+      color: '#5C5C5C',
     },
     button: {
       color: '#008982',

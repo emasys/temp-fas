@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '2.75rem',
       paddingBottom: 0,
       background: 'linear-gradient(91.7deg, #43CEA2 0.44%, #185A9D 98.43%)',
-      height: '31.75rem',
+      height: '29.75rem',
     },
     lead: {
       marginTop: '4.25rem',

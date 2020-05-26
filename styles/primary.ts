@@ -76,17 +76,10 @@ theme.overrides = {
       fontFamily: 'Lato',
       color: '#5C5C5C',
     },
-    button: {
-      color: '#008982',
-      fontSize: '1rem',
-      fontWeight: 'bold',
-      lineHeight: '45 px',
-    },
     caption: {
-      color: '#b4c0c1',
       fontSize: '.5rem',
-      fontWeight: 'normal',
-      lineHeight: 1.5,
+      fontFamily: 'Lato',
+      color: '#5C5C5C',
     },
   },
   MuiInputBase: {

@@ -10,6 +10,8 @@ import {
 import next from '../assets/next.svg';
 import Divider from './Divider';
 import Card from './Card';
+import { AppState } from '../lib/initialState';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: '1.25rem',
       display: 'flex',
       maxWidth: '100%',
+      height: '30rem',
       overflow: 'scroll',
       '-ms-overflow-style': 'none',
       '&::-webkit-scrollbar': {
@@ -54,6 +57,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {}
 const Services: React.FC<Props> = (props) => {
+  const services = useSelector(
+    (state: AppState) => state.services.popularServices
+  );
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
@@ -70,11 +76,9 @@ const Services: React.FC<Props> = (props) => {
         <Divider />
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {services.map((service) => (
+          <Card key={service.id} name={service.name} />
+        ))}
       </Grid>
     </Grid>
   );

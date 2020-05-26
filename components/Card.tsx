@@ -11,6 +11,7 @@ import Furniture from '../assets/furniture.svg';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      maxWidth: '20rem',
       minWidth: '20rem',
       maxHeight: '18rem',
       overflow: 'hidden',
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       color: '#181818',
       fontSize: '1.25rem',
+      textTransform: 'capitalize'
     },
     image: {
       width: '20rem',
@@ -55,13 +57,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     other: {
       color: '#181818',
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   })
 );
 
-interface Props {}
-const Card: React.FC<Props> = (props) => {
+interface Props {
+  name: string;
+}
+const Card: React.FC<Props> = ({ name }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
@@ -73,7 +77,7 @@ const Card: React.FC<Props> = (props) => {
       </Grid>
       <Grid item xs={12} className={classes.textWrapper}>
         <Typography variant='body2' className={classes.title}>
-          Carpentry
+          {name}
         </Typography>
         <Typography variant='caption' className={classes.captions}>
           <span className={classes.other}>Related services:</span> formwork,

@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: 0,
       background: 'linear-gradient(91.7deg, #43CEA2 0.44%, #185A9D 98.43%)',
       height: '29.75rem',
+      [theme.breakpoints.down('sm')]: {
+        height: '22rem',
+        paddingTop: '1rem'
+      },
     },
     lead: {
       marginTop: '4.25rem',
@@ -27,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      [theme.breakpoints.down('sm')]: {
+        marginTop: '2rem',
+        marginBottom: '3rem',
+      },
     },
     leadTitle: {
       fontWeight: 500,

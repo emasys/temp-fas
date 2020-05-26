@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import { instance } from '../config/axiosConfig';
 import { GetStaticProps } from 'next';
 import Services from '../components/Services';
 import { createStyles, makeStyles, Theme, Grid } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { saveServices } from '../redux/actions/services';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,10 +16,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
-const Home: React.FC<Props> = (props) => {
+interface Props {
+  services?: any[];
+}
+const Home: React.FC<Props> = ({ services }) => {
   const classes = useStyles();
-  console.log(props, '>>>>>');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(saveServices(services));
+  }, []);
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12}>

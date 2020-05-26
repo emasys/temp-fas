@@ -6,7 +6,7 @@ interface ILoginAction {
   payload: ILogin;
 }
 
-interface IResetAction {
+export interface IResetAction {
   type: EActionTypes.RESET_STORE;
   payload: null;
 }

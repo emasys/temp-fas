@@ -32,12 +32,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     state: {
       width: '7rem',
+      [theme.breakpoints.down('sm')]: {
+        width: '5rem'
+      }
     },
     area: {
       width: '7rem',
+      [theme.breakpoints.down('sm')]: {
+        width: '5rem'
+      }
     },
     searchInput: {
       width: '17.6856rem',
+      [theme.breakpoints.down('sm')]: {
+        width: '17rem'
+      }
     },
     icon: {
       width: '1rem',

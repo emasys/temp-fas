@@ -31,10 +31,10 @@ const Navbar: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
     <Grid container justify='space-between'>
-      <Grid item xs={3}>
+      <Grid item sm={3}>
         <Typography variant='body1'>Service Finder</Typography>
       </Grid>
-      <Grid item xs={4} className={classes.linkWrapper}>
+      <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
         <Link href='/'>
           <Typography variant='body1' className={classes.link}>About </Typography>
         </Link>

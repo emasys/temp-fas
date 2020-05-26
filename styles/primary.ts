@@ -128,6 +128,31 @@ theme.overrides = {
       },
     },
   },
+  MuiButton: {
+    root: {
+      minWidth: 180,
+      minHeight: '3.33rem',
+      outline: '0 !important',
+      borderRadius: '0.375rem',
+      fontSize: '1rem',
+      color: '#fff',
+      textTransform: 'inherit',
+      fontWeight: 'normal',
+      fontFamily: 'Lato',
+    },
+    contained: {
+      backgroundColor: '#43CEA2',
+      color: '#fff',
+      boxShadow: 'none',
+      paddingRight: 25,
+      paddingLeft: 25,
+      '&:hover': {
+        background: '#43CEA2 !important',
+        color: '#fff',
+        boxShadow: 'none',
+      },
+    },
+  },
 };
 
 export default theme;

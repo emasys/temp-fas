@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       color: '#14C0B8',
+      background: '#fff',
       fontSize: '0.9701rem',
       fontWeight: 500,
       textTransform: 'none',

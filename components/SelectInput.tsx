@@ -1,20 +1,11 @@
 import React from 'react';
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Icon,
-  IconButton,
-} from '@material-ui/core';
+import { FormControl, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { AcUnitSharp } from '@material-ui/icons';
 import dropdown from '../assets/dropdown.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1),
       minWidth: 120,
     },
     icon: {
@@ -29,11 +20,13 @@ interface Props {
   handleChange: (event: any) => void;
   value: string;
   name: string;
+  className?: any;
   options: { value: string; label: string }[];
 }
 const SelectInput: React.FC<Props> = ({
   handleChange,
   value,
+  className,
   options,
   name,
 }) => {
@@ -43,9 +36,10 @@ const SelectInput: React.FC<Props> = ({
       <Select
         labelId='custom-select'
         id='custom-select'
-        placeholder='name'
+        name={name}
         value={value}
         classes={{
+          root: className,
           iconFilled: classes.icon,
         }}
         IconComponent={(props) => (
@@ -59,8 +53,10 @@ const SelectInput: React.FC<Props> = ({
         onChange={handleChange}
       >
         <MenuItem value={'""'}>{name}</MenuItem>
-        {options.map((option, index) => (
-          <MenuItem value={option.value}>{option.label}</MenuItem>
+        {options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

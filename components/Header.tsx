@@ -11,11 +11,13 @@ import SearchBox from './SearchBox';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+    },
     container: {
       padding: '2.75rem',
       paddingBottom: 0,
       background: 'linear-gradient(91.7deg, #43CEA2 0.44%, #185A9D 98.43%)',
-      // minHeight: '31.75rem',
+      height: '31.75rem',
     },
     lead: {
       marginTop: '4.25rem',
@@ -35,6 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '0.9375rem',
       fontSize: '1.0254rem',
     },
+    searchBox: {
+    }
   })
 );
 
@@ -42,23 +46,25 @@ interface Props {}
 const Header: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
-    <Grid container className={classes.container}>
-      <Grid item xs={12}>
-        <Navbar />
+    <div className={classes.root}>
+      <Grid container className={classes.container}>
+        <Grid item xs={12}>
+          <Navbar />
+        </Grid>
+        <Grid item xs={12} className={classes.lead}>
+          <Typography variant='h5' className={classes.leadTitle}>
+            Find someone you can trust.
+          </Typography>
+          <Typography variant='body1' className={classes.leadText}>
+            Our vendors are honest. 100% cash back guaranteed if service
+            rendered is not acceptable.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} className={classes.searchBox}>
+          <SearchBox />
+        </Grid>
       </Grid>
-      <Grid item xs={12} className={classes.lead}>
-        <Typography variant='h5' className={classes.leadTitle}>
-          Find someone you can trust.
-        </Typography>
-        <Typography variant='body1' className={classes.leadText}>
-          Our vendors are honest. 100% cash back guaranteed if service rendered
-          is not acceptable.
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <SearchBox />
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 

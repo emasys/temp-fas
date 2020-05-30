@@ -6,6 +6,7 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import Furniture from '../assets/furniture.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       color: '#181818',
       fontSize: '1.25rem',
-      textTransform: 'capitalize'
+      textTransform: 'capitalize',
     },
     image: {
       width: '20rem',
@@ -67,8 +68,13 @@ interface Props {
 }
 const Card: React.FC<Props> = ({ name }) => {
   const classes = useStyles();
+  const router = useRouter();
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    router.push(`/services/${name}`);
+  };
   return (
-    <Grid container className={classes.container}>
+    <Grid container className={classes.container} onClick={handleClick}>
       <Grid item xs={12} className={classes.imageWrapper}>
         <Typography variant='caption' className={classes.vendors}>
           100k vendors

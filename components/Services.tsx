@@ -63,17 +63,8 @@ const Services: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
-      <Grid item xs={12} className={classes.header}>
-        <Typography variant='body2' className={classes.title}>
-          Popular services
-        </Typography>
-        <Button variant='text' className={classes.button}>
-          View all services{' '}
-          <img alt='next' src={next} className={classes.icon} />
-        </Button>
-      </Grid>
       <Grid item xs={12} className={classes.divider}>
-        <Divider />
+        <Divider title="Popular services" buttonText="View all services" />
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
         {services.map((service) => (

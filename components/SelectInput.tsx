@@ -2,6 +2,7 @@ import React from 'react';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import dropdown from '../assets/dropdown.svg';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,6 +21,8 @@ interface Props {
   handleChange: (event: any) => void;
   value: string;
   name: string;
+  controlClass?: any;
+  placeholder: string;
   className?: any;
   options: { value: string; label: string }[];
 }
@@ -28,11 +31,16 @@ const SelectInput: React.FC<Props> = ({
   value,
   className,
   options,
+  controlClass,
+  placeholder,
   name,
 }) => {
   const classes = useStyles();
   return (
-    <FormControl variant='filled' className={classes.formControl}>
+    <FormControl
+      variant='filled'
+      className={clsx(classes.formControl, controlClass)}
+    >
       <Select
         labelId='custom-select'
         id='custom-select'
@@ -52,7 +60,7 @@ const SelectInput: React.FC<Props> = ({
         )}
         onChange={handleChange}
       >
-        <MenuItem value={'""'}>{name}</MenuItem>
+        <MenuItem value={'""'}>{placeholder}</MenuItem>
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}

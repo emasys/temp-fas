@@ -18,45 +18,36 @@ import { AppState } from '../lib/initialState';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
-      maxWidth: '48.5425rem',
-      background: '#fff',
-      borderRadius: '0.375rem',
-      padding: '3.875rem',
-      height: '15.6875rem',
-      margin: 'auto',
-      boxShadow: '0px 11px 20px 1px rgba(0, 0, 0, 0.08)',
-    },
     results: {
       margin: '0 5px',
     },
-    button: {
-      marginTop: '2.1456rem',
+    select: {
+      height: '3rem',
+      marginRight: '1.1875rem'
     },
     state: {
-      width: '7rem',
+      width: '6rem',
       [theme.breakpoints.down('sm')]: {
         width: '5rem',
       },
     },
     area: {
-      width: '7rem',
+      width: '6rem',
       [theme.breakpoints.down('sm')]: {
         width: '5rem',
       },
     },
     searchInput: {
-      width: '17.6856rem',
-      [theme.breakpoints.down('sm')]: {
-        width: '17rem',
-      },
+      width: '15.0625rem',
+      height: '3rem',
+      marginRight: '3rem'
     },
     icon: {
       width: '1rem',
     },
     formWrapper: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
       alignItems: 'center',
     },
     endAdornment: {
@@ -76,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: '0px 11px 20px 1px rgba(0, 0, 0, 0.08)',
       '& li': {
         padding: '1rem .4rem',
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
       },
       '& li[data-focus="true"]': {
         backgroundColor: '#43CEA2',
@@ -95,10 +86,11 @@ interface Props {}
 interface ISearchValues {
   area: string;
   state: string;
+  relevance: string;
   search: any;
 }
 
-const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
+const SearchComp: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
   const { handleChange, handleSubmit, values, isValid, setFieldValue } = props;
   const searchOption = useSelector(
     (state: AppState) => state.services.searchOption
@@ -126,66 +118,55 @@ const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
   };
 
   return (
-    <Grid container className={classes.container}>
-      <Grid item xs={12} className={classes.formWrapper}>
-        <FormControl variant='filled'>
-          <div>
-            <div {...getRootProps()}>
-              <FilledInput
-                id='search'
-                type={'text'}
-                name='search'
-                {...getInputProps()}
-                placeholder='What service are you looking for?'
-                className={classes.searchInput}
-                endAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleSearch}
-                      edge='end'
-                    >
-                      <img src={search} className={classes.icon} alt='search' />
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </div>
-            {groupedOptions.length > 0 ? (
-              <ul className={classes.listbox} {...getListboxProps()}>
-                {groupedOptions.map((option, index) => (
-                  <li {...getOptionProps({ option, index })}>{option.title}</li>
-                ))}
-              </ul>
-            ) : null}
+    <Grid item xs={12} className={classes.formWrapper}>
+      <FormControl variant='filled'>
+        <div>
+          <div {...getRootProps()}>
+            <FilledInput
+              id='search'
+              type={'text'}
+              name='search'
+              {...getInputProps()}
+              className={classes.searchInput}
+              value={values.search}
+            />
           </div>
-        </FormControl>
-        <SelectInput
-          name='state'
-          placeholder='State'
-          className={classes.state}
-          options={[{ value: 'lagos', label: 'Lagos' }]}
-          handleChange={handleChange}
-          value={values.state}
-        />
-        <SelectInput
-          name='area'
-          placeholder='Area'
-          className={classes.area}
-          options={[{ value: 'ikeja', label: 'Ikeja' }]}
-          handleChange={handleChange}
-          value={values.area}
-        />
-      </Grid>
-      <Button
-        variant='contained'
-        className={classes.button}
-        onClick={handleSearch}
-        fullWidth
-      >
-        Show {isValid ? <strong className={classes.results}>2k</strong> : ''}{' '}
-        Results
-      </Button>
+          {groupedOptions.length > 0 ? (
+            <ul className={classes.listbox} {...getListboxProps()}>
+              {groupedOptions.map((option, index) => (
+                <li {...getOptionProps({ option, index })}>{option.title}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      </FormControl>
+      <SelectInput
+        name='state'
+        placeholder='State'
+        controlClass={classes.select}
+        className={classes.state}
+        options={[{ value: 'lagos', label: 'Lagos' }]}
+        handleChange={handleChange}
+        value={values.state}
+      />
+      <SelectInput
+        name='area'
+        placeholder='Area'
+        controlClass={classes.select}
+        className={classes.area}
+        options={[{ value: 'ikeja', label: 'long area name asdasd' }]}
+        handleChange={handleChange}
+        value={values.area}
+      />
+      <SelectInput
+        name='relevance'
+        placeholder='Relevance'
+        controlClass={classes.select}
+        className={classes.area}
+        options={[{ value: 'ratings', label: 'sort by ratings' }]}
+        handleChange={handleChange}
+        value={values.relevance}
+      />
     </Grid>
   );
 };
@@ -193,6 +174,7 @@ const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
 interface ISearchInitValues {
   area?: string;
   state?: string;
+  relevance?: string;
   search?: any;
 }
 
@@ -204,11 +186,12 @@ let validationSchema = Yup.object().shape({
 
 const SearchForm = withFormik<Props & ISearchInitValues, ISearchValues>({
   mapPropsToValues: (props) => {
-    const { search, state, area } = props;
+    const { search, state, area, relevance } = props;
     return {
-      search: search || '',
+      search: search || 'mechanic',
       state: state || '""',
       area: area || '""',
+      relevance: relevance || '""',
     };
   },
   validateOnChange: true,
@@ -217,6 +200,6 @@ const SearchForm = withFormik<Props & ISearchInitValues, ISearchValues>({
   handleSubmit: (values, { props }) => {
     console.log(values, '>>>>>>>', props);
   },
-})(SearchBox);
+})(SearchComp);
 
 export default SearchForm;

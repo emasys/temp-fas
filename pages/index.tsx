@@ -20,7 +20,7 @@ interface Props {
   services?: any[];
 }
 const Home: React.FC<Props> = ({ services }) => {
-  console.log(services, '')
+  console.log(services, '');
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {

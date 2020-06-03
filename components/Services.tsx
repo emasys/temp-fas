@@ -68,7 +68,7 @@ const Services: React.FC<Props> = (props) => {
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
         {services.map((service) => (
-          <Card key={service.id} name={service.name} />
+          <Card key={service.id} id={service.id} name={service.name} />
         ))}
       </Grid>
     </Grid>

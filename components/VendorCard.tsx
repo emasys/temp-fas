@@ -8,19 +8,17 @@ import {
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import Furniture from '../assets/furniture.svg';
+import { formatMoney } from '../util';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      maxWidth: '20rem',
-      minWidth: '20rem',
+      width: '100%',
       maxHeight: '18rem',
       overflow: 'hidden',
       cursor: 'pointer',
       paddingBottom: '1rem',
       borderRadius: '2px',
-      marginRight: '3.125rem',
-      boxShadow: '0px 3px 15px 1px rgba(0, 0, 0, 0.11)',
       '&:last-of-type': {
         marginRight: 0,
       },
@@ -30,10 +28,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.25rem',
       textTransform: 'capitalize',
       fontFamily: 'Lato',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      marginTop: '.2rem'
     },
     image: {
-      width: '20rem',
+      width: '100%',
     },
     imageWrapper: {
       maxHeight: '12rem',
@@ -44,14 +43,16 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#717171',
       fontSize: '0.725rem',
       lineHeight: '0.6rem',
+      fontFamily: 'Lato',
+      fontWeight: 'normal',
     },
     textWrapper: {
-      padding: '0 0.9375rem',
+      padding: '0',
     },
     vendors: {
       position: 'absolute',
       right: '1rem',
-      background: 'rgba(67, 206, 162, 0.96)',
+      background: 'rgba(0, 0, 0, 0.2)',
       top: '1rem',
       color: '#fff',
       borderRadius: '0.125rem',
@@ -67,20 +68,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   name: string;
-  id: string;
+  rate: number;
 }
-const Card: React.FC<Props> = ({ name, id }) => {
+const VendorCard: React.FC<Props> = ({ name, rate }) => {
   const classes = useStyles();
   const router = useRouter();
   const handleClick = (e: any) => {
     e.preventDefault();
-    router.push(`/services/${id}`);
+    // router.push(`/vendor/${name}`);
   };
   return (
     <Grid container className={classes.container} onClick={handleClick}>
       <Grid item xs={12} className={classes.imageWrapper}>
         <Typography variant='caption' className={classes.vendors}>
-          100k vendors
+          new
         </Typography>
         <img src={Furniture} alt='service-img' className={classes.image} />
       </Grid>
@@ -89,13 +90,11 @@ const Card: React.FC<Props> = ({ name, id }) => {
           {name}
         </Typography>
         <Typography variant='caption' className={classes.captions}>
-          <span className={classes.other}>Related services:</span> formwork,
-          roofing and structural work, joister, trim carpenter, furniture,
-          wardrobes, ship carpenter, framer, etc.
+          {formatMoney(rate)}
         </Typography>
       </Grid>
     </Grid>
   );
 };
 
-export default Card;
+export default VendorCard;

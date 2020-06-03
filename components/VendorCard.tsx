@@ -69,13 +69,14 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   name: string;
   rate: number;
+  id: string;
 }
-const VendorCard: React.FC<Props> = ({ name, rate }) => {
+const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   const classes = useStyles();
   const router = useRouter();
   const handleClick = (e: any) => {
     e.preventDefault();
-    // router.push(`/vendor/${name}`);
+    router.push(`/vendor/${id}`);
   };
   return (
     <Grid container className={classes.container} onClick={handleClick}>

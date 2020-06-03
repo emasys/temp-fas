@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clx from 'clsx';
 import Link from 'next/link';
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#181818',
       fontSize: '1.2rem',
       textDecoration: 'none',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     menuWrapper: {
       display: 'flex',
@@ -61,20 +62,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {}
 const Navbar: React.FC<Props> = (props) => {
+  const router = useRouter();
   const [status, setStatus] = useState(false);
   const classes = useStyles({ open: status });
   const handleClick = (e: any) => {
     e.preventDefault();
     setStatus(!status);
   };
+  const goHome = (e: any) => {
+    e.preventDefault();
+    router.push(`/`);
+  };
   return (
     <Grid container justify='space-between' className={classes.root}>
       <Grid item sm={3}>
-        <Link href='/'>
-          <Typography variant='body1' className={classes.title}>
-            Service Finder
-          </Typography>
-        </Link>
+        <Typography variant='body1' className={classes.title} onClick={goHome}>
+          Service Finder
+        </Typography>
       </Grid>
       <Grid item sm={8} md={6} lg={4} className={classes.menuWrapper}>
         <div className={classes.container} onClick={handleClick}>

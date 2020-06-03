@@ -6,7 +6,7 @@ import Services from '../../components/Services';
 import { createStyles, makeStyles, Theme, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { saveServices } from '../../redux/actions/services';
+import { setValue } from '../../redux/actions/common';
 import Navbar from '../../components/Navbar';
 import VendorLayout from '../../components/VendorLayout';
 import MenuBar from '../../components/MenuBar';
@@ -14,6 +14,7 @@ import Divider from '../../components/Divider';
 import { AppState } from '../../lib/initialState';
 import VendorCard from '../../components/VendorCard';
 import { IService, IVendor } from '../../interfaces';
+import { EActionTypes } from '../../redux/actions/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,6 +40,10 @@ interface Props {
 }
 const Vendors: React.FC<Props> = ({ vendors }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setValue(EActionTypes.SAVE_VENDORS, vendors));
+  }, []);
   return (
     <VendorLayout>
       <Grid container className={classes.container}>
@@ -50,8 +55,14 @@ const Vendors: React.FC<Props> = ({ vendors }) => {
         </Grid>
         <Grid container spacing={5} className={classes.vendorWrapper}>
           {vendors.map((vendor) => (
-            <Grid item key={vendor.id} xs={12} sm={4} className={classes.vendor}>
-              <VendorCard  name={vendor.name} rate={vendor.rate} />
+            <Grid
+              item
+              key={vendor.id}
+              xs={12}
+              sm={4}
+              className={classes.vendor}
+            >
+              <VendorCard name={vendor.name} rate={vendor.rate} id={vendor.id} />
             </Grid>
           ))}
         </Grid>

@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'next/router';
 import Furniture from '../assets/furniture.svg';
 import { formatMoney } from '../util';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textTransform: 'capitalize',
       fontFamily: 'Lato',
       fontWeight: 'bold',
-      marginTop: '.2rem'
+      marginTop: '.2rem',
     },
     image: {
       width: '100%',
@@ -76,25 +77,27 @@ const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   const router = useRouter();
   const handleClick = (e: any) => {
     e.preventDefault();
-    router.push(`/vendor/${id}`);
+    router.push(``);
   };
   return (
-    <Grid container className={classes.container} onClick={handleClick}>
-      <Grid item xs={12} className={classes.imageWrapper}>
-        <Typography variant='caption' className={classes.vendors}>
-          new
-        </Typography>
-        <img src={Furniture} alt='service-img' className={classes.image} />
+    <Link href={`/vendor/${id}`} as={`/vendor/${id}`}>
+      <Grid container className={classes.container}>
+        <Grid item xs={12} className={classes.imageWrapper}>
+          <Typography variant='caption' className={classes.vendors}>
+            new
+          </Typography>
+          <img src={Furniture} alt='service-img' className={classes.image} />
+        </Grid>
+        <Grid item xs={12} className={classes.textWrapper}>
+          <Typography variant='body2' className={classes.title}>
+            {name}
+          </Typography>
+          <Typography variant='caption' className={classes.captions}>
+            {formatMoney(rate)}
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={12} className={classes.textWrapper}>
-        <Typography variant='body2' className={classes.title}>
-          {name}
-        </Typography>
-        <Typography variant='caption' className={classes.captions}>
-          {formatMoney(rate)}
-        </Typography>
-      </Grid>
-    </Grid>
+    </Link>
   );
 };
 

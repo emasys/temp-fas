@@ -76,7 +76,6 @@ interface Props {
   phone: string;
 }
 const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
-    console.log(rate, phone, '====');
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>

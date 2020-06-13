@@ -79,11 +79,30 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     instaWrapper: {
       marginTop: '1rem',
+      display: 'flex',
+      justifyContent: 'center',
     },
     instaBtn: {
       color: '#5C5C5C',
     },
     vendor: {},
+    connectWrapper: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: '50%',
+      padding: '2rem',
+      border: '1px solid rgba(0, 0, 0, 0.23)',
+      width: '18rem',
+      height: '18rem',
+      marginTop: '2rem',
+    },
+    instaIcon: {
+      fontSize: '5rem',
+      fontWeight: 100,
+      marginBottom: '1rem',
+    },
   })
 );
 
@@ -129,9 +148,12 @@ const Vendors: React.FC<Props> = (props) => {
           <Divider title='Instagram Feed' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.instaWrapper}>
-          <Button variant='contained' className={classes.button}>
-            <InstagramIcon style={{ marginRight: '.5rem' }} /> Connect instagram
-          </Button>
+          <div className={classes.connectWrapper}>
+            <InstagramIcon className={classes.instaIcon} />
+            <Button variant='contained' className={classes.button}>
+              Connect instagram
+            </Button>
+          </div>
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Reviews' buttonText='' />

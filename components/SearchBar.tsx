@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     lineTop: {
       transform: (props: any) => (props.open ? 'rotate(45deg)' : 'none'),
       transformOrigin: 'top left',
-      marginBottom: '0.4688rem',
+      marginBottom: '0.4rem',
     },
     lineMiddle: {
       width: '2.125rem',
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: (props: any) =>
         props.open ? 'translateX(-1px) rotate(-45deg)' : 'none',
       transformOrigin: 'top left',
-      marginTop: '0.4688rem',
+      marginTop: '0.4rem',
     },
     title: {
       color: '#949494',

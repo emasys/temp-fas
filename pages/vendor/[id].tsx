@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
-import Header from '../../components/Header';
-import { instance } from '../../config/axiosConfig';
-import { GetStaticProps } from 'next';
-import Services from '../../components/Services';
-import { createStyles, makeStyles, Theme, Grid } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  Grid,
+  Typography,
+  Button,
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { setValue } from '../../redux/actions/common';
-import Navbar from '../../components/Navbar';
 import VendorLayout from '../../components/VendorLayout';
-import MenuBar from '../../components/MenuBar';
-import Divider from '../../components/Divider';
 import { AppState } from '../../lib/initialState';
-import VendorCard from '../../components/VendorCard';
-import { IService, IVendor } from '../../interfaces';
-import { EActionTypes } from '../../redux/actions/types';
 import VendorBanner from '../../components/VendorBanner';
+import verified from '../../assets/verified.svg';
+import star from '../../assets/Star.svg';
+import location from '../../assets/location.svg';
+import Divider from '../../components/Divider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +32,50 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '2rem',
       flexWrap: 'wrap',
     },
+    name: {
+      color: '#181818',
+      fontWeight: 'bold',
+      fontSize: '2rem',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    verifyIcon: {
+      height: '1.5rem',
+      marginLeft: '1rem',
+      marginTop: '.49rem',
+    },
+    nameWrapper: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: '1rem',
+    },
+    button: {
+      minHeight: '2.125rem',
+      borderRadius: '.2rem',
+    },
+    reviewWrapper: {
+      marginTop: '.8rem',
+      display: 'flex',
+    },
+    reviewText: {
+      border: '0.0452rem solid rgba(136, 136, 136, .2)',
+      boxSizing: 'border-box',
+      marginRight: '1.5625rem',
+      borderRadius: '1.75rem',
+      padding: '.5rem 1rem',
+      fontWeight: 400,
+      color: '#888888',
+      fontSize: '0.8125rem',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    icon: {
+      marginRight: '0.6rem',
+    },
+    divider: {
+      marginTop: '5rem'
+    },
     vendor: {},
   })
 );
@@ -40,19 +84,46 @@ interface Props {}
 const Vendors: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { query } = useRouter();
-  const { rate, phoneNumber } = useSelector((state: AppState) =>
+  const { rate, phoneNumber, name } = useSelector((state: AppState) =>
     state.vendor.find((vendor) => vendor.id === query.id)
   );
-  console.log(rate);
   return (
     <VendorLayout title={'Vendors'}>
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <VendorBanner rate={rate} phone={phoneNumber} />
         </Grid>
-        {/* <Grid item xs={12}>
-          <Divider title='Nearest to you' buttonText='view all 33' />
-        </Grid> */}
+        <Grid item xs={12} className={classes.nameWrapper}>
+          <div>
+            <Typography variant='body2' className={classes.name}>
+              {name}
+              <img
+                src={verified}
+                className={classes.verifyIcon}
+                alt='verified'
+              />
+            </Typography>
+            <div className={classes.reviewWrapper}>
+              <Typography variant='body2' className={classes.reviewText}>
+                <img src={star} className={classes.icon} alt='star' /> 23
+                reviews
+              </Typography>
+              <Typography variant='body2' className={classes.reviewText}>
+                <img src={location} className={classes.icon} alt='star' />{' '}
+                location
+              </Typography>
+            </div>
+          </div>
+          <Button variant='contained' className={classes.button}>
+            Book vendor
+          </Button>
+        </Grid>
+        <Grid item xs={12} className={classes.divider}>
+          <Divider title='Instagram Feed' buttonText='' />
+        </Grid>
+        <Grid item xs={12} className={classes.divider}>
+          <Divider title='Reviews' buttonText='' />
+        </Grid>
       </Grid>
     </VendorLayout>
   );

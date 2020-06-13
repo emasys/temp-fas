@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   title: string;
-  buttonText: string;
+  buttonText?: string;
 }
 const Divider: React.FC<Props> = ({ title, buttonText }) => {
   const classes = useStyles();
@@ -56,9 +56,11 @@ const Divider: React.FC<Props> = ({ title, buttonText }) => {
         <Typography variant='body2' className={classes.title}>
           {title}
         </Typography>
-        <Button variant='text' className={classes.button}>
-          {buttonText} <img alt='next' src={next} className={classes.icon} />
-        </Button>
+        {buttonText && (
+          <Button variant='text' className={classes.button}>
+            {buttonText} <img alt='next' src={next} className={classes.icon} />
+          </Button>
+        )}
       </Grid>
       <Grid item xs={12} className={classes.divider}>
         <div className={classes.dividerInner} />

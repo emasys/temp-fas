@@ -45,7 +45,7 @@ const Vendors: React.FC<Props> = (props) => {
   );
   console.log(rate);
   return (
-    <VendorLayout>
+    <VendorLayout title={'Vendors'}>
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <VendorBanner rate={rate} phone={phoneNumber} />

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, IconButton } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clx from 'clsx';
-import Link from 'next/link';
+import back from '../assets/back-arrow.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,10 +41,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '0.4688rem',
     },
     title: {
-      color: '#181818',
+      color: '#949494',
+      fontWeight: 500,
       fontSize: '1.2rem',
       textDecoration: 'none',
       cursor: 'pointer',
+      display: 'flex',
+
+      alignItems: 'center'
     },
     menuWrapper: {
       display: 'flex',
@@ -60,8 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
-const Navbar: React.FC<Props> = (props) => {
+interface Props {
+  prevPageTitle: string;
+}
+const Navbar: React.FC<Props> = ({ prevPageTitle }) => {
   const router = useRouter();
   const [status, setStatus] = useState(false);
   const classes = useStyles({ open: status });
@@ -69,15 +75,18 @@ const Navbar: React.FC<Props> = (props) => {
     e.preventDefault();
     setStatus(!status);
   };
-  const goHome = (e: any) => {
+  const goBack = (e: any) => {
     e.preventDefault();
-    router.push(`/`);
+    router.back();
   };
   return (
     <Grid container justify='space-between' className={classes.root}>
       <Grid item sm={3}>
-        <Typography variant='body1' className={classes.title} onClick={goHome}>
-          Service Finder
+        <Typography variant='body1' className={classes.title} onClick={goBack}>
+          <IconButton>
+            <img src={back} alt='back' />
+          </IconButton>{' '}
+          {prevPageTitle}
         </Typography>
       </Grid>
       <Grid item sm={8} md={6} lg={4} className={classes.menuWrapper}>

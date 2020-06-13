@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Grid,
   createStyles,
@@ -77,27 +77,26 @@ const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   const router = useRouter();
   const handleClick = (e: any) => {
     e.preventDefault();
-    router.push(``);
+    router.push(`/vendor/${id}`);
   };
+
   return (
-    <Link href={`/vendor/${id}`} as={`/vendor/${id}`}>
-      <Grid container className={classes.container}>
-        <Grid item xs={12} className={classes.imageWrapper}>
-          <Typography variant='caption' className={classes.vendors}>
-            new
-          </Typography>
-          <img src={Furniture} alt='service-img' className={classes.image} />
-        </Grid>
-        <Grid item xs={12} className={classes.textWrapper}>
-          <Typography variant='body2' className={classes.title}>
-            {name}
-          </Typography>
-          <Typography variant='caption' className={classes.captions}>
-            {formatMoney(rate)}
-          </Typography>
-        </Grid>
+    <Grid container className={classes.container} onClick={handleClick}>
+      <Grid item xs={12} className={classes.imageWrapper}>
+        <Typography variant='caption' className={classes.vendors}>
+          new
+        </Typography>
+        <img src={Furniture} alt='service-img' className={classes.image} />
       </Grid>
-    </Link>
+      <Grid item xs={12} className={classes.textWrapper}>
+        <Typography variant='body2' className={classes.title}>
+          {name}
+        </Typography>
+        <Typography variant='caption' className={classes.captions}>
+          {formatMoney(rate)}
+        </Typography>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -1,13 +1,6 @@
 import React, { ReactChild } from 'react';
-import {
-  Grid,
-  createStyles,
-  makeStyles,
-  Theme,
-  Divider,
-} from '@material-ui/core';
+import { Grid, createStyles, makeStyles, Theme } from '@material-ui/core';
 import SearchBar from './SearchBar';
-import MenuBar from './MenuBar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,13 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   children: ReactChild;
+  title: string;
 }
-const Header: React.FC<Props> = ({ children }) => {
+const Header: React.FC<Props> = ({ children, title }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12}>
-        <SearchBar />
+        <SearchBar prevPageTitle={title} />
       </Grid>
       <div className={classes.divider} />
       <Grid item xs={12} className={classes.content}>

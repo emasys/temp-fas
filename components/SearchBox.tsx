@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Grid,
   Button,
@@ -9,11 +9,12 @@ import {
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { withFormik, FormikProps } from 'formik';
+import { useSelector } from 'react-redux';
+import Router from 'next/router';
 import * as Yup from 'yup';
 import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import SelectInput from './SelectInput';
 import search from '../assets/search.svg';
-import { useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: '0px 11px 20px 1px rgba(0, 0, 0, 0.08)',
       '& li': {
         padding: '1rem .4rem',
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
       },
       '& li[data-focus="true"]': {
         backgroundColor: '#43CEA2',
@@ -96,6 +97,7 @@ interface ISearchValues {
   area: string;
   state: string;
   search: any;
+  services: any[];
 }
 
 const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
@@ -103,10 +105,15 @@ const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
   const searchOption = useSelector(
     (state: AppState) => state.services.searchOption
   );
+  const services = useSelector((state: AppState) => state.services.allServices);
   const classes = useStyles();
   const handleAutoChange = (value: any) => {
     setFieldValue('search', value?.title ? value.title : '');
   };
+  useEffect(() => {
+    setFieldValue('services', services);
+  }, [services]);
+
   const {
     getRootProps,
     getInputProps,
@@ -209,13 +216,17 @@ const SearchForm = withFormik<Props & ISearchInitValues, ISearchValues>({
       search: search || '',
       state: state || '""',
       area: area || '""',
+      services: [],
     };
   },
   validateOnChange: true,
   validateOnMount: true,
   validationSchema,
-  handleSubmit: (values, { props }) => {
-    console.log(values, '>>>>>>>', props);
+  handleSubmit: (values) => {
+    const { services, search } = values;
+    const matchServicesId = services.find((service) => service.name === search)
+      ?.id;
+    Router.push(`/services/${matchServicesId}`);
   },
 })(SearchBox);
 

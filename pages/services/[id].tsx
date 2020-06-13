@@ -46,7 +46,7 @@ const Vendors: React.FC<Props> = ({ vendors }) => {
     dispatch(setValue(EActionTypes.SAVE_VENDORS, vendors));
   }, []);
   return (
-    <VendorLayout>
+    <VendorLayout title={'Home'}>
       <Grid container className={classes.container}>
         <Grid item xs={12} className={classes.menu}>
           <MenuBar />

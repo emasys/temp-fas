@@ -41,6 +41,7 @@ interface Props {
 const Vendors: React.FC<Props> = ({ vendors }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const allVendors = useSelector((state: AppState) => state.vendor);
   useEffect(() => {
     dispatch(setValue(EActionTypes.SAVE_VENDORS, vendors));
   }, []);
@@ -54,12 +55,14 @@ const Vendors: React.FC<Props> = ({ vendors }) => {
           <Divider title='Nearest to you' buttonText='view all 33' />
         </Grid>
         <Grid container spacing={5} className={classes.vendorWrapper}>
-          {vendors.map((vendor) => (
+          {allVendors.map((vendor) => (
             <Grid
               item
               key={vendor.id}
               xs={12}
               sm={4}
+              md={3}
+              lg={2}
               className={classes.vendor}
             >
               <VendorCard name={vendor.name} rate={vendor.rate} id={vendor.id} />
@@ -91,7 +94,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const url = `services/${params.id}/vendors`;
     const { data } = await instance.get(url);
-    console.log(data);
     return {
       props: {
         vendors: data,

@@ -16,6 +16,7 @@ import verified from '../../assets/verified.svg';
 import star from '../../assets/Star.svg';
 import location from '../../assets/location.svg';
 import Divider from '../../components/Divider';
+import InstagramIcon from '@material-ui/icons/Instagram';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,7 +75,13 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '0.6rem',
     },
     divider: {
-      marginTop: '5rem'
+      marginTop: '5rem',
+    },
+    instaWrapper: {
+      marginTop: '1rem',
+    },
+    instaBtn: {
+      color: '#5C5C5C',
     },
     vendor: {},
   })
@@ -120,6 +127,11 @@ const Vendors: React.FC<Props> = (props) => {
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Instagram Feed' buttonText='' />
+        </Grid>
+        <Grid item xs={12} className={classes.instaWrapper}>
+          <Button variant='contained' className={classes.button}>
+            <InstagramIcon style={{ marginRight: '.5rem' }} /> Connect instagram
+          </Button>
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Reviews' buttonText='' />

@@ -6,7 +6,7 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Furniture from '../assets/furniture.svg';
 import { formatMoney } from '../util';
 import Link from 'next/link';
@@ -75,9 +75,13 @@ interface Props {
 const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   const classes = useStyles();
   const router = useRouter();
+  console.log('card', router);
   const handleClick = (e: any) => {
     e.preventDefault();
-    router.push(`/vendor/${id}`);
+    Router.push({
+      pathname: `/vendor/${id}`,
+      query: { serviceId: router.query.id },
+    })
   };
 
   return (

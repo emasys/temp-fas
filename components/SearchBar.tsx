@@ -66,8 +66,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   prevPageTitle: string;
+  path: string;
 }
-const Navbar: React.FC<Props> = ({ prevPageTitle }) => {
+const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
   const router = useRouter();
   const [status, setStatus] = useState(false);
   const classes = useStyles({ open: status });
@@ -77,7 +78,7 @@ const Navbar: React.FC<Props> = ({ prevPageTitle }) => {
   };
   const goBack = (e: any) => {
     e.preventDefault();
-    router.back();
+    router.push(path);
   };
   return (
     <Grid container justify='space-between' className={classes.root}>

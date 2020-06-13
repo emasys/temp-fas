@@ -46,7 +46,7 @@ const Vendors: React.FC<Props> = ({ vendors }) => {
     dispatch(setValue(EActionTypes.SAVE_VENDORS, vendors));
   }, []);
   return (
-    <VendorLayout title={'Home'}>
+    <VendorLayout title={'Home'} path={`/`}>
       <Grid container className={classes.container}>
         <Grid item xs={12} className={classes.menu}>
           <MenuBar />
@@ -65,7 +65,11 @@ const Vendors: React.FC<Props> = ({ vendors }) => {
               lg={2}
               className={classes.vendor}
             >
-              <VendorCard name={vendor.name} rate={vendor.rate} id={vendor.id} />
+              <VendorCard
+                name={vendor.name}
+                rate={vendor.rate}
+                id={vendor.id}
+              />
             </Grid>
           ))}
         </Grid>

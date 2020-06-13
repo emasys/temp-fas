@@ -16,3 +16,7 @@ export interface IVendor {
   rate: number;
   phoneNumber: string;
 }
+
+export interface ICommon {
+  tempUri: string;
+}

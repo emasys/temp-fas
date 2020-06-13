@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   children: ReactChild;
   title: string;
+  path: string;
 }
-const Header: React.FC<Props> = ({ children, title }) => {
+const Header: React.FC<Props> = ({ children, title, path }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12}>
-        <SearchBar prevPageTitle={title} />
+        <SearchBar prevPageTitle={title} path={path} />
       </Grid>
       <div className={classes.divider} />
       <Grid item xs={12} className={classes.content}>

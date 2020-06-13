@@ -16,7 +16,7 @@ import verified from '../../assets/verified.svg';
 import star from '../../assets/Star.svg';
 import location from '../../assets/location.svg';
 import Divider from '../../components/Divider';
-import InstagramIcon from '@material-ui/icons/Instagram';
+import InstagramWidget from '../../components/InstagramWidget';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -109,12 +109,18 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {}
 const Vendors: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { query } = useRouter();
+  const {
+    query: { id, serviceId },
+  } = useRouter();
   const { rate, phoneNumber, name } = useSelector((state: AppState) =>
-    state.vendor.find((vendor) => vendor.id === query.id)
+    state.vendor.find((vendor) => vendor.id === id)
   );
+
   return (
-    <VendorLayout title={'Vendors'}>
+    <VendorLayout
+      title={serviceId ? 'Vendors' : 'Home'}
+      path={serviceId ? `/services/${serviceId}` : '/'}
+    >
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <VendorBanner rate={rate} phone={phoneNumber} />
@@ -148,12 +154,7 @@ const Vendors: React.FC<Props> = (props) => {
           <Divider title='Instagram Feed' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.instaWrapper}>
-          <div className={classes.connectWrapper}>
-            <InstagramIcon className={classes.instaIcon} />
-            <Button variant='contained' className={classes.button}>
-              Connect instagram
-            </Button>
-          </div>
+          <InstagramWidget />
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Reviews' buttonText='' />

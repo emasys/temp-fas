@@ -7,7 +7,12 @@ interface ISaveVendor {
   payload: IVendor[];
 }
 
-export type TVendorActions = ISaveVendor | IResetAction;
+interface IUpdateVendor {
+  type: EActionTypes.UPDATE_VENDOR;
+  payload: IVendor;
+}
+
+export type TVendorActions = ISaveVendor | IResetAction | IUpdateVendor;
 
 export const initialVendorsState = [];
 
@@ -18,6 +23,11 @@ export default function vendor(
   switch (action.type) {
     case EActionTypes.SAVE_VENDORS:
       return action.payload;
+    case EActionTypes.UPDATE_VENDOR:
+      return [
+        ...state.filter((vendor) => vendor.id !== action.payload.id),
+        action.payload,
+      ];
     case EActionTypes.RESET_STORE:
       return [];
     default:

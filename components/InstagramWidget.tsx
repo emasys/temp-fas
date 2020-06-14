@@ -55,9 +55,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-interface Props {}
+interface Props {
+  instagramCode: null | string;
+}
 
-export default function InstagramWidget({}: Props): ReactElement {
+export default function InstagramWidget({
+  instagramCode,
+}: Props): ReactElement {
   const classes = useStyles();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -65,11 +69,11 @@ export default function InstagramWidget({}: Props): ReactElement {
     (state: AppState) => state.socialMedia
   );
   const handlePagination = (direction: string) => {
-    dispatch(fetchInstagramMedia(direction));
+    dispatch(fetchInstagramMedia(instagramCode, direction));
   };
   useEffect(() => {
-    dispatch(fetchInstagramMedia());
-  }, []);
+      dispatch(fetchInstagramMedia(instagramCode));
+  }, [instagramCode]);
   const onBtnClick = () => {
     dispatch(saveURI(router.asPath));
     const { client_id, redirectUri } = config.instagram;

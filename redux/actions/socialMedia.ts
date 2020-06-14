@@ -4,11 +4,11 @@ import { setValue } from './common';
 import { instance } from '../../config/axiosConfig';
 import config from '../../config';
 
-export const fetchInstagramMedia = (direction?: string) => async (
+export const fetchInstagramMedia = (code, direction?: string) => async (
   dispatch: Dispatch<any>
 ) => {
   const pagination = direction ? `&${direction}` : '';
-  const url = `https://graph.instagram.com/me/media?fields=id,media_url,thumbnail_url${pagination}&limit=8&access_token=''`;
+  const url = `https://graph.instagram.com/me/media?fields=id,media_url,thumbnail_url${pagination}&limit=8&access_token=${code}`;
   try {
     const { data } = await instance.get(url);
     const payload = {
@@ -18,6 +18,14 @@ export const fetchInstagramMedia = (direction?: string) => async (
     };
     dispatch(setValue(EActionTypes.SAVE_INSTADATA, payload));
   } catch (error) {
+    if(!code){
+      const payload = {
+        data: [],
+        next: '',
+        prev: '',
+      };
+      return dispatch(setValue(EActionTypes.SAVE_INSTADATA, payload));
+    }
     const mapDirection: any = {
       before: 'prev',
       after: 'next',

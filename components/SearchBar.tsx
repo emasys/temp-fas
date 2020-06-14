@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography, IconButton } from '@material-ui/core';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clx from 'clsx';
 import back from '../assets/back-arrow.svg';
@@ -69,7 +69,6 @@ interface Props {
   path: string;
 }
 const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
-  const router = useRouter();
   const [status, setStatus] = useState(false);
   const classes = useStyles({ open: status });
   const handleClick = (e: any) => {
@@ -78,8 +77,7 @@ const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
   };
   const goBack = (e: any) => {
     e.preventDefault();
-    console.log(path)
-    router.push(path, path);
+    Router.push(path);
   };
   return (
     <Grid container justify='space-between' className={classes.root}>

@@ -115,18 +115,23 @@ interface Props {
   vendor: IVendor;
 }
 const Vendors: React.FC<Props> = ({ vendor }) => {
-  const dispatch = useDispatch();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const {
     query: { id },
   } = useRouter();
-  const vendorObj =
-    useSelector((state: AppState) =>
-      state.vendor.find((vendor) => vendor.id === id)
-    ) || vendor;
+
+  const vendorObj = useSelector((state: AppState) =>
+    state.vendor.find((item) => item.id === id)
+  );
+  useEffect(() => {
+    if (vendor) {
+      dispatch(setValue(EActionTypes.UPDATE_VENDOR, vendor));
+    }
+  }, [vendor]);
 
   return (
-    <VendorLayout title={'Vendors'} path={`/services/${vendor.serviceId}`}>
+    <VendorLayout title={'Vendors'} path={`/services/${vendorObj?.serviceId}`}>
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <VendorBanner rate={vendorObj?.rate} phone={vendorObj?.phoneNumber} />
@@ -160,7 +165,7 @@ const Vendors: React.FC<Props> = ({ vendor }) => {
           <Divider title='Instagram Feed' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.instaWrapper}>
-          <InstagramWidget />
+          <InstagramWidget instagramCode={vendorObj?.instagramToken} />
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Reviews' buttonText='' />

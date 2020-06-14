@@ -22,6 +22,7 @@ import { instance } from '../../config/axiosConfig';
 import { IService, IVendor } from '../../interfaces';
 import { setValue } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
+import { fetchVendor } from '../../redux/actions/vendors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -111,10 +112,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {
-  vendor: IVendor;
-}
-const Vendors: React.FC<Props> = ({ vendor }) => {
+interface Props {}
+const Vendor: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const {
@@ -125,10 +124,8 @@ const Vendors: React.FC<Props> = ({ vendor }) => {
     state.vendor.find((item) => item.id === id)
   );
   useEffect(() => {
-    if (vendor) {
-      dispatch(setValue(EActionTypes.UPDATE_VENDOR, vendor));
-    }
-  }, [vendor]);
+    dispatch(fetchVendor(id));
+  }, []);
 
   return (
     <VendorLayout title={'Vendors'} path={`/services/${vendorObj?.serviceId}`}>
@@ -175,34 +172,4 @@ const Vendors: React.FC<Props> = ({ vendor }) => {
   );
 };
 
-export async function getStaticPaths() {
-  try {
-    const paths = [{ params: { id: '' } }];
-    return {
-      paths,
-      fallback: true,
-    };
-  } catch (error) {
-    return { paths: [{ params: { id: '' } }], fallback: false };
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const url = `vendors/${params.id}`;
-  try {
-    const { data } = await instance.get(url);
-    return {
-      props: {
-        vendor: data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        vendor: [],
-      },
-    };
-  }
-};
-
-export default Vendors;
+export default Vendor;

@@ -86,7 +86,7 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
       </Grid>
       <Grid item xs={6} className={classes.contactWrapper}>
         <Typography variant='body1' className={classes.phone}>
-          {phone}
+          {phone|| 'No phone number'}
         </Typography>
         <Typography variant='body1' className={classes.chat}>Chat now</Typography>
       </Grid>

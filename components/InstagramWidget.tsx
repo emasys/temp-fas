@@ -97,7 +97,7 @@ export default function InstagramWidget({
   return (
     <Grid container spacing={3}>
       {data.map(({ media_url, id }) => (
-        <Grid key={id} item sm={3}>
+        <Grid key={id} item sm={3} xl={2}>
           <img
             src={media_url}
             alt='instagram feed'

@@ -4,16 +4,29 @@ import { setValue } from './common';
 import { instance } from '../../config/axiosConfig';
 import config from '../../config';
 
-export const fetchInstagramMedia = (code: string | any) => async (
+export const fetchInstagramMedia = (direction?: string) => async (
   dispatch: Dispatch<any>
 ) => {
-  const url = `https://graph.instagram.com/me/media?fields=id,media_url&access_token=${code}`;
+  const pagination = direction ? `&${direction}` : '';
+  const url = `https://graph.instagram.com/me/media?fields=id,media_url,thumbnail_url${pagination}&limit=8&access_token=IGQVJVX0lmVTlPeVBiTFg2dDllRlYtYk9sSllaUkpOT2JZAMURrRi03QW16SGhaOV9fSU1na19HZAnRadzkzVkY2UjNnaXlWVU10bzZADR2Fyc2FzWlhEb0gzR3FpLTlRN0t4a1U1bkxFVWlKUGFvTndNRwZDZD`;
   try {
-    const data = await instance.post(url);
-    console.log(data, '=======');
-    dispatch(setValue(EActionTypes.SAVE_INSTADATA, data));
+    const { data } = await instance.get(url);
+    const payload = {
+      data: data.data,
+      next: data.paging.cursors.after,
+      prev: data.paging.cursors.before,
+    };
+    dispatch(setValue(EActionTypes.SAVE_INSTADATA, payload));
   } catch (error) {
-    console.log('====>', error);
+    const mapDirection: any = {
+      before: 'prev',
+      after: 'next',
+    };
+    const key = mapDirection[direction.split('=')[0]];
+    const payload = {
+      [key]: '',
+    };
+    dispatch(setValue(EActionTypes.UPDATE_INSTADATA, payload));
   }
 };
 

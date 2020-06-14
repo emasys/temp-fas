@@ -78,7 +78,8 @@ const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
   };
   const goBack = (e: any) => {
     e.preventDefault();
-    router.push(path);
+    console.log(path)
+    router.push(path, path);
   };
   return (
     <Grid container justify='space-between' className={classes.root}>

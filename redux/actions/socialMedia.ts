@@ -8,7 +8,7 @@ export const fetchInstagramMedia = (direction?: string) => async (
   dispatch: Dispatch<any>
 ) => {
   const pagination = direction ? `&${direction}` : '';
-  const url = `https://graph.instagram.com/me/media?fields=id,media_url,thumbnail_url${pagination}&limit=8&access_token=IGQVJVX0lmVTlPeVBiTFg2dDllRlYtYk9sSllaUkpOT2JZAMURrRi03QW16SGhaOV9fSU1na19HZAnRadzkzVkY2UjNnaXlWVU10bzZADR2Fyc2FzWlhEb0gzR3FpLTlRN0t4a1U1bkxFVWlKUGFvTndNRwZDZD`;
+  const url = `https://graph.instagram.com/me/media?fields=id,media_url,thumbnail_url${pagination}&limit=8&access_token=''`;
   try {
     const { data } = await instance.get(url);
     const payload = {
@@ -22,7 +22,7 @@ export const fetchInstagramMedia = (direction?: string) => async (
       before: 'prev',
       after: 'next',
     };
-    const key = mapDirection[direction.split('=')[0]];
+    const key = mapDirection[direction?.split('=')[0]];
     const payload = {
       [key]: '',
     };

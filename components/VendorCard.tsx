@@ -75,13 +75,11 @@ interface Props {
 const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   const classes = useStyles();
   const router = useRouter();
-  console.log('card', router);
   const handleClick = (e: any) => {
     e.preventDefault();
-    Router.push({
-      pathname: `/vendor/${id}`,
+    router.push('/vendor/[id]', `/vendor/${id}`, {
       query: { serviceId: router.query.id },
-    })
+    });
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   createStyles,
   makeStyles,
@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import VendorLayout from '../../components/VendorLayout';
 import { AppState } from '../../lib/initialState';
@@ -17,6 +17,11 @@ import star from '../../assets/Star.svg';
 import location from '../../assets/location.svg';
 import Divider from '../../components/Divider';
 import InstagramWidget from '../../components/InstagramWidget';
+import { GetStaticProps } from 'next';
+import { instance } from '../../config/axiosConfig';
+import { IService, IVendor } from '../../interfaces';
+import { setValue } from '../../redux/actions/common';
+import { EActionTypes } from '../../redux/actions/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,29 +111,30 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
-const Vendors: React.FC<Props> = (props) => {
+interface Props {
+  vendor: IVendor;
+}
+const Vendors: React.FC<Props> = ({ vendor }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const {
-    query: { id, serviceId },
+    query: { id },
   } = useRouter();
-  const { rate, phoneNumber, name } = useSelector((state: AppState) =>
-    state.vendor.find((vendor) => vendor.id === id)
-  );
+  const vendorObj =
+    useSelector((state: AppState) =>
+      state.vendor.find((vendor) => vendor.id === id)
+    ) || vendor;
 
   return (
-    <VendorLayout
-      title={serviceId ? 'Vendors' : 'Home'}
-      path={serviceId ? `/services/${serviceId}` : '/'}
-    >
+    <VendorLayout title={'Vendors'} path={`/services/${vendor.serviceId}`}>
       <Grid container className={classes.container}>
         <Grid item xs={12}>
-          <VendorBanner rate={rate} phone={phoneNumber} />
+          <VendorBanner rate={vendorObj?.rate} phone={vendorObj?.phoneNumber} />
         </Grid>
         <Grid item xs={12} className={classes.nameWrapper}>
           <div>
             <Typography variant='body2' className={classes.name}>
-              {name}
+              {vendorObj?.name}
               <img
                 src={verified}
                 className={classes.verifyIcon}
@@ -162,6 +168,36 @@ const Vendors: React.FC<Props> = (props) => {
       </Grid>
     </VendorLayout>
   );
+};
+
+export async function getStaticPaths() {
+  try {
+    const paths = [{ params: { id: '' } }];
+    return {
+      paths,
+      fallback: true,
+    };
+  } catch (error) {
+    return { paths: [{ params: { id: '' } }], fallback: false };
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const url = `vendors/${params.id}`;
+  try {
+    const { data } = await instance.get(url);
+    return {
+      props: {
+        vendor: data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        vendor: [],
+      },
+    };
+  }
 };
 
 export default Vendors;

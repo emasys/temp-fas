@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   vendors: IVendor[];
 }
-const Vendors: React.FC<Props> = ({ vendors }) => {
+const VendorServices: React.FC<Props> = ({ vendors }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const allVendors = useSelector((state: AppState) => state.vendor);
@@ -62,7 +62,6 @@ const Vendors: React.FC<Props> = ({ vendors }) => {
               xs={12}
               sm={4}
               md={3}
-              lg={2}
               className={classes.vendor}
             >
               <VendorCard
@@ -112,4 +111,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 };
 
-export default Vendors;
+export default VendorServices;

@@ -74,7 +74,7 @@ const Card: React.FC<Props> = ({ name, id }) => {
   const router = useRouter();
   const handleClick = (e: any) => {
     e.preventDefault();
-    router.push(`/services/${id}`);
+    router.push('/services/[id]',`/services/${id}`);
   };
   return (
     <Grid container className={classes.container} onClick={handleClick}>

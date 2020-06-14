@@ -23,7 +23,7 @@ interface Props {
   title: string;
   path: string;
 }
-const Header: React.FC<Props> = ({ children, title, path }) => {
+const VendorLayout: React.FC<Props> = ({ children, title, path }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
@@ -38,4 +38,4 @@ const Header: React.FC<Props> = ({ children, title, path }) => {
   );
 };
 
-export default Header;
+export default VendorLayout;

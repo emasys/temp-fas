@@ -10,6 +10,9 @@ instance.defaults.headers.post['Content-Type'] =
 instance.defaults.headers.put['Content-Type'] =
   'application/x-www-form-urlencoded';
 instance.defaults.timeout = 50000;
-const data = JSON.parse(localStorage.getItem('persist:fas') || '');
-instance.defaults.headers.common['Authorization'] = data?.auth?.auth
-console.log(data.auth.auth, '====');
+const isClient = typeof window !== 'undefined';
+if (isClient) {
+  const data = JSON.parse(localStorage.getItem('persist:fas') || '');
+  instance.defaults.headers.common['Authorization'] = data?.auth?.auth;
+  console.log(data.auth.auth, '====');
+}

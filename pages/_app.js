@@ -7,10 +7,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import withReduxStore from '../lib/with-redux-store';
 import '../styles/index.css';
 import theme from '../styles/primary';
+import { instance } from '../config/axiosConfig';
 
 class MyApp extends App {
   render() {
     const { Component, pageProps, store } = this.props;
+    instance.defaults.headers.common[
+      'Authorization'
+    ] = store.getState().auth.auth;
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={store.persistor}>

@@ -11,11 +11,12 @@ export default function Auth({}: Props): ReactElement {
   const dispatch = useDispatch();
   const { query } = router;
   const path = useSelector((state: AppState) => state.common.tempUri);
+  const pathArr = path.split('/');
+  const id = pathArr[pathArr.length - 1]
   useEffect(() => {
     if (query?.code) {
-      dispatch(instagramAuth(query.code));
-      console.log(query.code, '====');
-      // router.push(path || '/');
+      dispatch(instagramAuth(query.code, id));
+      router.push(path || '/');
     }
   }, [path]);
   return <div />;

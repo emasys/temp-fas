@@ -20,7 +20,7 @@ import InstagramWidget from '../../components/InstagramWidget';
 import { GetStaticProps } from 'next';
 import { instance } from '../../config/axiosConfig';
 import { IService, IVendor } from '../../interfaces';
-import { setValue } from '../../redux/actions/common';
+import { setValue, handleAuthModal } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
 import { fetchVendor } from '../../redux/actions/vendors';
 
@@ -116,6 +116,7 @@ interface Props {}
 const Vendor: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const auth = useSelector((state: AppState) => state.auth.auth);
   const {
     query: { id },
   } = useRouter();
@@ -126,6 +127,12 @@ const Vendor: React.FC<Props> = () => {
   useEffect(() => {
     dispatch(fetchVendor(id));
   }, []);
+
+  const handleBooking = () => {
+    if (!auth) {
+      return dispatch(handleAuthModal(true));
+    }
+  };
 
   return (
     <VendorLayout title={'Vendors'} path={`/services/${vendorObj?.serviceId}`}>
@@ -154,7 +161,11 @@ const Vendor: React.FC<Props> = () => {
               </Typography>
             </div>
           </div>
-          <Button variant='contained' className={classes.button}>
+          <Button
+            variant='contained'
+            onClick={handleBooking}
+            className={classes.button}
+          >
             Book vendor
           </Button>
         </Grid>

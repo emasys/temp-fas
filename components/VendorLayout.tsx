@@ -1,6 +1,7 @@
 import React, { ReactChild } from 'react';
 import { Grid, createStyles, makeStyles, Theme } from '@material-ui/core';
 import SearchBar from './SearchBar';
+import Login from './Login';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +28,7 @@ const VendorLayout: React.FC<Props> = ({ children, title, path }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
+      <Login open={true} handleClose={() => {}}/>
       <Grid item xs={12}>
         <SearchBar prevPageTitle={title} path={path} />
       </Grid>

@@ -7,10 +7,16 @@ interface ISaveURI {
   payload: string;
 }
 
-export type TCommonActions = ISaveURI | IResetAction;
+interface IAuthModal {
+  type: EActionTypes.HANDLE_AUTH_MODAL;
+  payload: boolean;
+}
+
+export type TCommonActions = ISaveURI | IResetAction | IAuthModal;
 
 export const initialCommonState = {
   tempUri: '',
+  openAuthModal: false,
 };
 
 export default function vendor(
@@ -22,6 +28,11 @@ export default function vendor(
       return {
         ...state,
         tempUri: action.payload,
+      };
+    case EActionTypes.HANDLE_AUTH_MODAL:
+      return {
+        ...state,
+        openAuthModal: action.payload,
       };
     case EActionTypes.RESET_STORE:
       return initialCommonState;

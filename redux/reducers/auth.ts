@@ -1,9 +1,14 @@
 import { EActionTypes } from '../actions/types';
-import { ILogin } from '../actions/auth';
 
+interface ILoginRes {
+  auth: string;
+  email: string;
+  fullName: null | string;
+  id: string;
+}
 interface ILoginAction {
   type: EActionTypes.LOGIN;
-  payload: ILogin;
+  payload: ILoginRes;
 }
 
 export interface IResetAction {
@@ -12,16 +17,19 @@ export interface IResetAction {
 }
 
 export interface IAuth {
-  loggedIn: ILogin;
+  auth: string;
+  fullName: string;
+  email: string;
+  id: string;
 }
 
 export type TAuthActions = ILoginAction | IResetAction;
 
 export const initialAuthState = {
-  loggedIn: {
-    email: '',
-    password: '',
-  },
+  auth: '',
+  fullName: '',
+  email: '',
+  id: '',
 };
 
 export default function auth(
@@ -30,13 +38,9 @@ export default function auth(
 ): IAuth {
   switch (action.type) {
     case EActionTypes.LOGIN:
-      return {
-        ...state,
-        loggedIn: action.payload,
-      };
+      return action.payload;
     case EActionTypes.RESET_STORE:
       return initialAuthState;
-
     default:
       return state;
   }

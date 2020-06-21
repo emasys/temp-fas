@@ -43,6 +43,5 @@ export default (initialState) => {
       store.replaceReducer(createNextReducer(initialState));
     });
   }
-
   return store;
 };

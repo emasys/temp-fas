@@ -28,15 +28,14 @@ interface IUpdateVendor {
 }
 export const updateVendor = (body: IUpdateVendor, id: string) => async (
   dispatch: Dispatch<any>,
-  getState: () => AppState
 ) => {
   const url = `vendors/${id}`;
+  console.log(body, '====');
   try {
     const { data } = await instance.put(url, body);
-    console.log(data, '=====');
+    console.log(data, '=data')
     dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
   } catch (error) {
-    console.log(error.response)
     // dispatch(handleAuthModal(true));
     // dispatch(handleAuthError(error));
   }

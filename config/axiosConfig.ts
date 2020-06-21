@@ -12,7 +12,10 @@ instance.defaults.headers.put['Content-Type'] =
 instance.defaults.timeout = 50000;
 const isClient = typeof window !== 'undefined';
 if (isClient) {
-  const data = JSON.parse(localStorage.getItem('persist:fas') || '');
-  instance.defaults.headers.common['Authorization'] = data?.auth?.auth;
-  console.log(data.auth.auth, '====');
+  let data = JSON.parse(localStorage.getItem('persist:fas')) || '';
+  if (data) {
+    data = JSON.parse(data.auth);
+    instance.defaults.headers.common['Authorization'] = data?.auth;
+    console.log(data?.auth, '====>>');
+  }
 }

@@ -53,8 +53,9 @@ export const instagramAuth = (code: string | any, id: string) => async (
   data.append('redirect_uri', redirectUri);
   try {
     const res = await Axios.post(url, data);
+    console.log({ instagramToken: res.data.access_token }, 'body')
     dispatch(updateVendor({ instagramToken: res.data.access_token }, id));
   } catch (error) {
-    console.log('====>', error);
+    console.log('====>', error.response);
   }
 };

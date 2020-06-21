@@ -36,7 +36,8 @@ export const updateVendor = (body: IUpdateVendor, id: string) => async (
     console.log(data, '=====');
     dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
   } catch (error) {
-    dispatch(handleAuthModal(true));
-    dispatch(handleAuthError(error));
+    console.log(error.response)
+    // dispatch(handleAuthModal(true));
+    // dispatch(handleAuthError(error));
   }
 };

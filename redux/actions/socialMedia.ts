@@ -18,7 +18,7 @@ export const fetchInstagramMedia = (code, direction?: string) => async (
     };
     dispatch(setValue(EActionTypes.SAVE_INSTADATA, payload));
   } catch (error) {
-    if(!code){
+    if (!code) {
       const payload = {
         data: [],
         next: '',
@@ -50,14 +50,16 @@ export const instagramAuth = (code: string | any) => async (
     grant_type: 'authorization_code',
     redirect_uri: redirectUri,
   };
+  const data = new FormData();
+  data.append('client_id', client_id);
+  data.append('client_secret', client_secret);
+  data.append('code', code);
+  data.append('grant_type', 'authorization_code');
+  data.append('redirect_uri', redirectUri);
   try {
-    const { data } = await instance.post(url, body, {
-      headers: {
-        'Content-type': 'multipart/form-data',
-      },
-    });
-    console.log(data, '=======');
-    localStorage.setItem('sm:auth', data?.access_token);
+    const res = await instance.post(url, data);
+    console.log(res, '=======');
+    // localStorage.setItem('sm:auth', data?.access_token);
     // dispatch(setValue(EActionTypes.SAVE_INSTADATA, data));
   } catch (error) {
     console.log('====>', error);

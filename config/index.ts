@@ -5,7 +5,7 @@ const config = {
   development: {
     backendURL: 'https://fas-web-api.herokuapp.com/',
     instagram: {
-      redirectUri: 'https://d8933e35d4e9.ngrok.io/auth',
+      redirectUri: 'https://dc69ad3bf600.ngrok.io/auth',
       client_id: '254441985981155',
       client_secret: '9833f500a38a09a105f266ff891ecca5',
     },
@@ -13,7 +13,7 @@ const config = {
   staging: {
     backendURL: 'https://fas-web-api.herokuapp.com/',
     instagram: {
-      redirectUri: 'https://d8933e35d4e9.ngrok.io/auth',
+      redirectUri: 'https://dc69ad3bf600.ngrok.io/auth',
       client_id: '254441985981155',
       client_secret: '9833f500a38a09a105f266ff891ecca5',
     },
@@ -21,7 +21,7 @@ const config = {
   test: {
     backendURL: 'https://fas-web-api.herokuapp.com/',
     instagram: {
-      redirectUri: 'https://d8933e35d4e9.ngrok.io/auth',
+      redirectUri: 'https://dc69ad3bf600.ngrok.io/auth',
       client_id: '254441985981155',
       client_secret: '9833f500a38a09a105f266ff891ecca5',
     },
@@ -29,7 +29,7 @@ const config = {
   production: {
     backendURL: 'https://fas-web-api.herokuapp.com/',
     instagram: {
-      redirectUri: 'https://d8933e35d4e9.ngrok.io/auth',
+      redirectUri: 'https://dc69ad3bf600.ngrok.io/auth',
       client_id: '254441985981155',
       client_secret: '9833f500a38a09a105f266ff891ecca5',
     },

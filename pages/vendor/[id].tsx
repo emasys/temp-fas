@@ -129,7 +129,7 @@ const Vendor: React.FC<Props> = () => {
   }, []);
 
   const handleBooking = () => {
-    if (!auth) {
+    if (auth) {
       return dispatch(handleAuthModal(true));
     }
   };

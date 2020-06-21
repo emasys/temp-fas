@@ -15,7 +15,7 @@ if (isClient) {
   let data = JSON.parse(localStorage.getItem('persist:fas')) || '';
   if (data) {
     data = JSON.parse(data.auth);
-    instance.defaults.headers.common['Authorization'] = data?.auth;
+    instance.defaults.headers.common['Authorization'] = `Bearer ${data?.auth}`;
     console.log(data?.auth, '====>>');
   }
 }

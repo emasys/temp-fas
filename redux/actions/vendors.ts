@@ -28,12 +28,17 @@ interface IUpdateVendor {
 }
 export const updateVendor = (body: IUpdateVendor, id: string) => async (
   dispatch: Dispatch<any>,
+  getState: () => AppState
 ) => {
   const url = `vendors/${id}`;
-  console.log(body, '====');
+  console.log(body, '====', getState().auth.auth);
   try {
-    const { data } = await instance.put(url, body);
-    console.log(data, '=data')
+    const { data } = await instance.put(url, body, {
+      headers: {
+        Authorization: `Bearer ${getState().auth.auth}`,
+      },
+    });
+    console.log(data, '=data');
     dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
   } catch (error) {
     // dispatch(handleAuthModal(true));

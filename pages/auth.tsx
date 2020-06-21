@@ -16,7 +16,7 @@ export default function Auth({}: Props): ReactElement {
   useEffect(() => {
     if (query?.code) {
       dispatch(instagramAuth(query.code, id));
-      // router.push(path || '/');
+      router.push(path || '/');
     }
   }, [path]);
   return <div />;

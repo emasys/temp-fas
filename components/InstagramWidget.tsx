@@ -12,7 +12,7 @@ import config from '../config';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInstagramMedia } from '../redux/actions/socialMedia';
-import { saveURI } from '../redux/actions/common';
+import { saveURI, handleAuthModal } from '../redux/actions/common';
 import { AppState } from '../lib/initialState';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -68,13 +68,18 @@ export default function InstagramWidget({
   const { data, next, prev } = useSelector(
     (state: AppState) => state.socialMedia
   );
+  const auth = useSelector((state: AppState) => state.auth.auth);
+
   const handlePagination = (direction: string) => {
     dispatch(fetchInstagramMedia(instagramCode, direction));
   };
   useEffect(() => {
-      dispatch(fetchInstagramMedia(instagramCode));
+    dispatch(fetchInstagramMedia(instagramCode));
   }, [instagramCode]);
   const onBtnClick = () => {
+    if (!auth) {
+      return dispatch(handleAuthModal(true));
+    }
     dispatch(saveURI(router.asPath));
     const { client_id, redirectUri } = config.instagram;
     window.location.href = `https://api.instagram.com/oauth/authorize/?app_id=${client_id}&redirect_uri=${redirectUri}&scope=user_profile,user_media&response_type=code`;

@@ -2,7 +2,6 @@ import { EActionTypes } from './types';
 import { Dispatch } from 'redux';
 import { setValue, handleAuthError, handleAuthModal } from './common';
 import { instance } from '../../config/axiosConfig';
-import config from '../../config';
 import { AppState } from '../../lib/initialState';
 
 export const fetchVendor = (id: string | string[]) => async (
@@ -31,17 +30,15 @@ export const updateVendor = (body: IUpdateVendor, id: string) => async (
   getState: () => AppState
 ) => {
   const url = `vendors/${id}`;
-  console.log(body, '====', getState().auth.auth);
   try {
     const { data } = await instance.put(url, body, {
       headers: {
         Authorization: `Bearer ${getState().auth.auth}`,
       },
     });
-    console.log(data, '=data');
     dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
   } catch (error) {
-    // dispatch(handleAuthModal(true));
-    // dispatch(handleAuthError(error));
+    dispatch(handleAuthModal(true));
+    dispatch(handleAuthError(error));
   }
 };

@@ -16,6 +16,5 @@ if (isClient) {
   if (data) {
     data = JSON.parse(data.auth);
     instance.defaults.headers.common['Authorization'] = `Bearer ${data?.auth}`;
-    console.log(data?.auth, '====>>');
   }
 }

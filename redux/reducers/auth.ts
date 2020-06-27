@@ -11,6 +11,11 @@ interface ILoginAction {
   payload: ILoginRes;
 }
 
+interface ILogOutAction {
+  type: EActionTypes.LOG_OUT;
+  payload: ILoginRes;
+}
+
 export interface IResetAction {
   type: EActionTypes.RESET_STORE;
   payload: null;
@@ -23,7 +28,7 @@ export interface IAuth {
   id: string;
 }
 
-export type TAuthActions = ILoginAction | IResetAction;
+export type TAuthActions = ILoginAction | IResetAction | ILogOutAction;
 
 export const initialAuthState = {
   auth: '',
@@ -39,6 +44,8 @@ export default function auth(
   switch (action.type) {
     case EActionTypes.LOGIN:
       return action.payload;
+    case EActionTypes.LOG_OUT:
+      return initialAuthState;
     case EActionTypes.RESET_STORE:
       return initialAuthState;
     default:

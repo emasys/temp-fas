@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import { Grid, Typography, IconButton } from '@material-ui/core';
+import React, { useState, Fragment } from 'react';
+import { Grid, Typography, IconButton, Button } from '@material-ui/core';
 import Router, { useRouter } from 'next/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clx from 'clsx';
 import back from '../assets/back-arrow.svg';
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleAuthModal } from '../redux/actions/common';
+import Login from './Login';
+import UserMenu from './UserMenu';
+import { AppState } from '../lib/initialState';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,29 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       padding: '0.25rem',
     },
-    line: {
-      height: '0.25rem',
-      width: '1.7356rem',
-      borderRadius: '0.125rem',
-      background: '#c1c1c1',
-      transition: 'all 0.2s ease',
-    },
-    lineTop: {
-      transform: (props: any) => (props.open ? 'rotate(45deg)' : 'none'),
-      transformOrigin: 'top left',
-      marginBottom: '0.4rem',
-    },
-    lineMiddle: {
-      width: '2.125rem',
-      opacity: (props: any) => (props.open ? 0 : 1),
-      transform: (props: any) => (props.open ? 'translateX(-16px)' : 'none'),
-    },
-    lineBottom: {
-      transform: (props: any) =>
-        props.open ? 'translateX(-1px) rotate(-45deg)' : 'none',
-      transformOrigin: 'top left',
-      marginTop: '0.4rem',
-    },
     title: {
       color: '#949494',
       fontWeight: 500,
@@ -47,19 +30,37 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: 'none',
       cursor: 'pointer',
       display: 'flex',
-
-      alignItems: 'center'
+      alignItems: 'center',
     },
-    menuWrapper: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-    },
+   
     root: {
       display: 'flex',
       justifyContent: 'space-between',
       background: '#fff',
       alignItems: 'center',
       padding: '1.25rem 0',
+    },
+    link: {
+      color: '#949494',
+      cursor: 'pointer',
+    },
+    button: {
+      color: '#fff',
+      background: '#43CEA2',
+      fontSize: '0.9701rem',
+      fontWeight: 500,
+      minHeight: '2.5rem',
+      textTransform: 'none',
+    },
+    linkWrapper: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    menuWrapper: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
     },
   })
 );
@@ -69,34 +70,67 @@ interface Props {
   path: string;
 }
 const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
-  const [status, setStatus] = useState(false);
-  const classes = useStyles({ open: status });
-  const handleClick = (e: any) => {
+  const classes = useStyles();
+  const { auth } = useSelector((state: AppState) => state.auth);
+  const dispatch = useDispatch();
+ 
+  const handleLogin = (e: any) => {
     e.preventDefault();
-    setStatus(!status);
+    dispatch(handleAuthModal(true));
   };
   const goBack = (e: any) => {
     e.preventDefault();
     Router.push(path);
   };
   return (
-    <Grid container justify='space-between' className={classes.root}>
-      <Grid item sm={3}>
-        <Typography variant='body1' className={classes.title} onClick={goBack}>
-          <IconButton>
-            <img src={back} alt='back' />
-          </IconButton>{' '}
-          {prevPageTitle}
-        </Typography>
+    <Fragment>
+      <Login />
+      <Grid container justify='space-between' className={classes.root}>
+        <Grid item sm={4}>
+          <Typography
+            variant='body1'
+            className={classes.title}
+            onClick={goBack}
+          >
+            <IconButton>
+              <img src={back} alt='back' />
+            </IconButton>{' '}
+            {prevPageTitle}
+          </Typography>
+        </Grid>
+
+        {auth ? (
+          <Grid item sm={6} className={classes.menuWrapper}>
+            <UserMenu dark/>
+          </Grid>
+        ) : (
+          <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
+            <Link href='/'>
+              <Typography variant='body1' className={classes.link}>
+                About{' '}
+              </Typography>
+            </Link>
+            <Link href='/'>
+              <Typography variant='body1' className={classes.link}>
+                All Services{' '}
+              </Typography>
+            </Link>
+            <Typography
+              variant='body1'
+              className={classes.link}
+              onClick={handleLogin}
+            >
+              Login
+            </Typography>
+            <Link href='/'>
+              <Button variant='contained' className={classes.button}>
+                Become a vendor
+              </Button>
+            </Link>
+          </Grid>
+        )}
       </Grid>
-      <Grid item sm={8} md={6} lg={4} className={classes.menuWrapper}>
-        <div className={classes.container} onClick={handleClick}>
-          <div className={clx(classes.line, classes.lineTop)} />
-          <div className={clx(classes.line, classes.lineMiddle)} />
-          <div className={clx(classes.line, classes.lineBottom)} />
-        </div>
-      </Grid>
-    </Grid>
+    </Fragment>
   );
 };
 

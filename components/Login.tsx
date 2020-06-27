@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import {
   Grid,
@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '2rem',
       borderRadius: '2rem',
     },
+    inputBox: {
+      margin: '.5rem 0',
+    },
   })
 );
 
@@ -44,17 +47,26 @@ interface Props {}
 const Login: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const open = useSelector((state: AppState) => state.common.openAuthModal) || false;
-  const { handleChange, values, handleSubmit, isSubmitting } = useFormik({
+  const open = useSelector((state: AppState) => state.common.openAuthModal);
+  const {
+    handleChange,
+    values,
+    handleSubmit,
+    isSubmitting,
+    setSubmitting,
+  } = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: (values, {setSubmitting}) => {
+    onSubmit: (values, { setSubmitting }) => {
       dispatch(login(values));
-      setSubmitting(true);
+      setSubmitting(open);
     },
   });
+  useEffect(() => {
+    setSubmitting(false);
+  }, [open]);
 
   return (
     <Modal
@@ -68,6 +80,7 @@ const Login: React.FC<Props> = () => {
           error={false}
           onChange={handleChange}
           value={values.email}
+          className={classes.inputBox}
           name='email'
           id='filled-error-helper-text'
           label='Email'
@@ -75,6 +88,7 @@ const Login: React.FC<Props> = () => {
         />
         <TextField
           error={false}
+          className={classes.inputBox}
           id='filled-error-helper-text'
           label='Password'
           name='password'

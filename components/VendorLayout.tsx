@@ -28,7 +28,6 @@ const VendorLayout: React.FC<Props> = ({ children, title, path }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
-      <Login />
       <Grid item xs={12}>
         <SearchBar prevPageTitle={title} path={path} />
       </Grid>

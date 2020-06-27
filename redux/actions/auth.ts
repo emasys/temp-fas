@@ -19,11 +19,16 @@ export const login = (data: ILogin) => async (dispatch: Dispatch<any>) => {
       email,
       id,
     };
-    instance.defaults.headers.common['Authorization'] = auth_token;
+    instance.defaults.headers.common['Authorization'] = `Bearer ${auth_token}` ;
     dispatch(setValue(EActionTypes.LOGIN, payload));
     dispatch(handleAuthModal(false));
   } catch (error) {
-    console.log(error)
+    console.log(error);
     // dispatch(handleAuthError(error));
   }
+};
+
+export const logOut = () => (dispatch: Dispatch<any>) => {
+  dispatch(setValue(EActionTypes.LOG_OUT, null));
+  instance.defaults.headers.common['Authorization'] = null;
 };

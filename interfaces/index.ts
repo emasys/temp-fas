@@ -23,7 +23,7 @@ export interface ICommon {
   openAuthModal: boolean;
 }
 
-export interface IState {
+export interface IArea {
   id: string;
   name: string;
   stateId: string;
@@ -37,5 +37,5 @@ export interface ILocation {
   stateId: null;
   createdAt: string;
   updatedAt: string;
-  states: IState[];
+  areas: IArea[];
 }

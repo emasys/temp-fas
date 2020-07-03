@@ -8,7 +8,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { withFormik, FormikProps } from 'formik';
+import { withFormik, FormikProps, useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 import * as Yup from 'yup';
@@ -16,6 +16,7 @@ import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import SelectInput from './SelectInput';
 import search from '../assets/search.svg';
 import { AppState } from '../lib/initialState';
+import { getLocations } from '../redux/selectors/locations';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,6 +92,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+let validationSchema = Yup.object().shape({
+  search: Yup.string().trim().required('This field is required'),
+  state: Yup.string(),
+  area: Yup.string(),
+});
 
 interface Props {}
 interface ISearchValues {
@@ -100,19 +106,50 @@ interface ISearchValues {
   services: any[];
 }
 
-const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
-  const { handleChange, handleSubmit, values, isValid, setFieldValue } = props;
+const initialValues = (props: ISearchValues) => {
+  const { search, state, area } = props;
+  return {
+    search: search || '',
+    state: state || '""',
+    area: area || '""',
+  };
+};
+
+const SearchBox: React.FC<Props> = (props) => {
+  const services = useSelector((state: AppState) => state.services.allServices);
   const searchOption = useSelector(
     (state: AppState) => state.services.searchOption
   );
-  const services = useSelector((state: AppState) => state.services.allServices);
+  const locations = useSelector((state: AppState) => getLocations(state));
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    isValid,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      search: '',
+      state: '""',
+      area: '""',
+    },
+    validateOnChange: true,
+    validateOnMount: true,
+    validationSchema,
+    onSubmit: (values) => {
+      const { search, area, state } = values;
+      const matchServicesId = services.find(
+        (service) => service.name === search
+      )?.id;
+      console.log(matchServicesId, area, state);
+      Router.push(`/services/${matchServicesId}?state=${state}&area=${area}`);
+    },
+  });
+
   const classes = useStyles();
   const handleAutoChange = (value: any) => {
     setFieldValue('search', value?.title ? value.title : '');
   };
-  useEffect(() => {
-    setFieldValue('services', services);
-  }, [services]);
 
   const {
     getRootProps,
@@ -131,6 +168,8 @@ const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
   const handleSearch = () => {
     handleSubmit();
   };
+
+  const areaOptions = locations.find((loc) => loc.value === values.state);
 
   return (
     <Grid container className={classes.container}>
@@ -171,7 +210,7 @@ const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
           name='state'
           placeholder='State'
           className={classes.state}
-          options={[{ value: 'lagos', label: 'Lagos' }]}
+          options={locations}
           handleChange={handleChange}
           value={values.state}
         />
@@ -179,7 +218,7 @@ const SearchBox: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
           name='area'
           placeholder='Area'
           className={classes.area}
-          options={[{ value: 'ikeja', label: 'Ikeja' }]}
+          options={areaOptions?.areas || []}
           handleChange={handleChange}
           value={values.area}
         />
@@ -203,31 +242,4 @@ interface ISearchInitValues {
   search?: any;
 }
 
-let validationSchema = Yup.object().shape({
-  search: Yup.string().trim().required('This field is required'),
-  state: Yup.string(),
-  area: Yup.string(),
-});
-
-const SearchForm = withFormik<Props & ISearchInitValues, ISearchValues>({
-  mapPropsToValues: (props) => {
-    const { search, state, area } = props;
-    return {
-      search: search || '',
-      state: state || '""',
-      area: area || '""',
-      services: [],
-    };
-  },
-  validateOnChange: true,
-  validateOnMount: true,
-  validationSchema,
-  handleSubmit: (values) => {
-    const { services, search } = values;
-    const matchServicesId = services.find((service) => service.name === search)
-      ?.id;
-    Router.push(`/services/${matchServicesId}`);
-  },
-})(SearchBox);
-
-export default SearchForm;
+export default SearchBox;

@@ -6,6 +6,9 @@ import Services from '../components/Services';
 import { createStyles, makeStyles, Theme, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { saveServices } from '../redux/actions/services';
+import { fetchServices, fetchLocations } from '../api';
+import { IService, ILocation } from '../interfaces';
+import { saveLocations } from '../redux/actions/locations';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,13 +20,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  services?: any[];
+  services: IService[];
+  locations: ILocation[];
 }
-const Home: React.FC<Props> = ({ services }) => {
+const Home: React.FC<Props> = ({ services, locations }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(saveServices(services));
+    dispatch(saveLocations(locations))
   }, []);
   return (
     <Grid container className={classes.container}>
@@ -38,20 +43,13 @@ const Home: React.FC<Props> = ({ services }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  try {
-    const url = 'services';
-    const { data } = await instance.get(url);
-    return {
-      props: {
-        services: data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        services: [],
-      },
-    };
-  }
+  const services = await fetchServices();
+  const locations = await fetchLocations();
+  return {
+    props: {
+      services,
+      locations,
+    },
+  };
 };
 export default Home;

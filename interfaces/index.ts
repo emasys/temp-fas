@@ -22,3 +22,20 @@ export interface ICommon {
   tempUri: string;
   openAuthModal: boolean;
 }
+
+export interface IState {
+  id: string;
+  name: string;
+  stateId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ILocation {
+  id: string;
+  name: string;
+  stateId: null;
+  createdAt: string;
+  updatedAt: string;
+  states: IState[];
+}

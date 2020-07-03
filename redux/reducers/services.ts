@@ -1,5 +1,6 @@
 import { EActionTypes } from '../actions/types';
 import { IResetAction } from './auth';
+import { IService } from '../../interfaces';
 
 interface IServiceAction {
   type: EActionTypes.ALL_SERVICES;
@@ -7,8 +8,8 @@ interface IServiceAction {
 }
 
 export interface IServices {
-  allServices: any[];
-  popularServices: any[];
+  allServices: IService[];
+  popularServices: IService[];
   searchOption: any[];
 }
 

@@ -188,7 +188,7 @@ const SearchForm = withFormik<Props & ISearchInitValues, ISearchValues>({
   mapPropsToValues: (props) => {
     const { search, state, area, relevance } = props;
     return {
-      search: search || 'mechanic',
+      search: search || '',
       state: state || '""',
       area: area || '""',
       relevance: relevance || '""',

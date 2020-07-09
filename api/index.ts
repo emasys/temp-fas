@@ -19,3 +19,13 @@ export const fetchLocations = async () => {
     return [];
   }
 };
+
+export const fetchVendors = async (serviceId: any) => {
+  try {
+    const url = `services/${serviceId}/vendors`;
+    const { data } = await instance.get(url);
+    return data;
+  } catch (error) {
+    return [];
+  }
+};

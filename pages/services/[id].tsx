@@ -15,6 +15,7 @@ import { AppState } from '../../lib/initialState';
 import VendorCard from '../../components/VendorCard';
 import { IService, IVendor } from '../../interfaces';
 import { EActionTypes } from '../../redux/actions/types';
+import { fetchServices, fetchVendors } from '../../api';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +53,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
           <MenuBar />
         </Grid>
         <Grid item xs={12}>
-          <Divider title='Nearest to you' buttonText='view all 33' />
+          <Divider title='Vendors nearest to you' buttonText='view all 33' />
         </Grid>
         <Grid container spacing={5} className={classes.vendorWrapper}>
           {allVendors.map((vendor) => (
@@ -79,8 +80,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
 
 export async function getStaticPaths() {
   try {
-    const url = 'services';
-    const { data } = await instance.get(url);
+    const data = await fetchServices();
     const paths = data.map((service: IService) => ({
       params: { id: service.id },
     }));
@@ -95,8 +95,7 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const url = `services/${params.id}/vendors`;
-    const { data } = await instance.get(url);
+    const data = await fetchVendors(params.id);
     return {
       props: {
         vendors: data,

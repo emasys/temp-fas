@@ -31,7 +31,10 @@ export default function services(
         ...state,
         allServices: action.payload,
         popularServices: action.payload.filter((_, index) => index <= 5),
-        searchOption: action.payload.map((option) => ({ title: option.name })),
+        searchOption: action.payload.map(({ name, id }) => ({
+          title: name,
+          id,
+        })),
       };
     case EActionTypes.RESET_STORE:
       return initialServicesState;

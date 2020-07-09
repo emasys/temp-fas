@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Grid,
-  Button,
   FormControl,
   FilledInput,
   InputAdornment,
   IconButton,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { withFormik, FormikProps } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import SelectInput from './SelectInput';
-import search from '../assets/search.svg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
+import { useRouter } from 'next/router';
+import { searchVendors } from '../redux/actions/vendors';
+import { getLocations } from '../redux/selectors/locations';
+import search from '../assets/search.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     select: {
       height: '3rem',
-      marginRight: '1.1875rem'
+      marginRight: '1.1875rem',
     },
     state: {
       width: '6rem',
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     searchInput: {
       width: '15.0625rem',
       height: '3rem',
-      marginRight: '3rem'
+      marginRight: '3rem',
     },
     icon: {
       width: '1rem',
@@ -83,21 +85,70 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {}
-interface ISearchValues {
-  area: string;
-  state: string;
-  relevance: string;
-  search: any;
-}
 
-const SearchComp: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
-  const { handleChange, handleSubmit, values, isValid, setFieldValue } = props;
+let validationSchema = Yup.object().shape({
+  search: Yup.string().trim().required('This field is required'),
+  state: Yup.string(),
+  area: Yup.string(),
+});
+
+const SearchComp: React.FC<Props> = (props) => {
+  const { query } = useRouter();
+  const dispatch = useDispatch();
   const searchOption = useSelector(
     (state: AppState) => state.services.searchOption
   );
+  const services = useSelector((state: AppState) => state.services.allServices);
+  const locations = useSelector((state: AppState) => getLocations(state));
+  let areaOptions = locations.find((loc) => loc.value === query.s);
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    isValid,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      search: searchOption.find((item) => item.id === query.id)?.title || '',
+      state: locations.find((item) => item.value === query.s)?.value || '',
+      area:
+        areaOptions?.areas?.find((item) => item.value === query.a)?.value || '',
+    },
+    enableReinitialize: true,
+    validateOnChange: true,
+    validateOnMount: true,
+    validationSchema,
+    onSubmit: (values) => {
+      const { search, area, state } = values;
+      const matchServicesId = services.find(
+        (service) => service.name === search
+      )?.id;
+      const dynamicArea = areaOptions?.areas?.find(
+        (item) => item.value === area
+      )?.value;
+      dispatch(searchVendors(matchServicesId, state, dynamicArea));
+      const queryString = {
+        state: '',
+        area: '',
+      };
+      const isStateId = state?.length > 10;
+      if (isStateId) queryString.state = `?s=${state}`;
+      if (dynamicArea?.length > 10 && isStateId)
+        queryString.area = `&a=${dynamicArea}`;
+      const url = `/services/${matchServicesId}${queryString.state}${queryString.area}`;
+      window.history.pushState({}, null, url);
+    },
+  });
+  if (values.state) {
+    areaOptions = locations.find((loc) => loc.value === values.state);
+  }
+  useEffect(() => {
+    dispatch(searchVendors(query.id, query.s, query.a));
+  }, []);
   const classes = useStyles();
   const handleAutoChange = (value: any) => {
     setFieldValue('search', value?.title ? value.title : '');
+    handleSubmit();
   };
   const {
     getRootProps,
@@ -113,7 +164,13 @@ const SearchComp: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
     freeSolo: true,
     onInputChange: handleChange,
   });
+
   const handleSearch = () => {
+    handleSubmit();
+  };
+
+  const handleLocation = (e) => {
+    handleChange(e);
     handleSubmit();
   };
 
@@ -128,6 +185,17 @@ const SearchComp: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
               name='search'
               {...getInputProps()}
               className={classes.searchInput}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleSearch}
+                    edge='end'
+                  >
+                    <img src={search} className={classes.icon} alt='search' />
+                  </IconButton>
+                </InputAdornment>
+              }
               value={values.search}
             />
           </div>
@@ -145,8 +213,8 @@ const SearchComp: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
         placeholder='State'
         controlClass={classes.select}
         className={classes.state}
-        options={[{ value: 'lagos', label: 'Lagos' }]}
-        handleChange={handleChange}
+        options={locations}
+        handleChange={handleLocation}
         value={values.state}
       />
       <SelectInput
@@ -154,52 +222,12 @@ const SearchComp: React.FC<Props & FormikProps<ISearchValues>> = (props) => {
         placeholder='Area'
         controlClass={classes.select}
         className={classes.area}
-        options={[{ value: 'ikeja', label: 'long area name asdasd' }]}
-        handleChange={handleChange}
+        options={areaOptions?.areas || []}
+        handleChange={handleLocation}
         value={values.area}
-      />
-      <SelectInput
-        name='relevance'
-        placeholder='Relevance'
-        controlClass={classes.select}
-        className={classes.area}
-        options={[{ value: 'ratings', label: 'sort by ratings' }]}
-        handleChange={handleChange}
-        value={values.relevance}
       />
     </Grid>
   );
 };
 
-interface ISearchInitValues {
-  area?: string;
-  state?: string;
-  relevance?: string;
-  search?: any;
-}
-
-let validationSchema = Yup.object().shape({
-  search: Yup.string().trim().required('This field is required'),
-  state: Yup.string(),
-  area: Yup.string(),
-});
-
-const SearchForm = withFormik<Props & ISearchInitValues, ISearchValues>({
-  mapPropsToValues: (props) => {
-    const { search, state, area, relevance } = props;
-    return {
-      search: search || '',
-      state: state || '""',
-      area: area || '""',
-      relevance: relevance || '""',
-    };
-  },
-  validateOnChange: true,
-  validateOnMount: true,
-  validationSchema,
-  handleSubmit: (values, { props }) => {
-    console.log(values, '>>>>>>>', props);
-  },
-})(SearchComp);
-
-export default SearchForm;
+export default SearchComp;

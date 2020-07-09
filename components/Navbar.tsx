@@ -43,7 +43,6 @@ const Navbar: React.FC<Props> = (props) => {
   const { auth } = useSelector((state: AppState) => state.auth);
   const classes = useStyles();
   const handleLogin = () => {
-    console.log('clicked');
     dispatch(handleAuthModal(true));
   };
   return (

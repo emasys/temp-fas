@@ -45,7 +45,7 @@ const SelectInput: React.FC<Props> = ({
         labelId='custom-select'
         id='custom-select'
         name={name}
-        value={value}
+        value={value || '""'}
         classes={{
           root: className,
           iconFilled: classes.icon,

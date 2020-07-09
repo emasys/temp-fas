@@ -42,3 +42,21 @@ export const updateVendor = (body: IUpdateVendor, id: string) => async (
     dispatch(handleAuthError(error));
   }
 };
+
+export const searchVendors = (
+  vendorId: any,
+  stateId?: any,
+  areaId?: any
+) => async (dispatch: Dispatch<any>) => {
+  let query = '';
+  const isStateId = stateId?.length > 10
+  if (isStateId) query = `?stateId=${stateId}`;
+  if (areaId?.length> 10 && isStateId) query = `?areaId=${areaId}`;
+  const url = `services/${vendorId}/vendors${query}`;
+  try {
+    const { data } = await instance.get(url);
+    dispatch(setValue(EActionTypes.SAVE_VENDORS, data));
+  } catch (error) {
+    dispatch(handleAuthError(error));
+  }
+};

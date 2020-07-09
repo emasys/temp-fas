@@ -8,7 +8,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { withFormik, FormikProps, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 import * as Yup from 'yup';
@@ -99,21 +99,6 @@ let validationSchema = Yup.object().shape({
 });
 
 interface Props {}
-interface ISearchValues {
-  area: string;
-  state: string;
-  search: any;
-  services: any[];
-}
-
-const initialValues = (props: ISearchValues) => {
-  const { search, state, area } = props;
-  return {
-    search: search || '',
-    state: state || '""',
-    area: area || '""',
-  };
-};
 
 const SearchBox: React.FC<Props> = (props) => {
   const services = useSelector((state: AppState) => state.services.allServices);
@@ -125,24 +110,27 @@ const SearchBox: React.FC<Props> = (props) => {
     handleChange,
     handleSubmit,
     values,
+    isSubmitting,
+    setSubmitting,
     isValid,
     setFieldValue,
   } = useFormik({
     initialValues: {
       search: '',
-      state: '""',
-      area: '""',
+      state: '',
+      area: '',
     },
     validateOnChange: true,
     validateOnMount: true,
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, fProps) => {
       const { search, area, state } = values;
       const matchServicesId = services.find(
         (service) => service.name === search
       )?.id;
-      console.log(matchServicesId, area, state);
-      Router.push(`/services/${matchServicesId}?state=${state}&area=${area}`);
+      const url = `/services/${matchServicesId}?s=${state}&a=${area}`;
+      fProps.setSubmitting(true);
+      Router.push(url, url);
     },
   });
 
@@ -150,6 +138,10 @@ const SearchBox: React.FC<Props> = (props) => {
   const handleAutoChange = (value: any) => {
     setFieldValue('search', value?.title ? value.title : '');
   };
+
+  useEffect(() => {
+    setSubmitting(false);
+  }, []);
 
   const {
     getRootProps,
@@ -227,19 +219,13 @@ const SearchBox: React.FC<Props> = (props) => {
         variant='contained'
         className={classes.button}
         onClick={handleSearch}
+        disabled={!isValid || isSubmitting}
         fullWidth
       >
-        Show {isValid ? <strong className={classes.results}>2k</strong> : ''}{' '}
-        Results
+        {isSubmitting ? 'Searching...' : `Find ${values.search} services`}
       </Button>
     </Grid>
   );
 };
-
-interface ISearchInitValues {
-  area?: string;
-  state?: string;
-  search?: any;
-}
 
 export default SearchBox;

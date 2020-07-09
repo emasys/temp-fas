@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#5C5C5C',
       fontWeight: 500,
       fontSize: '1.5rem',
+      marginBottom: '.5rem'
     },
     button: {
       color: '#A9A9A9',
@@ -39,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       marginLeft: '.5rem',
-      marginTop: '.26rem',
     },
   })
 );

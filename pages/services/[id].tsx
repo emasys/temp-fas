@@ -53,7 +53,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
           <MenuBar />
         </Grid>
         <Grid item xs={12}>
-          <Divider title='Vendors nearest to you' buttonText='view all 33' />
+          <Divider title='Vendors nearest to you' />
         </Grid>
         <Grid container spacing={5} className={classes.vendorWrapper}>
           {allVendors.map((vendor) => (

@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
     },
-   
+    back: {
+      marginRight: '.5rem',
+      height: '1rem'
+    },
     root: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -69,11 +72,11 @@ interface Props {
   prevPageTitle: string;
   path: string;
 }
-const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
+const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   const classes = useStyles();
   const { auth } = useSelector((state: AppState) => state.auth);
   const dispatch = useDispatch();
- 
+
   const handleLogin = (e: any) => {
     e.preventDefault();
     dispatch(handleAuthModal(true));
@@ -92,16 +95,14 @@ const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
             className={classes.title}
             onClick={goBack}
           >
-            <IconButton>
-              <img src={back} alt='back' />
-            </IconButton>{' '}
+            <img src={back} alt='back' className={classes.back} />
             {prevPageTitle}
           </Typography>
         </Grid>
 
         {auth ? (
           <Grid item sm={6} className={classes.menuWrapper}>
-            <UserMenu dark/>
+            <UserMenu dark />
           </Grid>
         ) : (
           <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
@@ -134,4 +135,4 @@ const Navbar: React.FC<Props> = ({ prevPageTitle, path }) => {
   );
 };
 
-export default Navbar;
+export default SearchBar;

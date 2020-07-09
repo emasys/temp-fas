@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       color: '#5C5C5C',
       fontWeight: 500,
-      fontSize: '1.6875rem',
+      fontSize: '1.5rem',
     },
     button: {
       color: '#A9A9A9',

@@ -16,12 +16,14 @@ import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      padding: '0 4%',
+      maxWidth: '1440px',
+      margin: 'auto',
       marginBottom: '5rem',
     },
     header: {
       display: 'flex',
       justifyContent: 'space-between',
-      padding: '0 1.25rem',
     },
     title: {
       color: '#5C5C5C',
@@ -33,16 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: '2.5rem',
       fontSize: '1.1411rem',
     },
-    divider: {
-      padding: '0 1.25rem',
-    },
+    divider: {},
     icon: {
       marginLeft: '.5rem',
       marginTop: '.26rem',
     },
     cardWrapper: {
       marginTop: '3.25rem',
-      paddingLeft: '1.25rem',
       display: 'flex',
       maxWidth: '100%',
       height: '30rem',
@@ -64,7 +63,7 @@ const Services: React.FC<Props> = (props) => {
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12} className={classes.divider}>
-        <Divider title="Popular services" buttonText="View all services" />
+        <Divider title='Popular services' buttonText='View all services' />
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
         {services.map((service) => (

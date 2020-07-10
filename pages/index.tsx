@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Header from '../components/Header';
-import { instance } from '../config/axiosConfig';
 import { GetStaticProps } from 'next';
 import Services from '../components/Services';
 import { createStyles, makeStyles, Theme, Grid } from '@material-ui/core';

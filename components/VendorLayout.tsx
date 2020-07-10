@@ -1,13 +1,14 @@
 import React, { ReactChild } from 'react';
 import { Grid, createStyles, makeStyles, Theme } from '@material-ui/core';
 import SearchBar from './SearchBar';
-import Login from './Login';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
     container: {
-      padding: '0 1.25rem',
+      padding: '0 4%',
+      maxWidth: '1440px',
+      margin: 'auto'
     },
     content: {},
     divider: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#C4C4C4',
       height: '0.0625rem',
     },
+    nav: {
+      // padding: '0 4%'
+    }
   })
 );
 
@@ -28,7 +32,7 @@ const VendorLayout: React.FC<Props> = ({ children, title, path }) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.nav}>
         <SearchBar prevPageTitle={title} path={path} />
       </Grid>
       <div className={classes.divider} />

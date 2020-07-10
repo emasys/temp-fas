@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '10.7625rem',
     },
     container: {
-      padding: '2.75rem',
+      padding: '4%',
       paddingBottom: 0,
       background: 'linear-gradient(91.7deg, #43CEA2 0.44%, #185A9D 98.43%)',
       height: '29.75rem',

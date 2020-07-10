@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
     instaWrapper: {
       marginTop: '1rem',
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
     },
     instaBtn: {
       color: '#5C5C5C',

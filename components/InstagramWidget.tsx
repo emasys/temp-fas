@@ -6,6 +6,7 @@ import {
   Grid,
   Typography,
   Button,
+  IconButton,
 } from '@material-ui/core';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import config from '../config';
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchInstagramMedia } from '../redux/actions/socialMedia';
 import { saveURI, handleAuthModal } from '../redux/actions/common';
 import { AppState } from '../lib/initialState';
+import plus from '../assets/plus.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,9 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: '50%',
       padding: '2rem',
-      border: '1px solid rgba(0, 0, 0, 0.23)',
+      borderRadius: '.2rem',
+      background: '#F8F8F8',
       width: '18rem',
       height: '18rem',
       marginTop: '2rem',
@@ -53,6 +55,16 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '.2rem',
       color: '#5C5C5C',
     },
+    add: {
+      borderRadius: '50%',
+      background: 'rgba(67, 206, 162, 0.19)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '6.125rem',
+      height: '6.125rem',
+    },
+    addIcon: {},
   })
 );
 interface Props {
@@ -88,14 +100,14 @@ export default function InstagramWidget({
   if (!data.length) {
     return (
       <div className={classes.connectWrapper}>
-        <InstagramIcon className={classes.instaIcon} />
-        <Button
-          variant='contained'
-          className={classes.button}
-          onClick={onBtnClick}
-        >
-          Connect instagram
-        </Button>
+        <div className={classes.add}>
+          <IconButton onClick={onBtnClick}>
+            <img src={plus} alt='add' className={classes.addIcon} />
+          </IconButton>
+        </div>
+
+        {/* <InstagramIcon className={} />
+         */}
       </div>
     );
   }

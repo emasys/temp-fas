@@ -10,6 +10,8 @@ import Navbar from './Navbar';
 import SearchBox from './SearchBox';
 import vendorImg from '../assets/vendorBanner.svg';
 import { formatMoney } from '../util';
+import phoneIcon from '../assets/phone.svg';
+import chat from '../assets/chat.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,23 +52,35 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'flex-end',
     },
     phone: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: '1.75rem',
       background: 'rgba(0, 0, 0, 0.25)',
-      padding: '.5rem 2rem',
-      fontWeight: 300,
+      padding: '.5rem 1.5rem',
+      fontWeight: 'normal',
+      fontFamily: 'Lato',
       color: '#fff',
       fontSize: '0.9375rem',
-      paddingLeft: '2.5rem'
+    },
+    phoneIcon: {
+      marginRight: '.5rem',
     },
     chat: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: '1.75rem',
       background: '#43CEA2',
-      padding: '.5rem 2rem',
-      fontWeight: 300,
-      paddingLeft: '2.5rem',
+      padding: '.5rem 1.5rem',
+      fontWeight: 'normal',
+      fontFamily: 'Lato',
       color: '#fff',
       fontSize: '0.9375rem',
-      marginLeft: '0.75rem'
+      marginLeft: '0.75rem',
+    },
+    chatIcon: {
+      marginRight: '.5rem',
     },
   })
 );
@@ -86,9 +100,12 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
       </Grid>
       <Grid item xs={6} className={classes.contactWrapper}>
         <Typography variant='body1' className={classes.phone}>
-          {phone|| 'No phone number'}
+          <img src={phoneIcon} alt='phone' className={classes.phoneIcon} />
+          {phone || 'Not available'}
         </Typography>
-        <Typography variant='body1' className={classes.chat}>Chat now</Typography>
+        <Typography variant='body1' className={classes.chat}>
+          <img src={chat} alt='chat' className={classes.chatIcon} /> Chat now
+        </Typography>
       </Grid>
     </Grid>
   );

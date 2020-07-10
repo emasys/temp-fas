@@ -122,7 +122,7 @@ const Vendor: React.FC<Props> = () => {
   } = useRouter();
 
   const vendorObj = useSelector((state: AppState) =>
-    state.vendor.find((item) => item.id === id)
+    state.vendor.allVendors.find((item) => item.id === id)
   );
   useEffect(() => {
     dispatch(fetchVendor(id));

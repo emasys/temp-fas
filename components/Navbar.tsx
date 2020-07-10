@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '0.9701rem',
       fontWeight: 500,
       minHeight: '2.5rem',
+      borderRadius: '.2rem',
       textTransform: 'none',
     },
   })

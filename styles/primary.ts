@@ -127,7 +127,7 @@ theme.overrides = {
       minWidth: 180,
       minHeight: '3.33rem',
       outline: '0 !important',
-      borderRadius: '0.375rem',
+      borderRadius: '0.2rem',
       fontSize: '1rem',
       color: '#fff',
       textTransform: 'inherit',

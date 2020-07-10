@@ -23,6 +23,7 @@ import { IService, IVendor } from '../../interfaces';
 import { setValue, handleAuthModal } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
 import { fetchVendor } from '../../redux/actions/vendors';
+import Reviews from '../../components/Reviews';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,6 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '1.5625rem',
       borderRadius: '1.75rem',
       padding: '.5rem 1rem',
+      minWidth: '7rem',
       fontWeight: 400,
       color: '#888888',
       fontSize: '0.8125rem',
@@ -109,6 +111,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 100,
       marginBottom: '1rem',
     },
+    reviews: {
+      margin: '3rem 0'
+    }
   })
 );
 
@@ -152,12 +157,12 @@ const Vendor: React.FC<Props> = () => {
             </Typography>
             <div className={classes.reviewWrapper}>
               <Typography variant='body2' className={classes.reviewText}>
-                <img src={star} className={classes.icon} alt='star' /> 23
-                reviews
+                <img src={star} className={classes.icon} alt='star' /> no
+                review
               </Typography>
               <Typography variant='body2' className={classes.reviewText}>
-                <img src={location} className={classes.icon} alt='star' />{' '}
-                location
+                <img src={location} className={classes.icon} alt='star' />
+                Nil
               </Typography>
             </div>
           </div>
@@ -177,6 +182,9 @@ const Vendor: React.FC<Props> = () => {
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Reviews' buttonText='' />
+        </Grid>
+        <Grid item xs={12} className={classes.reviews}>
+          <Reviews />
         </Grid>
       </Grid>
     </VendorLayout>

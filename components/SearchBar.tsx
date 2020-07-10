@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#43CEA2',
       fontSize: '0.9701rem',
       fontWeight: 500,
+      borderRadius: '.2rem',
       minHeight: '2.5rem',
       textTransform: 'none',
     },

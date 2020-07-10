@@ -55,7 +55,7 @@ export const searchVendors = (
   const url = `services/${vendorId}/vendors${query}`;
   try {
     const { data } = await instance.get(url);
-    dispatch(setValue(EActionTypes.SAVE_VENDORS, data));
+    dispatch(setValue(EActionTypes.SEARCH_VENDOR, data));
   } catch (error) {
     dispatch(handleAuthError(error));
   }

@@ -8,8 +8,15 @@ import withReduxStore from '../lib/with-redux-store';
 import '../styles/index.css';
 import theme from '../styles/primary';
 import { instance } from '../config/axiosConfig';
+import { getServices } from '../redux/actions/services'
+import { fetchAllLocations} from '../redux/actions/locations'
 
 class MyApp extends App {
+  componentDidMount() {
+    this.props.store.dispatch(getServices())
+    this.props.store.dispatch(fetchAllLocations())
+  }
+  
   render() {
     const { Component, pageProps, store } = this.props;
     instance.defaults.headers.common[

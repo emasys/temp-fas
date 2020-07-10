@@ -43,10 +43,9 @@ interface Props {
 const VendorServices: React.FC<Props> = ({ vendors }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const allVendors = useSelector((state: AppState) => state.vendor);
-  useEffect(() => {
-    dispatch(setValue(EActionTypes.SAVE_VENDORS, vendors));
-  }, []);
+  const allVendors = useSelector(
+    (state: AppState) => state.vendor.searchResult
+  );
   return (
     <VendorLayout title={'Home'} path={`/`}>
       <Grid container className={classes.container}>
@@ -56,30 +55,36 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
         <Grid item xs={12}>
           <Divider title='Vendors nearest to you' />
         </Grid>
-        <Grid container spacing={5} className={classes.vendorWrapper}>
-          {!allVendors.length ? (
-            <Grid item xs={12} justify='center' style={{ display: 'flex' }}>
-              <img src={noResult} alt='no result' />
-            </Grid>
-          ) : (
-            allVendors.map((vendor) => (
+        {allVendors && (
+          <Grid container spacing={5} className={classes.vendorWrapper}>
+            {!allVendors.length ? (
               <Grid
                 item
-                key={vendor.id}
                 xs={12}
-                sm={4}
-                md={3}
-                className={classes.vendor}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
-                <VendorCard
-                  name={vendor.name}
-                  rate={vendor.rate}
-                  id={vendor.id}
-                />
+                <img src={noResult} alt='no result' />
               </Grid>
-            ))
-          )}
-        </Grid>
+            ) : (
+              allVendors.map((vendor) => (
+                <Grid
+                  item
+                  key={vendor.id}
+                  xs={12}
+                  sm={4}
+                  md={3}
+                  className={classes.vendor}
+                >
+                  <VendorCard
+                    name={vendor.name}
+                    rate={vendor.rate}
+                    id={vendor.id}
+                  />
+                </Grid>
+              ))
+            )}
+          </Grid>
+        )}
       </Grid>
     </VendorLayout>
   );

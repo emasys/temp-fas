@@ -12,24 +12,54 @@ interface IUpdateVendor {
   payload: IVendor;
 }
 
-export type TVendorActions = ISaveVendor | IResetAction | IUpdateVendor;
+interface ISearchVendor {
+  type: EActionTypes.SEARCH_VENDOR;
+  payload: IVendor[];
+}
 
-export const initialVendorsState = [];
+export type TVendorActions =
+  | ISaveVendor
+  | IResetAction
+  | IUpdateVendor
+  | ISearchVendor;
+
+export interface IVendors {
+  allVendors: IVendor[];
+  searchResult: IVendor[];
+}
+
+export const initialVendorsState = {
+  allVendors: [],
+  searchResult: null,
+};
 
 export default function vendor(
-  state: IVendor[] = initialVendorsState,
+  state: IVendors = initialVendorsState,
   action: TVendorActions
-): IVendor[] {
+): IVendors {
   switch (action.type) {
     case EActionTypes.SAVE_VENDORS:
-      return action.payload;
+      return {
+        ...state,
+        allVendors: action.payload,
+      };
     case EActionTypes.UPDATE_VENDOR:
-      return [
-        ...state.filter((vendor) => vendor.id !== action.payload.id),
-        action.payload,
-      ];
+      return {
+        ...state,
+        allVendors: [
+          ...state.allVendors.filter(
+            (vendor) => vendor.id !== action.payload.id
+          ),
+          action.payload,
+        ],
+      };
+    case EActionTypes.SEARCH_VENDOR:
+      return {
+        ...state,
+        searchResult: action.payload,
+      };
     case EActionTypes.RESET_STORE:
-      return [];
+      return initialVendorsState;
     default:
       return state;
   }

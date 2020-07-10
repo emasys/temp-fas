@@ -10,12 +10,6 @@ import { searchVendors } from '../redux/actions/vendors';
 import { getLocations } from '../redux/selectors/locations';
 import SearchFields from './SearchFields';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-  })
-);
-
 interface Props {}
 
 let validationSchema = Yup.object().shape({
@@ -27,7 +21,6 @@ let validationSchema = Yup.object().shape({
 const SearchComp: React.FC<Props> = (props) => {
   const { query } = useRouter();
   const dispatch = useDispatch();
-  const classes = useStyles();
   const searchOption = useSelector(
     (state: AppState) => state.services.searchOption
   );

@@ -16,6 +16,7 @@ import VendorCard from '../../components/VendorCard';
 import { IService, IVendor } from '../../interfaces';
 import { EActionTypes } from '../../redux/actions/types';
 import { fetchServices, fetchVendors } from '../../api';
+import noResult from '../../assets/no-result.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,22 +57,28 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
           <Divider title='Vendors nearest to you' />
         </Grid>
         <Grid container spacing={5} className={classes.vendorWrapper}>
-          {allVendors.map((vendor) => (
-            <Grid
-              item
-              key={vendor.id}
-              xs={12}
-              sm={4}
-              md={3}
-              className={classes.vendor}
-            >
-              <VendorCard
-                name={vendor.name}
-                rate={vendor.rate}
-                id={vendor.id}
-              />
+          {!allVendors.length ? (
+            <Grid item xs={12} justify='center' style={{ display: 'flex' }}>
+              <img src={noResult} alt='no result' />
             </Grid>
-          ))}
+          ) : (
+            allVendors.map((vendor) => (
+              <Grid
+                item
+                key={vendor.id}
+                xs={12}
+                sm={4}
+                md={3}
+                className={classes.vendor}
+              >
+                <VendorCard
+                  name={vendor.name}
+                  rate={vendor.rate}
+                  id={vendor.id}
+                />
+              </Grid>
+            ))
+          )}
         </Grid>
       </Grid>
     </VendorLayout>

@@ -11,6 +11,11 @@ import Login from './Login';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {},
+    root: {
+      maxWidth: '1440px',
+      padding: '0 4%',
+      margin: 'auto'
+    },
     linkWrapper: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -49,7 +54,7 @@ const Navbar: React.FC<Props> = (props) => {
   return (
     <Fragment>
       <Login />
-      <Grid container justify='space-between'>
+      <Grid container justify='space-between' className={classes.root}>
         <Grid item sm={3}>
           <Typography variant='body1'>Service Finder</Typography>
         </Grid>

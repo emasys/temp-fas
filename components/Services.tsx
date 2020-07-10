@@ -51,9 +51,13 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
-    viewAll: {
+    spaceEnd: {
       height: '3rem',
       minWidth: '3rem',
+    },
+    spaceStart: {
+      height: '3rem',
+      minWidth: '1rem',
     },
   })
 );
@@ -72,9 +76,12 @@ const Services: React.FC<Props> = (props) => {
       <Grid item xs={12} className={classes.cardWrapper}>
         {services.map((service, index) => (
           <>
+            {!index && (
+              <div className={classes.spaceStart} />
+            )}
             <Card key={service.id} id={service.id} name={service.name} />
             {index === services.length - 1 && (
-              <div className={classes.viewAll} />
+              <div className={classes.spaceEnd} />
             )}
           </>
         ))}

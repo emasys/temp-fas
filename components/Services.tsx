@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    viewAll: {
+      height: '3rem',
+      minWidth: '3rem',
+    },
   })
 );
 
@@ -66,8 +70,13 @@ const Services: React.FC<Props> = (props) => {
         <Divider title='Popular services' buttonText='View all services' />
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
-        {services.map((service) => (
-          <Card key={service.id} id={service.id} name={service.name} />
+        {services.map((service, index) => (
+          <>
+            <Card key={service.id} id={service.id} name={service.name} />
+            {index === services.length - 1 && (
+              <div className={classes.viewAll} />
+            )}
+          </>
         ))}
       </Grid>
     </Grid>

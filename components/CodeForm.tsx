@@ -33,6 +33,7 @@ import {
   ArrowBackIosRounded,
 } from '@material-ui/icons';
 import { login } from '../redux/actions/auth';
+import PasswordInput from './passwordInput';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -138,7 +139,6 @@ const CodeInput = (props: any) => {
 interface Props {}
 const CodeForm: React.FC<Props> = () => {
   const classes = useStyles();
-  const [show, togglePassword] = useState(false);
   const dispatch = useDispatch();
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const email = useSelector((state: AppState) => state.common.tempEmail);
@@ -162,7 +162,7 @@ const CodeForm: React.FC<Props> = () => {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
-      const payload = { ...values, token: Number(values.token)}
+      const payload = { ...values, token: Number(values.token) };
       const data = await signUpVerify(payload);
       console.log(data);
       setSubmitting(true);
@@ -238,34 +238,12 @@ const CodeForm: React.FC<Props> = () => {
           label='Email'
           helperText={touched.email && errors.email}
         />
-        <TextField
-          error={!!errors.password && touched.password}
-          classes={{
-            root: classes.inputRoot,
-          }}
-          type={show ? 'text' : 'password'}
-          variant='standard'
-          onChange={handleChange}
-          onBlur={handleBlur}
+        <PasswordInput
           value={values.password}
-          className={classes.inputBox}
-          name='password'
-          id='filled-error-helper-text'
-          label='Create Password'
-          helperText={touched.password && errors.password}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <IconButton
-                  aria-label='toggle password visibility'
-                  onClick={() => togglePassword(!show)}
-                  onMouseDown={() => togglePassword(!show)}
-                >
-                  {show ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          errors={errors}
+          touched={touched}
         />
         <Button
           onClick={() => handleSubmit()}

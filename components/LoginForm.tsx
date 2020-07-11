@@ -24,6 +24,7 @@ import {
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { loginAPI } from '../api';
+import PasswordInput from './passwordInput';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -99,7 +100,9 @@ const LoginForm: React.FC<Props> = () => {
     values,
     errors,
     isValid,
+    touched,
     handleSubmit,
+    handleBlur,
     isSubmitting,
     setSubmitting,
   } = useFormik({
@@ -108,6 +111,8 @@ const LoginForm: React.FC<Props> = () => {
       password: '',
     },
     validationSchema,
+    validateOnBlur: true,
+    validateOnChange: true,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       const data = await loginAPI(values);
       setSubmitting(true);
@@ -137,28 +142,26 @@ const LoginForm: React.FC<Props> = () => {
           Sign in
         </Typography>
         <TextField
-          error={!!errors.email}
+          error={!!errors.email && touched.email}
           classes={{
             root: classes.inputRoot,
           }}
           variant='standard'
           onChange={handleChange}
           value={values.email}
+          onBlur={handleBlur}
           className={classes.inputBox}
           name='email'
           id='filled-error-helper-text'
           label='Email'
-          helperText={errors.email}
+          helperText={touched.email && errors.email}
         />
-        <TextField
-          error={!!errors.password}
-          className={classes.inputBox}
-          id='filled-error-helper-text'
-          label='Password'
-          name='password'
-          onChange={handleChange}
+        <PasswordInput
           value={values.password}
-          helperText={errors.password}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          errors={errors}
+          touched={touched}
         />
         <Button
           onClick={() => handleSubmit()}

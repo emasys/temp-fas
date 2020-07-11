@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       maxWidth: '1440px',
       padding: '0 4%',
-      margin: 'auto'
+      margin: 'auto',
     },
     linkWrapper: {
       display: 'flex',
@@ -51,6 +51,12 @@ const Navbar: React.FC<Props> = (props) => {
   const handleLogin = () => {
     dispatch(handleAuthModal(true));
   };
+
+  const handleCreateVendor = () => {
+    if (!auth) {
+      handleLogin();
+    }
+  };
   return (
     <Fragment>
       <Login />
@@ -82,11 +88,13 @@ const Navbar: React.FC<Props> = (props) => {
             >
               Login
             </Typography>
-            <Link href='/'>
-              <Button variant='contained' className={classes.button}>
-                Become a vendor
-              </Button>
-            </Link>
+            <Button
+              variant='contained'
+              className={classes.button}
+              onClick={handleCreateVendor}
+            >
+              Become a vendor
+            </Button>
           </Grid>
         )}
       </Grid>

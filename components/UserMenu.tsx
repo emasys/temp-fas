@@ -98,7 +98,7 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
         style={{ color: dark ? '#5C5C5C' : '#fff' }}
         onClick={handleClick}
       >
-        {fullName || 'user name'} <ArrowDropDown />
+        {fullName || 'Hi there '} <ArrowDropDown />
       </Typography>
       <Popover
         id='menu'

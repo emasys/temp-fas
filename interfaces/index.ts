@@ -23,6 +23,7 @@ export interface ICommon {
   openAuthModal: boolean;
   isLogin: string;
   tempEmail: string;
+  isBAV: boolean;
 }
 
 export interface IArea {

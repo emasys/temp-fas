@@ -1,7 +1,13 @@
 import { EActionTypes } from './types';
 import { Dispatch } from 'redux';
-import { setValue, handleAuthError, handleAuthModal } from './common';
+import {
+  setValue,
+  handleAuthError,
+  handleAuthModal,
+  toggleModal,
+} from './common';
 import { instance } from '../../config/axiosConfig';
+import { AppState } from '../../lib/initialState';
 
 export interface ILogin {
   email: string;
@@ -15,8 +21,14 @@ export interface ILoginRes {
   id: string;
 }
 
-export const login = (data: ILoginRes) => async (dispatch: Dispatch<any>) => {
+export const login = (data: ILoginRes) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
   try {
+    const {
+      common: { isBAV },
+    } = getState();
     const { fullName, email, auth_token, id } = data;
     const payload = {
       auth: auth_token,
@@ -26,10 +38,12 @@ export const login = (data: ILoginRes) => async (dispatch: Dispatch<any>) => {
     };
     instance.defaults.headers.common['Authorization'] = `Bearer ${auth_token}`;
     dispatch(setValue(EActionTypes.LOGIN, payload));
+    if (isBAV) {
+      return dispatch(toggleModal('bav'));
+    }
     dispatch(handleAuthModal(false));
   } catch (error) {
-    console.log(error);
-    // dispatch(handleAuthError(error));
+    console.log(error, 'error');
   }
 };
 

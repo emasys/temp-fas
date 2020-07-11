@@ -7,7 +7,7 @@ import back from '../assets/back-arrow.svg';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleAuthModal } from '../redux/actions/common';
-import Login from './Login';
+import Login from './Modal';
 import UserMenu from './UserMenu';
 import { AppState } from '../lib/initialState';
 

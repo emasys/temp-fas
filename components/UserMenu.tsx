@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { logOut } from '../redux/actions/auth';
+import { toggleModal, handleAuthModal } from '../redux/actions/common';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,6 +85,11 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
     setAnchorEl(null);
   };
 
+  const handleBAV = () => {
+    dispatch(toggleModal('bav'))
+    dispatch(handleAuthModal(true));
+  }
+
   const open = Boolean(anchorEl);
 
   return (
@@ -118,6 +124,11 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
         }}
       >
         <List component='nav' className={classes.linkWrapper}>
+          <ListItem button onClick={handleBAV}>
+            <Typography variant='body2' className={classes.menuItem}>
+              Become a vendor
+            </Typography>
+          </ListItem>
           <ListItem button onClick={handleLogOut}>
             <Typography variant='body2' className={classes.menuItem}>
               Sign out

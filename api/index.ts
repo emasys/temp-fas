@@ -65,3 +65,19 @@ export const signUpVerify = async (data: ISignUp) => {
     return false;
   }
 };
+
+interface ICreateVendor {
+  name: string;
+  rate: number;
+  phoneNumber: string;
+  locationId: string;
+}
+export const createVendor = async (serviceId: string, data: ICreateVendor) => {
+  try {
+    const url = `services/${serviceId}/vendors`;
+    const res = await instance.post(url, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};

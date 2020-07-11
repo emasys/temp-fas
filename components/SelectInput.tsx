@@ -24,6 +24,7 @@ interface Props {
   controlClass?: any;
   placeholder: string;
   className?: any;
+  variant?: 'standard' | 'filled' | 'outlined';
   options: { value: string; label: string }[];
 }
 const SelectInput: React.FC<Props> = ({
@@ -31,6 +32,7 @@ const SelectInput: React.FC<Props> = ({
   value,
   className,
   options,
+  variant,
   controlClass,
   placeholder,
   name,
@@ -38,7 +40,7 @@ const SelectInput: React.FC<Props> = ({
   const classes = useStyles();
   return (
     <FormControl
-      variant='filled'
+      variant={variant ? variant : 'filled'}
       className={clsx(classes.formControl, controlClass)}
     >
       <Select

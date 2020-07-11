@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import UserMenu from './UserMenu';
-import { handleAuthModal } from '../redux/actions/common';
-import Login from './Login';
+import { handleAuthModal, triggerBAV } from '../redux/actions/common';
+import Login from './Modal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,10 +53,12 @@ const Navbar: React.FC<Props> = (props) => {
   };
 
   const handleCreateVendor = () => {
+    dispatch(triggerBAV(true));
     if (!auth) {
       handleLogin();
     }
   };
+
   return (
     <Fragment>
       <Login />

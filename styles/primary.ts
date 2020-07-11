@@ -103,7 +103,7 @@ theme.overrides = {
       background: 'transparent !important',
     },
     formControl: {
-      marginTop: '0 !important'
+      marginTop: '0 !important',
     },
     underline: {
       '&:before': {
@@ -114,6 +114,21 @@ theme.overrides = {
   MuiFormHelperText: {
     root: {
       background: 'transparent !important',
+    },
+  },
+  MuiSelect: {
+    icon: {
+      top: '1.4rem !important',
+      right: '1rem !important',
+    },
+    select: {
+      '&:focus': {
+        backgroundColor: 'transparent !important',
+      },
+    },
+    iconFilled: {
+      top: 'calc(50% - 12px) !important',
+      right: '0 !important',
     },
   },
   MuiFilledInput: {

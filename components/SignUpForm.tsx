@@ -21,7 +21,7 @@ import { AppState } from '../lib/initialState';
 import {
   setValue,
   handleAuthModal,
-  toggleLogin,
+  toggleModal,
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { loginAPI, signUpAPI } from '../api';
@@ -134,7 +134,7 @@ const SignUpForm: React.FC<Props> = () => {
         });
       }
       dispatch(setValue(EActionTypes.SAVE_EMAIL, values.email));
-      dispatch(toggleLogin('code'));
+      dispatch(toggleModal('code'));
       setSubmitting(false);
     },
   });
@@ -143,7 +143,7 @@ const SignUpForm: React.FC<Props> = () => {
   }, [open]);
 
   const handleSignIn = () => {
-    dispatch(toggleLogin('login'));
+    dispatch(toggleModal('login'));
   };
 
   const handleClose = () => {

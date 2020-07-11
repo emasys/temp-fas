@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useFormik } from 'formik';
 import NumberFormat from 'react-number-format';
 import * as Yup from 'yup';
 import {
-  Grid,
+
   createStyles,
   makeStyles,
   Theme,
   Typography,
-  Modal,
+
   TextField,
   Button,
-  Divider,
-  InputAdornment,
+
   IconButton,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import {
-  setValue,
+
   handleAuthModal,
-  toggleLogin,
+  toggleModal,
 } from '../redux/actions/common';
-import { EActionTypes } from '../redux/actions/types';
-import { loginAPI, signUpAPI, signUpVerify } from '../api';
+import {  } from '../redux/actions/types';
+import {  signUpVerify } from '../api';
 import {
-  Visibility,
-  VisibilityOff,
-  ArrowBackIos,
-  Close,
+
   CloseRounded,
   ArrowBackIosRounded,
 } from '@material-ui/icons';
@@ -171,7 +167,7 @@ const CodeForm: React.FC<Props> = () => {
         return setFieldError('token', 'Invalid code');
       }
       dispatch(login(data));
-      dispatch(toggleLogin('login'));
+      dispatch(toggleModal('login'));
       setSubmitting(false);
       dispatch(handleAuthModal(false));
     },
@@ -181,7 +177,7 @@ const CodeForm: React.FC<Props> = () => {
   }, [open]);
 
   const goBack = () => {
-    dispatch(toggleLogin('signUp'));
+    dispatch(toggleModal('signUp'));
   };
 
   const handleClose = () => {

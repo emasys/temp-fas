@@ -20,7 +20,7 @@ import { AppState } from '../lib/initialState';
 import {
   setValue,
   handleAuthModal,
-  toggleLogin,
+  toggleModal,
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { loginAPI } from '../api';
@@ -132,7 +132,7 @@ const LoginForm: React.FC<Props> = () => {
   }, [open]);
 
   const handleSignUp = () => {
-    dispatch(toggleLogin('signUp'));
+    dispatch(toggleModal('signUp'));
   };
 
   return (

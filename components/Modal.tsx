@@ -6,14 +6,16 @@ import { handleAuthModal } from '../redux/actions/common';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import CodeForm from './CodeForm';
+import BAVForm from './BAVForm';
 
 interface Props {}
 const _component: any = {
   login: <LoginForm />,
   signUp: <SignUpForm />,
-  code: <CodeForm />
+  code: <CodeForm />,
+  bav: <BAVForm />
 };
-const Login: React.FC<Props> = () => {
+const ModalComponent: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const page = useSelector((state: AppState) => state.common.isLogin);
@@ -29,4 +31,4 @@ const Login: React.FC<Props> = () => {
   );
 };
 
-export default Login;
+export default ModalComponent;

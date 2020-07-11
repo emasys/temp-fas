@@ -22,10 +22,16 @@ interface ISaveEmail {
   payload: string;
 }
 
+interface ITriggerBAV {
+  type: EActionTypes.TRIGGER_BAV;
+  payload: boolean;
+}
+
 export type TCommonActions =
   | ISaveURI
   | IResetAction
   | IAuthModal
+  | ITriggerBAV
   | ISaveEmail
   | IToggleLogin;
 
@@ -34,6 +40,7 @@ export const initialCommonState = {
   openAuthModal: false,
   isLogin: 'login',
   tempEmail: '',
+  isBAV: false,
 };
 
 export default function vendor(
@@ -60,6 +67,11 @@ export default function vendor(
       return {
         ...state,
         tempEmail: action.payload,
+      };
+    case EActionTypes.TRIGGER_BAV:
+      return {
+        ...state,
+        isBAV: action.payload,
       };
     case EActionTypes.RESET_STORE:
       return initialCommonState;

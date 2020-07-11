@@ -16,7 +16,8 @@ export const saveURI = (url: string) => (dispatch: Dispatch<any>) => {
 export const handleAuthModal = (status: boolean) => (
   dispatch: Dispatch<any>
 ) => {
-  return dispatch(setValue(EActionTypes.HANDLE_AUTH_MODAL, status));
+  dispatch(setValue(EActionTypes.HANDLE_AUTH_MODAL, status));
+  !status && dispatch(toggleModal('login'));
 };
 
 export const handleAuthError = (error: AxiosError | any) => (
@@ -28,6 +29,10 @@ export const handleAuthError = (error: AxiosError | any) => (
   }
 };
 
-export const toggleLogin = (page: string) => (dispatch: Dispatch) => {
+export const toggleModal = (page: string) => (dispatch: Dispatch) => {
   dispatch(setValue(EActionTypes.IS_LOGIN, page));
+};
+
+export const triggerBAV = (status: boolean) => (dispatch: Dispatch) => {
+  dispatch(setValue(EActionTypes.TRIGGER_BAV, status));
 };

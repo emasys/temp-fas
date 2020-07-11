@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Grid, Typography, Link } from '@material-ui/core';
+import React from 'react';
+import { Grid } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import clx from 'clsx';
 import SearchComp from './SearchComp';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,8 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       color: '#5C5C5C',
       fontWeight: 500,
-      fontSize: '0.7813rem'
-    }
+      fontSize: '0.7813rem',
+    },
   })
 );
 

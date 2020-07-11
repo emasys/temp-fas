@@ -29,7 +29,7 @@ import {
   ArrowBackIosRounded,
 } from '@material-ui/icons';
 import { login } from '../redux/actions/auth';
-import PasswordInput from './passwordInput';
+import PasswordInput from './PasswordField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

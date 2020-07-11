@@ -27,7 +27,7 @@ interface Props {
   handleChange: (e: React.ChangeEvent<any>) => void;
   handleBlur: (e: React.ChangeEvent<any>) => void;
 }
-const PasswordInput: React.FC<Props> = (props) => {
+const PasswordField: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const [show, togglePassword] = useState(false);
@@ -65,4 +65,4 @@ const PasswordInput: React.FC<Props> = (props) => {
   );
 };
 
-export default PasswordInput;
+export default PasswordField;

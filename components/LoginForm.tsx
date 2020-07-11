@@ -24,7 +24,7 @@ import {
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { loginAPI } from '../api';
-import PasswordInput from './passwordInput';
+import PasswordInput from './PasswordField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

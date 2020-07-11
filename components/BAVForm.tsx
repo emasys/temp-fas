@@ -24,7 +24,7 @@ import {
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { loginAPI, createVendor } from '../api';
-import PasswordInput from './passwordInput';
+import PasswordInput from './PasswordField';
 import NumberFormat from 'react-number-format';
 import SelectInput from './SelectInput';
 import { getLocations } from '../redux/selectors/locations';

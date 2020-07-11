@@ -12,11 +12,28 @@ interface IAuthModal {
   payload: boolean;
 }
 
-export type TCommonActions = ISaveURI | IResetAction | IAuthModal;
+interface IToggleLogin {
+  type: EActionTypes.IS_LOGIN;
+  payload: string;
+}
+
+interface ISaveEmail {
+  type: EActionTypes.SAVE_EMAIL;
+  payload: string;
+}
+
+export type TCommonActions =
+  | ISaveURI
+  | IResetAction
+  | IAuthModal
+  | ISaveEmail
+  | IToggleLogin;
 
 export const initialCommonState = {
   tempUri: '',
   openAuthModal: false,
+  isLogin: 'login',
+  tempEmail: '',
 };
 
 export default function vendor(
@@ -33,6 +50,16 @@ export default function vendor(
       return {
         ...state,
         openAuthModal: action.payload,
+      };
+    case EActionTypes.IS_LOGIN:
+      return {
+        ...state,
+        isLogin: action.payload,
+      };
+    case EActionTypes.SAVE_EMAIL:
+      return {
+        ...state,
+        tempEmail: action.payload,
       };
     case EActionTypes.RESET_STORE:
       return initialCommonState;

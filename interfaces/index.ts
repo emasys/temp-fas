@@ -21,6 +21,8 @@ export interface IVendor {
 export interface ICommon {
   tempUri: string;
   openAuthModal: boolean;
+  isLogin: string;
+  tempEmail: string;
 }
 
 export interface IArea {

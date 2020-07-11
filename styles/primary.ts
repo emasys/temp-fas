@@ -98,6 +98,24 @@ theme.overrides = {
       },
     },
   },
+  MuiInput: {
+    root: {
+      background: 'transparent !important',
+    },
+    formControl: {
+      marginTop: '0 !important'
+    },
+    underline: {
+      '&:before': {
+        borderBottom: '1px solid rgba(196, 196, 196, .4)',
+      },
+    },
+  },
+  MuiFormHelperText: {
+    root: {
+      background: 'transparent !important',
+    },
+  },
   MuiFilledInput: {
     root: {
       background: '#F6F6F6 !important',

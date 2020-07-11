@@ -8,18 +8,23 @@ export interface ILogin {
   password: string;
 }
 
-export const login = (data: ILogin) => async (dispatch: Dispatch<any>) => {
-  const url = `auth/signin`;
+export interface ILoginRes {
+  fullName: string;
+  email: string;
+  auth_token: string;
+  id: string;
+}
+
+export const login = (data: ILoginRes) => async (dispatch: Dispatch<any>) => {
   try {
-    const res = await instance.post(url, data);
-    const { fullName, email, auth_token, id } = res.data;
+    const { fullName, email, auth_token, id } = data;
     const payload = {
       auth: auth_token,
       fullName,
       email,
       id,
     };
-    instance.defaults.headers.common['Authorization'] = `Bearer ${auth_token}` ;
+    instance.defaults.headers.common['Authorization'] = `Bearer ${auth_token}`;
     dispatch(setValue(EActionTypes.LOGIN, payload));
     dispatch(handleAuthModal(false));
   } catch (error) {

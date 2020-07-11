@@ -19,6 +19,7 @@ export default (initialState) => {
 
     const persistConfig = {
       key: 'fas',
+      blacklist: ['common'],
       storage,
     };
 

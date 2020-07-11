@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Grid,
   Typography,
@@ -75,15 +75,13 @@ const Services: React.FC<Props> = (props) => {
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
         {services.map((service, index) => (
-          <>
-            {!index && (
-              <div className={classes.spaceStart} />
-            )}
-            <Card key={service.id} id={service.id} name={service.name} />
+          <Fragment key={service.id}>
+            {!index && <div className={classes.spaceStart} />}
+            <Card id={service.id} name={service.name} />
             {index === services.length - 1 && (
               <div className={classes.spaceEnd} />
             )}
-          </>
+          </Fragment>
         ))}
       </Grid>
     </Grid>

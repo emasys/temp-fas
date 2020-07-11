@@ -26,7 +26,7 @@ const Navbar: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
     <Grid container justify='space-between' className={classes.root}>
-      <Grid item xs={12} xl={6} sm={9} lg={7}>
+      <Grid item xs={12} sm={9} lg={7}>
         <SearchComp />
       </Grid>
     </Grid>

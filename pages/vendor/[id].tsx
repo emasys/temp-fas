@@ -174,7 +174,7 @@ const Vendor: React.FC<Props> = () => {
             onClick={handleBooking}
             className={classes.button}
           >
-            {ownVendor.id === vendorObj?.id ? 'Edit profile' : 'Book vendor'}
+            {ownVendor?.id === vendorObj?.id ? 'Edit profile' : 'Book vendor'}
           </Button>
         </Grid>
         <Grid item xs={12} className={classes.divider}>

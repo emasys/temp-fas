@@ -141,7 +141,7 @@ const BookingForm: React.FC<Props> = () => {
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
-      const { state, area, ...rest } = values;
+      const { state, area, error, ...rest } = values;
       const payload = {
         ...rest,
         vendorId: vendor.id,

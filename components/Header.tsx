@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#fff',
     },
     leadText: {
+      color: '#fff',
       fontFamily: 'Lato',
       marginTop: '0.9375rem',
       fontSize: '1.0254rem',

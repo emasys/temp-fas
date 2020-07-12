@@ -1,6 +1,9 @@
 import { EActionTypes } from './types';
 import { Dispatch } from 'redux';
 import { AxiosError } from 'axios';
+import jwt from 'jwt-decode';
+import moment from 'moment';
+import { AppState } from '../../lib/initialState';
 
 export const setValue = (type: EActionTypes, payload: any) => {
   return {
@@ -26,6 +29,22 @@ export const handleAuthError = (error: AxiosError | any) => (
   if (error.response?.status === 401) {
     window.location.href = '/';
     dispatch(setValue(EActionTypes.RESET_STORE, null));
+  }
+};
+
+export const validateToken = () => (
+  dispatch: Dispatch,
+  getState: () => AppState
+) => {
+  const {
+    auth: { auth },
+  } = getState();
+  const { iat } = jwt(auth);
+  const isExp = moment(iat*1000).isSameOrBefore(Date.now(), 'minute');
+  console.log(isExp,'=====', moment(iat * 1000).format(), auth)
+  if (isExp) {
+    // window.location.href = '/';
+    // dispatch(setValue(EActionTypes.RESET_STORE, null));
   }
 };
 

@@ -21,6 +21,7 @@ import {
   setValue,
   handleAuthModal,
   toggleModal,
+  validateToken,
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { loginAPI, createVendor } from '../api';
@@ -170,6 +171,7 @@ const BAVForm: React.FC<Props> = () => {
       const data = await createVendor(service, payload);
       setSubmitting(true);
       if (!data) {
+        dispatch(validateToken());
         setErrors({
           name: 'You are already a vendor',
           phoneNumber: 'You are already a vendor',
@@ -178,7 +180,7 @@ const BAVForm: React.FC<Props> = () => {
         return setSubmitting(false);
       }
       dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
-      dispatch(handleAuthModal(false))
+      dispatch(handleAuthModal(false));
       setSubmitting(false);
     },
   });

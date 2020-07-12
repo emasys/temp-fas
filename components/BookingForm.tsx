@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import { setValue, handleAuthModal } from '../redux/actions/common';
+import { setValue, handleAuthModal, validateToken } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { createVendor, createOrder } from '../api';
 import NumberFormat from 'react-number-format';
@@ -150,10 +150,10 @@ const BookingForm: React.FC<Props> = () => {
       const data = await createOrder(payload);
       setSubmitting(true);
       if (!data) {
+        dispatch(validateToken())
         setFieldError('error', 'error');
         return setSubmitting(false);
       }
-      dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
       dispatch(handleAuthModal(false));
       setSubmitting(false);
     },

@@ -17,6 +17,7 @@
     "axios": "^0.19.2",
     "clsx": "^1.1.0",
     "formik": "^2.1.4",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",
     "next": "latest",
     "react": "^16.9.0",

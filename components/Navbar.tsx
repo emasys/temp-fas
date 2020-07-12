@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
     },
     link: {
+      color: '#fff',
       fontWeight: 400,
       cursor: 'pointer',
       fontSize: '0.9701rem',
@@ -64,7 +65,9 @@ const Navbar: React.FC<Props> = (props) => {
       <Login />
       <Grid container justify='space-between' className={classes.root}>
         <Grid item sm={3}>
-          <Typography variant='body1'>Service Finder</Typography>
+          <Typography variant='body1' style={{ color: '#fff' }}>
+            Service Finder
+          </Typography>
         </Grid>
         {auth && (
           <Grid item sm={6} className={classes.menuWrapper}>

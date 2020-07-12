@@ -16,6 +16,7 @@ import { fetchInstagramMedia } from '../redux/actions/socialMedia';
 import { saveURI, handleAuthModal } from '../redux/actions/common';
 import { AppState } from '../lib/initialState';
 import plus from '../assets/plus.svg';
+import { getVendorStatus } from '../redux/selectors/vendors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,10 +70,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 interface Props {
   instagramCode: null | string;
+  vendorId: string;
 }
 
 export default function InstagramWidget({
   instagramCode,
+  vendorId,
 }: Props): ReactElement {
   const classes = useStyles();
   const router = useRouter();
@@ -80,7 +83,10 @@ export default function InstagramWidget({
   const { data, next, prev } = useSelector(
     (state: AppState) => state.socialMedia
   );
-  const auth = useSelector((state: AppState) => state.auth.auth);
+  const auth = useSelector((state: AppState) => state.auth);
+  const ownVendor = useSelector((state: AppState) =>
+    getVendorStatus(state, auth.id)
+  );
 
   const handlePagination = (direction: string) => {
     dispatch(fetchInstagramMedia(instagramCode, direction));
@@ -89,7 +95,7 @@ export default function InstagramWidget({
     dispatch(fetchInstagramMedia(instagramCode));
   }, [instagramCode]);
   const onBtnClick = () => {
-    if (!auth) {
+    if (!auth.auth) {
       return dispatch(handleAuthModal(true));
     }
     dispatch(saveURI(router.asPath));
@@ -101,13 +107,12 @@ export default function InstagramWidget({
     return (
       <div className={classes.connectWrapper}>
         <div className={classes.add}>
-          <IconButton onClick={onBtnClick}>
-            <img src={plus} alt='add' className={classes.addIcon} />
-          </IconButton>
+          {ownVendor.id === vendorId && (
+            <IconButton onClick={onBtnClick}>
+              <img src={plus} alt='add' className={classes.addIcon} />
+            </IconButton>
+          )}
         </div>
-
-        {/* <InstagramIcon className={} />
-         */}
       </div>
     );
   }

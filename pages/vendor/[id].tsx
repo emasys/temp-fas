@@ -24,6 +24,7 @@ import { setValue, handleAuthModal } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
 import { fetchVendor } from '../../redux/actions/vendors';
 import Reviews from '../../components/Reviews';
+import { getVendorStatus } from '../../redux/selectors/vendors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -112,8 +113,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '1rem',
     },
     reviews: {
-      margin: '3rem 0'
-    }
+      margin: '3rem 0',
+    },
   })
 );
 
@@ -121,7 +122,10 @@ interface Props {}
 const Vendor: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const auth = useSelector((state: AppState) => state.auth.auth);
+  const auth = useSelector((state: AppState) => state.auth);
+  const ownVendor = useSelector((state: AppState) =>
+    getVendorStatus(state, auth.id)
+  );
   const {
     query: { id },
   } = useRouter();
@@ -134,7 +138,7 @@ const Vendor: React.FC<Props> = () => {
   }, []);
 
   const handleBooking = () => {
-    if (!auth) {
+    if (!auth.auth) {
       return dispatch(handleAuthModal(true));
     }
   };
@@ -157,8 +161,7 @@ const Vendor: React.FC<Props> = () => {
             </Typography>
             <div className={classes.reviewWrapper}>
               <Typography variant='body2' className={classes.reviewText}>
-                <img src={star} className={classes.icon} alt='star' /> no
-                review
+                <img src={star} className={classes.icon} alt='star' /> no review
               </Typography>
               <Typography variant='body2' className={classes.reviewText}>
                 <img src={location} className={classes.icon} alt='star' />
@@ -171,14 +174,17 @@ const Vendor: React.FC<Props> = () => {
             onClick={handleBooking}
             className={classes.button}
           >
-            Book vendor
+            {ownVendor.id === vendorObj?.id ? 'Edit profile' : 'Book vendor'}
           </Button>
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Instagram Feed' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.instaWrapper}>
-          <InstagramWidget instagramCode={vendorObj?.instagramToken} />
+          <InstagramWidget
+            instagramCode={vendorObj?.instagramToken}
+            vendorId={vendorObj?.id}
+          />
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Reviews' buttonText='' />

@@ -20,7 +20,7 @@ import InstagramWidget from '../../components/InstagramWidget';
 import { GetStaticProps } from 'next';
 import { instance } from '../../config/axiosConfig';
 import { IService, IVendor } from '../../interfaces';
-import { setValue, handleAuthModal } from '../../redux/actions/common';
+import { setValue, handleAuthModal, toggleModal } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
 import { fetchVendor } from '../../redux/actions/vendors';
 import Reviews from '../../components/Reviews';
@@ -139,8 +139,11 @@ const Vendor: React.FC<Props> = () => {
 
   const handleBooking = () => {
     if (!auth.auth) {
+      dispatch(toggleModal('login'));
       return dispatch(handleAuthModal(true));
     }
+    dispatch(handleAuthModal(true));
+    dispatch(toggleModal('bookVendor'));
   };
 
   return (

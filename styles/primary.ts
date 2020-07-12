@@ -67,8 +67,7 @@ theme.overrides = {
     },
     body1: {
       fontSize: '.8rem',
-      color: '#fff',
-      fontFamily: 'Roboto',
+      fontFamily: 'Lato',
       fontWeight: 300,
     },
     body2: {
@@ -90,6 +89,11 @@ theme.overrides = {
       fontWeight: 500,
       backgroundColor: 'rgba(186,215,214,0.12) !important',
       height: '3.33rem',
+    },
+    multiline: {
+      height: 'auto',
+      minHeight: '3.33rem',
+      paddingTop: '1rem'
     },
     input: {
       '&::placeholder': {

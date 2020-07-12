@@ -7,13 +7,15 @@ import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import CodeForm from './CodeForm';
 import BAVForm from './BAVForm';
+import BookingForm from './BookingForm';
 
 interface Props {}
 const _component: any = {
   login: <LoginForm />,
   signUp: <SignUpForm />,
   code: <CodeForm />,
-  bav: <BAVForm />
+  bav: <BAVForm />,
+  bookVendor: <BookingForm />
 };
 const ModalComponent: React.FC<Props> = () => {
   const dispatch = useDispatch();

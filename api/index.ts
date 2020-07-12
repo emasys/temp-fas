@@ -1,5 +1,7 @@
 import { instance } from '../config/axiosConfig';
 import { ILogin } from '../redux/actions/auth';
+import { AxiosError } from 'axios';
+
 
 export const fetchServices = async () => {
   try {
@@ -75,6 +77,23 @@ interface ICreateVendor {
 export const createVendor = async (serviceId: string, data: ICreateVendor) => {
   try {
     const url = `services/${serviceId}/vendors`;
+    const res = await instance.post(url, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+interface ICreateOrder {
+  vendorId: string;
+  description: string;
+  dueDate: string;
+  locationId: string;
+  address: string;
+}
+export const createOrder = async (data: ICreateOrder) => {
+  try {
+    const url = `jobs`;
     const res = await instance.post(url, data);
     return res.data;
   } catch (error) {

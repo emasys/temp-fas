@@ -26,11 +26,23 @@ export type TVendorActions =
 export interface IVendors {
   allVendors: IVendor[];
   searchResult: IVendor[];
+  activeVendor: IVendor;
 }
 
 export const initialVendorsState = {
   allVendors: [],
   searchResult: null,
+  activeVendor: {
+    id: '',
+    name: '',
+    serviceId: '',
+    userId: '',
+    instagramToken: null,
+    updatedAt: '',
+    createdAt: '',
+    rate: 0,
+    phoneNumber: '',
+  },
 };
 
 export default function vendor(
@@ -46,6 +58,7 @@ export default function vendor(
     case EActionTypes.UPDATE_VENDOR:
       return {
         ...state,
+        activeVendor: action.payload,
         allVendors: [
           ...state.allVendors.filter(
             (vendor) => vendor.id !== action.payload.id

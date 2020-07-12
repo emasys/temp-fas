@@ -72,7 +72,12 @@ const Navbar: React.FC<Props> = (props) => {
           </Grid>
         )}
         {!auth && (
-          <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
+          <Grid item sm={8} md={6} lg={5} className={classes.linkWrapper}>
+            <Link href='/'>
+              <Typography variant='body1' className={classes.link}>
+                Home
+              </Typography>
+            </Link>
             <Link href='/'>
               <Typography variant='body1' className={classes.link}>
                 About{' '}

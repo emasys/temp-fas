@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { logOut } from '../redux/actions/auth';
 import { toggleModal, handleAuthModal } from '../redux/actions/common';
+import { getVendorStatus } from '../redux/selectors/vendors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,6 +72,10 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const auth = useSelector((state: AppState) => state.auth);
+  const ownVendor = useSelector((state: AppState) =>
+    getVendorStatus(state, auth.id)
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -86,9 +91,9 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   };
 
   const handleBAV = () => {
-    dispatch(toggleModal('bav'))
+    dispatch(toggleModal('bav'));
     dispatch(handleAuthModal(true));
-  }
+  };
 
   const open = Boolean(anchorEl);
 
@@ -124,11 +129,13 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
         }}
       >
         <List component='nav' className={classes.linkWrapper}>
-          <ListItem button onClick={handleBAV}>
-            <Typography variant='body2' className={classes.menuItem}>
-              Become a vendor
-            </Typography>
-          </ListItem>
+          {!ownVendor?.id && (
+            <ListItem button onClick={handleBAV}>
+              <Typography variant='body2' className={classes.menuItem}>
+                Become a vendor
+              </Typography>
+            </ListItem>
+          )}
           <ListItem button onClick={handleLogOut}>
             <Typography variant='body2' className={classes.menuItem}>
               Sign out

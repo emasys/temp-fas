@@ -6,7 +6,7 @@ import clx from 'clsx';
 import back from '../assets/back-arrow.svg';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { handleAuthModal } from '../redux/actions/common';
+import { handleAuthModal, triggerBAV } from '../redux/actions/common';
 import Login from './Modal';
 import UserMenu from './UserMenu';
 import { AppState } from '../lib/initialState';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     back: {
       marginRight: '.5rem',
-      height: '1rem'
+      height: '1rem',
     },
     root: {
       display: 'flex',
@@ -78,13 +78,18 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   const { auth } = useSelector((state: AppState) => state.auth);
   const dispatch = useDispatch();
 
-  const handleLogin = (e: any) => {
-    e.preventDefault();
+  const handleLogin = () => {
     dispatch(handleAuthModal(true));
   };
   const goBack = (e: any) => {
     e.preventDefault();
     Router.push(path);
+  };
+  const handleCreateVendor = () => {
+    dispatch(triggerBAV(true));
+    if (!auth) {
+      handleLogin();
+    }
   };
   return (
     <Fragment>
@@ -109,6 +114,11 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
           <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
             <Link href='/'>
               <Typography variant='body1' className={classes.link}>
+                Home
+              </Typography>
+            </Link>
+            <Link href='/'>
+              <Typography variant='body1' className={classes.link}>
                 About{' '}
               </Typography>
             </Link>
@@ -124,11 +134,13 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
             >
               Login
             </Typography>
-            <Link href='/'>
-              <Button variant='contained' className={classes.button}>
-                Become a vendor
-              </Button>
-            </Link>
+            <Button
+              variant='contained'
+              className={classes.button}
+              onClick={handleCreateVendor}
+            >
+              Become a vendor
+            </Button>
           </Grid>
         )}
       </Grid>

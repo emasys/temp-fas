@@ -10,7 +10,13 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { AccountCircle, ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
+import {
+  AccountCircle,
+  ArrowDropDown,
+  ArrowDropUp,
+  ArrowDropUpRounded,
+  ArrowDropDownRounded,
+} from '@material-ui/icons';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
@@ -46,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 400,
       cursor: 'pointer',
       display: 'flex',
-      alignItems: 'flex-end',
+      alignItems: 'center',
       fontSize: '0.9701rem',
     },
     button: {
@@ -109,7 +115,12 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
         style={{ color: dark ? '#5C5C5C' : '#fff' }}
         onClick={handleClick}
       >
-        {fullName || 'Hi there '} <ArrowDropDown />
+        {fullName || 'Hi there '}{' '}
+        {open ? (
+          <ArrowDropUpRounded fontSize='large' />
+        ) : (
+          <ArrowDropDownRounded fontSize='large' />
+        )}
       </Typography>
       <Popover
         id='menu'

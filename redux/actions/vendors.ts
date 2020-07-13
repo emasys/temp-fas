@@ -60,3 +60,17 @@ export const searchVendors = (
     dispatch(handleAuthError(error));
   }
 };
+
+export const fetchVendorJobs = (id: string | string[]) => async (
+  dispatch: Dispatch<any>
+) => {
+  const url = `vendors/${id}/jobs`;
+  try {
+    const { data } = await instance.get(url);
+    console.log(data, '=====');
+    // dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
+  } catch (error) {
+    console.log(error, '====');
+    // dispatch(handleAuthError(error));
+  }
+};

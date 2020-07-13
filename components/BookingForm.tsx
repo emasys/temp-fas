@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import DateFnsUtils from '@date-io/date-fns';
-import moment from 'moment';
 import Alert from '@material-ui/lab/Alert';
 import {
   MuiPickersUtilsProvider,
@@ -169,7 +168,6 @@ const BookingForm: React.FC<Props> = () => {
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-    console.log(moment(date).format(), new Date(date), '=====')
     setFieldValue('dueDate', new Date(date));
   };
 

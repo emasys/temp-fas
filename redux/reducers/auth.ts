@@ -42,7 +42,7 @@ export default function auth(
   state: IAuth = initialAuthState,
   action: TAuthActions
 ): IAuth {
-  instance.defaults.headers.common['Authorization'] = `Bearer ${state.auth}`;
+  if (state.auth) instance.defaults.headers.common['Authorization'] = `Bearer ${state.auth}`;
   switch (action.type) {
     case EActionTypes.LOGIN:
       return action.payload;

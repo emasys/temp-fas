@@ -1,4 +1,5 @@
 import { EActionTypes } from '../actions/types';
+import { instance } from '../../config/axiosConfig';
 
 interface ILoginRes {
   auth: string;
@@ -41,6 +42,7 @@ export default function auth(
   state: IAuth = initialAuthState,
   action: TAuthActions
 ): IAuth {
+  instance.defaults.headers.common['Authorization'] = `Bearer ${state.auth}`;
   switch (action.type) {
     case EActionTypes.LOGIN:
       return action.payload;

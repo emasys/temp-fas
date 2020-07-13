@@ -159,7 +159,7 @@ const Vendor: React.FC<Props> = () => {
   const isOwnPage = ownVendor?.id === vendorObj?.id;
 
   return (
-    <VendorLayout title={'Vendors'} path={`/services/${vendorObj?.serviceId}`}>
+    <VendorLayout title={'General details'} path={`/services/${vendorObj?.serviceId}`}>
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <VendorBanner rate={vendorObj?.rate} phone={vendorObj?.phoneNumber} />

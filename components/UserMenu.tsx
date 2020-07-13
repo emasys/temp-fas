@@ -23,6 +23,7 @@ import { AppState } from '../lib/initialState';
 import { logOut } from '../redux/actions/auth';
 import { toggleModal, handleAuthModal } from '../redux/actions/common';
 import { getVendorStatus } from '../redux/selectors/vendors';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,6 +78,7 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   const { fullName } = useSelector((state: AppState) => state.auth);
   const dispatch = useDispatch();
   const classes = useStyles();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const auth = useSelector((state: AppState) => state.auth);
   const ownVendor = useSelector((state: AppState) =>
@@ -90,6 +92,10 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   const handleLogOut = () => {
     handleClose();
     dispatch(logOut());
+  };
+
+  const handleProfile = () => {
+    router.push('/profile', '/profile');
   };
 
   const handleClose = () => {
@@ -147,6 +153,11 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
               </Typography>
             </ListItem>
           )}
+          <ListItem button onClick={handleProfile}>
+            <Typography variant='body2' className={classes.menuItem}>
+              Profile
+            </Typography>
+          </ListItem>
           <ListItem button onClick={handleLogOut}>
             <Typography variant='body2' className={classes.menuItem}>
               Sign out

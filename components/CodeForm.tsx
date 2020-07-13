@@ -239,6 +239,7 @@ const CodeForm: React.FC<Props> = () => {
           handleChange={handleChange}
           handleBlur={handleBlur}
           errors={errors}
+          label="Create password"
           touched={touched}
         />
         <Button

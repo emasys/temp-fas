@@ -24,6 +24,7 @@ interface Props {
   errors: any;
   value: string;
   touched: any;
+  label: string;
   handleChange: (e: React.ChangeEvent<any>) => void;
   handleBlur: (e: React.ChangeEvent<any>) => void;
 }
@@ -31,7 +32,7 @@ const PasswordField: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const [show, togglePassword] = useState(false);
-  const { errors, touched, handleBlur, handleChange, value } = props;
+  const { errors, touched, handleBlur, handleChange, value, label } = props;
   return (
     <TextField
       error={!!errors.password && touched.password}
@@ -46,7 +47,7 @@ const PasswordField: React.FC<Props> = (props) => {
       className={classes.inputBox}
       name='password'
       id='filled-error-helper-text'
-      label='Create Password'
+      label={label}
       helperText={touched.password && errors.password}
       InputProps={{
         endAdornment: (

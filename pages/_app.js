@@ -7,7 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import withReduxStore from '../lib/with-redux-store';
 import '../styles/index.css';
 import theme from '../styles/primary';
-import { instance } from '../config/axiosConfig';
 import { getServices } from '../redux/actions/services';
 import { fetchAllLocations } from '../redux/actions/locations';
 

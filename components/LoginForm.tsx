@@ -157,6 +157,7 @@ const LoginForm: React.FC<Props> = () => {
           helperText={touched.email && errors.email}
         />
         <PasswordInput
+          label='password'
           value={values.password}
           handleChange={handleChange}
           handleBlur={handleBlur}

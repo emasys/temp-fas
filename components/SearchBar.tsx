@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   prevPageTitle: string;
-  path: string;
+  path?: string;
 }
 const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   const classes = useStyles();
@@ -83,6 +83,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   };
   const goBack = (e: any) => {
     e.preventDefault();
+    if (!path) return Router.back();
     Router.push(path);
   };
   const handleCreateVendor = () => {

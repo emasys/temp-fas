@@ -47,7 +47,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
     (state: AppState) => state.vendor.searchResult
   );
   return (
-    <VendorLayout title={'Home'} path={`/`}>
+    <VendorLayout title={'Vendors'} path={`/`}>
       <Grid container className={classes.container}>
         <Grid item xs={12} className={classes.menu}>
           <MenuBar />

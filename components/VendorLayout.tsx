@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   children: ReactChild;
   title: string;
-  path: string;
+  path?: string;
 }
 const VendorLayout: React.FC<Props> = ({ children, title, path }) => {
   const classes = useStyles();

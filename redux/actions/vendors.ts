@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { setValue, handleAuthError, handleAuthModal } from './common';
 import { instance } from '../../config/axiosConfig';
 import { AppState } from '../../lib/initialState';
+import { ILocation, IVendor } from '../../interfaces';
 
 export const fetchVendor = (id: string | string[]) => async (
   dispatch: Dispatch<any>
@@ -49,28 +50,14 @@ export const searchVendors = (
   areaId?: any
 ) => async (dispatch: Dispatch<any>) => {
   let query = '';
-  const isStateId = stateId?.length > 10
+  const isStateId = stateId?.length > 10;
   if (isStateId) query = `?stateId=${stateId}`;
-  if (areaId?.length> 10 && isStateId) query = `?areaId=${areaId}`;
+  if (areaId?.length > 10 && isStateId) query = `?areaId=${areaId}`;
   const url = `services/${vendorId}/vendors${query}`;
   try {
     const { data } = await instance.get(url);
     dispatch(setValue(EActionTypes.SEARCH_VENDOR, data));
   } catch (error) {
     dispatch(handleAuthError(error));
-  }
-};
-
-export const fetchVendorJobs = (id: string | string[]) => async (
-  dispatch: Dispatch<any>
-) => {
-  const url = `vendors/${id}/jobs`;
-  try {
-    const { data } = await instance.get(url);
-    console.log(data, '=====');
-    // dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
-  } catch (error) {
-    console.log(error, '====');
-    // dispatch(handleAuthError(error));
   }
 };

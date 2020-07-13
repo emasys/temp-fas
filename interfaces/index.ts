@@ -42,3 +42,23 @@ export interface ILocation {
   updatedAt: string;
   areas: IArea[];
 }
+
+export interface IJob {
+  cost: any;
+  id: string;
+  invoice: any;
+  description: string;
+  dueDate: string;
+  stage: string;
+  canceled: any;
+  accepted: any;
+  vendorStatus: any;
+  customerId: string;
+  vendorId: string;
+  locationId: string;
+  address: string;
+  createdAt: string;
+  updatedAt: string;
+  vendor: IVendor;
+  location: ILocation;
+}

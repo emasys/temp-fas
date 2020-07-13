@@ -26,9 +26,11 @@ import {
   toggleModal,
 } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
-import { fetchVendor, fetchVendorJobs } from '../../redux/actions/vendors';
+import { fetchVendor } from '../../redux/actions/vendors';
 import Reviews from '../../components/Reviews';
 import { getVendorStatus } from '../../redux/selectors/vendors';
+import { fetchUserJobs } from '../../redux/actions/jobs';
+import { getUserJobs } from '../../redux/selectors/jobs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -127,6 +129,10 @@ const Vendor: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const auth = useSelector((state: AppState) => state.auth);
+  const vendorObj = useSelector((state: AppState) => state.vendor.activeVendor);
+  const { isBooked } = useSelector((state: AppState) =>
+    getUserJobs(state, vendorObj?.id)
+  );
   const ownVendor = useSelector((state: AppState) =>
     getVendorStatus(state, auth.id)
   );
@@ -134,13 +140,10 @@ const Vendor: React.FC<Props> = () => {
     query: { id },
   } = useRouter();
 
-  const vendorObj = useSelector((state: AppState) =>
-    state.vendor?.allVendors?.find((item) => item.id === id)
-  );
   useEffect(() => {
     dispatch(fetchVendor(id));
     if (auth.auth) {
-      dispatch(fetchVendorJobs(id));
+      dispatch(fetchUserJobs());
     }
   }, [auth]);
 
@@ -152,6 +155,8 @@ const Vendor: React.FC<Props> = () => {
     dispatch(handleAuthModal(true));
     dispatch(toggleModal('bookVendor'));
   };
+
+  const isOwnPage = ownVendor?.id === vendorObj?.id;
 
   return (
     <VendorLayout title={'Vendors'} path={`/services/${vendorObj?.serviceId}`}>
@@ -179,13 +184,21 @@ const Vendor: React.FC<Props> = () => {
               </Typography>
             </div>
           </div>
-          <Button
-            variant='contained'
-            onClick={handleBooking}
-            className={classes.button}
-          >
-            {ownVendor?.id === vendorObj?.id ? 'Edit profile' : 'Book vendor'}
-          </Button>
+          {isOwnPage && (
+            <Button variant='contained' className={classes.button}>
+              Edit profile
+            </Button>
+          )}
+          {!isOwnPage && (
+            <Button
+              variant='contained'
+              onClick={handleBooking}
+              disabled={!!isBooked}
+              className={classes.button}
+            >
+              {isBooked ? 'Booked' : 'Book vendor'}
+            </Button>
+          )}
         </Grid>
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Instagram Feed' buttonText='' />

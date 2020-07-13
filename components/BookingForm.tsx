@@ -25,6 +25,7 @@ import SelectInput from './SelectInput';
 import { getLocations } from '../redux/selectors/locations';
 import { getServiceOptions } from '../redux/selectors/services';
 import MoneyInput from './MoneyInput';
+import { updateUserJob } from '../redux/actions/jobs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -154,6 +155,7 @@ const BookingForm: React.FC<Props> = () => {
         setFieldError('error', 'error');
         return setSubmitting(false);
       }
+      dispatch(updateUserJob(data))
       dispatch(handleAuthModal(false));
       setSubmitting(false);
     },
@@ -207,6 +209,7 @@ const BookingForm: React.FC<Props> = () => {
           />
           <KeyboardDatePicker
             disableToolbar
+            disablePast
             variant='inline'
             className={classes.datePicker}
             format='MM/dd/yyyy'

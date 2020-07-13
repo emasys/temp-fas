@@ -123,12 +123,18 @@ const SearchFields: React.FC<Props> = ({
     options: searchOption,
     getOptionLabel: (option) => option.title,
     onChange: (_, value) => handleAutoChange(value),
-    freeSolo: true,
+    freeSolo: false,
     onInputChange: handleChange,
   });
   const handleSearch = () => {
     handleSubmit();
   };
+
+  const handleKeyPress = (event: React.KeyboardEvent<any>) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  }
 
   const areaOptions = locations.find((loc) => loc.value === values.state);
 
@@ -139,6 +145,7 @@ const SearchFields: React.FC<Props> = ({
           <div {...getRootProps()}>
             <FilledInput
               id='search'
+              onKeyPress={handleKeyPress}
               type={'text'}
               name='search'
               {...getInputProps()}

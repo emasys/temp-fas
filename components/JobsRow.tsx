@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       borderRadius: '1.113rem',
     },
+    amount: {
+      fontSize: '0.7rem'
+    }
   })
 );
 
@@ -129,7 +132,11 @@ const JobsRow: React.FC<IJobsRowProps> = ({
         <Typography variant='body2'>{name}</Typography>
       </Grid>
       <Grid item xs={2} onClick={handleDrawer}>
-        <Typography variant='body2' onClick={handleDrawer}>
+        <Typography
+          variant='body2'
+          className={classes.amount}
+          onClick={handleDrawer}
+        >
           {amount ? formatMoney(amount) : 'Awaiting invoice'}
         </Typography>
       </Grid>

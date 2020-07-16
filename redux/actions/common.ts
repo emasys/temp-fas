@@ -39,17 +39,19 @@ export const validateToken = () => (
   const {
     auth: { auth },
   } = getState();
-  const { iat } = jwt(auth);
-  const isExp = moment(iat*1000).isSameOrBefore(Date.now(), 'minute');
-  console.log(isExp,'=====', moment(iat * 1000).format(), auth)
-  if (isExp) {
-    // window.location.href = '/';
-    // dispatch(setValue(EActionTypes.RESET_STORE, null));
-  }
+  // const { exp } = jwt(auth);
+  // const isExp = moment(exp*1000).isSameOrBefore(Date.now(), 'minute');
+  // console.log(isExp,'=====', moment(exp * 1000).format(), auth)
+  // if (isExp) {
+  // }
 };
 
 export const toggleModal = (page: string) => (dispatch: Dispatch) => {
   dispatch(setValue(EActionTypes.IS_LOGIN, page));
+};
+
+export const toggleDrawer = (status: boolean) => (dispatch: Dispatch) => {
+  dispatch(setValue(EActionTypes.TOGGLE_DRAWER, status));
 };
 
 export const triggerBAV = (status: boolean) => (dispatch: Dispatch) => {

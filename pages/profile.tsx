@@ -8,6 +8,7 @@ import JobSearch from '../components/JobSearch';
 import { fetchUserJobs } from '../redux/actions/jobs';
 import JobsRow from '../components/JobsRow';
 import { getUserJobs } from '../redux/selectors/jobs';
+import JobsDrawer from '../components/jobsDrawer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +48,7 @@ export default function Profile({}: Props): ReactElement {
 
   return (
     <div className={auth ? classes.container : classes.blur}>
+      <JobsDrawer />
       <VendorLayout title={'Profile'}>
         <>
           <Grid container className={classes.search}>

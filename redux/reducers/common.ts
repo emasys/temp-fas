@@ -27,12 +27,18 @@ interface ITriggerBAV {
   payload: boolean;
 }
 
+interface IToggleDrawer {
+  type: EActionTypes.TOGGLE_DRAWER;
+  payload: boolean;
+}
+
 export type TCommonActions =
   | ISaveURI
   | IResetAction
   | IAuthModal
   | ITriggerBAV
   | ISaveEmail
+  | IToggleDrawer
   | IToggleLogin;
 
 export const initialCommonState = {
@@ -40,6 +46,7 @@ export const initialCommonState = {
   openAuthModal: false,
   isLogin: 'login',
   tempEmail: '',
+  drawerStatus: false,
   isBAV: false,
 };
 
@@ -52,6 +59,11 @@ export default function vendor(
       return {
         ...state,
         tempUri: action.payload,
+      };
+    case EActionTypes.TOGGLE_DRAWER:
+      return {
+        ...state,
+        drawerStatus: action.payload,
       };
     case EActionTypes.HANDLE_AUTH_MODAL:
       return {

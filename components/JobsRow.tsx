@@ -11,6 +11,8 @@ import NavigateNextRoundedIcon from '@material-ui/icons/NavigateNextRounded';
 import arrow from '../assets/arrowDown.svg';
 import moment from 'moment';
 import { formatMoney } from '../util';
+import { useDispatch } from 'react-redux';
+import { toggleDrawer } from '../redux/actions/common';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,13 +62,16 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
       alignItems: 'center',
       paddingRight: '2rem',
+      cursor: 'pointer',
     },
     statusBtn: {
+      cursor: 'pointer',
       background: '#F9F9F9',
       padding: '.5rem',
       marginLeft: '2rem',
     },
     status: {
+      cursor: 'pointer',
       height: '2.2262rem',
       width: 'auto',
       color: '#fff',
@@ -98,6 +103,10 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   color,
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleDrawer = () => {
+    dispatch(toggleDrawer(true));
+  };
   return (
     <Grid container className={classes.row}>
       <Grid item xs={2} className={classes.pdfWrapper}>
@@ -111,18 +120,25 @@ const JobsRow: React.FC<IJobsRowProps> = ({
           </Typography>
         </div>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={2} onClick={handleDrawer}>
         <Typography variant='body2'>
           {moment(date).format('yyyy-MM-DD')}
         </Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} onClick={handleDrawer}>
         <Typography variant='body2'>{name}</Typography>
       </Grid>
-      <Grid item xs={2}>
-        <Typography variant='body2'>{amount ? formatMoney(amount) : 'Awaiting invoice'}</Typography>
+      <Grid item xs={2} onClick={handleDrawer}>
+        <Typography variant='body2' onClick={handleDrawer}>
+          {amount ? formatMoney(amount) : 'Awaiting invoice'}
+        </Typography>
       </Grid>
-      <Grid item xs={3} className={classes.statusWrapper}>
+      <Grid
+        item
+        xs={3}
+        className={classes.statusWrapper}
+        onClick={handleDrawer}
+      >
         <Typography
           variant='body2'
           className={classes.status}
@@ -132,7 +148,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
         >
           {status || 'Not started'}
         </Typography>
-        <IconButton className={classes.statusBtn}>
+        <IconButton className={classes.statusBtn} onClick={handleDrawer}>
           <NavigateNextRoundedIcon />
         </IconButton>
       </Grid>

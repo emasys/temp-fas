@@ -24,6 +24,7 @@ export interface ICommon {
   isLogin: string;
   tempEmail: string;
   isBAV: boolean;
+  drawerStatus: boolean
 }
 
 export interface IArea {

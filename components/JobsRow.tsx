@@ -69,8 +69,10 @@ const useStyles = makeStyles((theme: Theme) =>
     status: {
       height: '2.2262rem',
       width: 'auto',
+      color: '#fff',
       padding: '0 2rem',
       display: 'flex',
+      fontSize: '.7rem',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '1.113rem',
@@ -87,15 +89,6 @@ interface IJobsRowProps {
   stage: string;
 }
 
-const jobColorMapper = {
-  request: '#5C5C5C',
-  active: '#fff',
-  done: '#fff',
-  closed: '#5C5C5C',
-  accepted: '#fff',
-  review: '#fff',
-};
-
 const JobsRow: React.FC<IJobsRowProps> = ({
   date,
   name,
@@ -108,7 +101,10 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   return (
     <Grid container className={classes.row}>
       <Grid item xs={2} className={classes.pdfWrapper}>
-        <div className={classes.indicator} style={{ backgroundColor: color }} />
+        <div
+          className={classes.indicator}
+          style={{ backgroundColor: color || '#574497' }}
+        />
         <div className={classes.pdf}>
           <Typography variant='body2' className={classes.pdfText}>
             PDF <img src={arrow} alt='arrow' className={classes.arrow} />
@@ -124,15 +120,17 @@ const JobsRow: React.FC<IJobsRowProps> = ({
         <Typography variant='body2'>{name}</Typography>
       </Grid>
       <Grid item xs={2}>
-        <Typography variant='body2'>{formatMoney(amount || '0')}</Typography>
+        <Typography variant='body2'>{amount ? formatMoney(amount) : 'Awaiting invoice'}</Typography>
       </Grid>
       <Grid item xs={3} className={classes.statusWrapper}>
         <Typography
           variant='body2'
           className={classes.status}
-          style={{ background: color, color: jobColorMapper[stage] }}
+          style={{
+            background: color || '#574497',
+          }}
         >
-          {status}
+          {status || 'Not started'}
         </Typography>
         <IconButton className={classes.statusBtn}>
           <NavigateNextRoundedIcon />

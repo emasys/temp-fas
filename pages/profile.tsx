@@ -37,7 +37,6 @@ export default function Profile({}: Props): ReactElement {
   const classes = useStyles();
   const { auth } = useSelector((state: AppState) => state.auth);
   const { allJobs } = useSelector((state: AppState) => getUserJobs(state));
-  console.log(allJobs, '====');
   const dispatch = useDispatch();
   useEffect(() => {
     if (!auth) {
@@ -62,7 +61,7 @@ export default function Profile({}: Props): ReactElement {
               date={job.createdAt}
               name={job.vendor.name}
               amount={job.cost}
-              stage={job.stage}
+              stage={job.vendorStatus}
               status={job.status}
             />
           ))}

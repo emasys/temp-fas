@@ -9,29 +9,27 @@ const jobs = (state: AppState, vendorId?: string) => {
 };
 
 const jobColorMapper = {
-  request: '#FFD36D',
-  active: '#574497',
-  done: '#574497',
-  closed: '#FF8515',
-  accepted: 'rgba(0, 155, 106, 0.15)',
-  review: '#574497',
+  not_started: '#574497',
+  started: '#574497',
+  completed: 'rgba(0, 155, 106)',
+  rejected: '#FF8515',
+  accepted: 'rgba(0, 155, 106)',
 };
 
 export const getUserJobs = createSelector(jobs, (job) => {
   const isBooked = job.data.find(({ vendorId }) => job.vendorId === vendorId);
   const allJobs = job.data.map((item) => {
     const jobStatusMapper = {
-      request: 'Awaiting invoice',
-      active: 'Active',
-      done: `Done on 2020-07-26`,
-      closed: 'Closed',
-      accepted: 'Completed on dummy date',
-      review: 'Review',
+      not_started: 'Not started',
+      started: 'Started on 2020-07-26',
+      completed: `Completed on 2020-07-26`,
+      rejected: 'Rejected on 2020-07-26',
+      accepted: 'Accepted on 2020-07-26',
     };
     return {
       ...item,
-      status: jobStatusMapper[item.stage],
-      color: jobColorMapper[item.stage]
+      status: jobStatusMapper[item.vendorStatus],
+      color: jobColorMapper[item.vendorStatus]
     };
   });
   return { isBooked, allJobs };

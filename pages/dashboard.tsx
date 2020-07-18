@@ -55,7 +55,7 @@ export default function Jobs({}: Props): ReactElement {
 
   return (
     <div className={auth ? classes.container : classes.blur}>
-      <VendorLayout title={'Profile'}>
+      <VendorLayout title={'Dashboard'}>
         <>
           <Grid container className={classes.search}>
             <Grid item xs={12}>

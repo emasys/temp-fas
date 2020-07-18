@@ -56,6 +56,7 @@ export const signUpAPI = async (data: { email: string }) => {
 interface ISignUp {
   email: string;
   token: number;
+  fullName: string;
   password: string;
 }
 export const signUpVerify = async (data: ISignUp) => {

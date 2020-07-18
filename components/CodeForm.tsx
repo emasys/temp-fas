@@ -108,6 +108,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const validationSchema = Yup.object().shape({
   token: Yup.string().required(),
+  fullName: Yup.string().required('Please provide your name'),
   email: Yup.string().email().required(),
   password: Yup.string().required(),
 });
@@ -151,6 +152,7 @@ const CodeForm: React.FC<Props> = () => {
   } = useFormik({
     initialValues: {
       token: '',
+      fullName: '',
       email,
       password: '',
     },
@@ -160,7 +162,6 @@ const CodeForm: React.FC<Props> = () => {
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
       const payload = { ...values, token: Number(values.token) };
       const data = await signUpVerify(payload);
-      console.log(data);
       setSubmitting(true);
       if (!data) {
         setSubmitting(false);
@@ -218,6 +219,21 @@ const CodeForm: React.FC<Props> = () => {
             inputComponent: CodeInput,
           }}
           helperText={errors.token && touched.token}
+        />
+        <TextField
+          error={!!errors.fullName && touched.fullName}
+          classes={{
+            root: classes.inputRoot,
+          }}
+          variant='standard'
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.fullName}
+          className={classes.inputBox}
+          name='fullName'
+          id='filled-error-helper-text'
+          label='Full name'
+          helperText={touched.fullName && errors.fullName}
         />
         <TextField
           error={!!errors.email && touched.email}

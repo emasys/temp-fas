@@ -6,6 +6,7 @@ import {
   createStyles,
   Drawer,
   Typography,
+  Button,
 } from '@material-ui/core';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -94,32 +95,35 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '2rem',
     },
     phone: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: '1.75rem',
-      background: 'rgba(0, 0, 0, 0.25)',
-      padding: '.1rem 1rem',
-      fontWeight: 'normal',
-      fontFamily: 'Lato',
+      borderRadius: '1.113rem',
+      background: 'rgba(0,0,0,0.25)',
       color: '#fff',
-      fontSize: '0.9375rem',
+      padding: 0,
+      minWidth: '9rem',
+      fontSize: '0.6875rem',
+      minHeight: '2rem',
+      '&:hover': {
+        background: 'rgba(0,0,0,0.25)',
+      },
     },
     phoneIcon: {
       marginRight: '.5rem',
     },
     chat: {
+      borderRadius: '1.113rem',
+      color: '#fff',
+      padding: 0,
+      minWidth: '9rem',
+      fontSize: '0.6875rem',
+      minHeight: '2rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: '1.75rem',
       background: '#43CEA2',
-      padding: '.1rem 1rem',
-      fontWeight: 'normal',
-      fontFamily: 'Lato',
-      color: '#fff',
-      fontSize: '0.9375rem',
       marginLeft: '0.75rem',
+      '&:hover': {
+        background: '#43CEA2',
+      },
     },
     chatIcon: {
       marginRight: '.5rem',
@@ -133,7 +137,6 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
   const status = useSelector((state: AppState) => state.common.drawerStatus);
   const content = useSelector((state: AppState) => state.common.drawerContent);
-  console.log(content, '=====');
   const dispatch = useDispatch();
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
     dispatch(toggleDrawer(false));
@@ -173,18 +176,18 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               {vendorName}
             </Typography>
             <Grid item xs={6} className={classes.contactWrapper}>
-              <Typography variant='body1' className={classes.phone}>
+              <Button variant='text' className={classes.phone}>
                 <img
                   src={phoneIcon}
-                  alt='phone'
                   className={classes.phoneIcon}
+                  alt='pdf download'
                 />
                 {phoneNumber || 'Not available'}
-              </Typography>
-              <Typography variant='body1' className={classes.chat}>
+              </Button>
+              <Button variant='text' className={classes.chat}>
                 <img src={chat} alt='chat' className={classes.chatIcon} /> Chat
                 now
-              </Typography>
+              </Button>
             </Grid>
             <Typography variant='body2' className={classes.link}>
               <span

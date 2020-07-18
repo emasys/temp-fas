@@ -171,6 +171,11 @@ theme.overrides = {
       fontWeight: 'normal',
       fontFamily: 'Lato',
     },
+    text: {
+      // '&:hover': {
+      //   background: 'transparent',
+      // },
+    },
     contained: {
       backgroundColor: '#43CEA2',
       color: '#fff',

@@ -37,9 +37,12 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '5rem',
       },
     },
+    field: {
+      marginRight: '.5rem',
+    },
     formWrapper: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
       alignItems: 'center',
     },
     icon: {
@@ -54,39 +57,45 @@ const JobSearch: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
     <Grid item xs={12} className={classes.formWrapper}>
-      <SelectInput
-        name='state'
-        placeholder='All'
-        className={classes.state}
-        options={[]}
-        handleChange={(e) => {}}
-        value={''}
-      />
-      <SelectInput
-        name='area'
-        placeholder='This month'
-        className={classes.area}
-        options={[]}
-        handleChange={(e) => {}}
-        value={''}
-      />
-      <TextField
-        classes={{
-          root: classes.inputRoot,
-        }}
-        placeholder="Search"
-        variant='filled'
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='end'>
-              <IconButton aria-label='search' edge='end'>
-                <img src={search} className={classes.icon} alt='search' />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        className={classes.inputBox}
-      />
+      <div className={classes.field}>
+        <SelectInput
+          name='state'
+          placeholder='All'
+          className={classes.state}
+          options={[]}
+          handleChange={(e) => {}}
+          value={''}
+        />
+      </div>
+      <div className={classes.field}>
+        <SelectInput
+          name='area'
+          placeholder='This month'
+          className={classes.area}
+          options={[]}
+          handleChange={(e) => {}}
+          value={''}
+        />
+      </div>
+      <div className={classes.field}>
+        <TextField
+          classes={{
+            root: classes.inputRoot,
+          }}
+          placeholder='Search'
+          variant='filled'
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton aria-label='search' edge='end'>
+                  <img src={search} className={classes.icon} alt='search' />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          className={classes.inputBox}
+        />
+      </div>
     </Grid>
   );
 };

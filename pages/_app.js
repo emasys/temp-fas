@@ -9,6 +9,7 @@ import '../styles/index.css';
 import theme from '../styles/primary';
 import { getServices } from '../redux/actions/services';
 import { fetchAllLocations } from '../redux/actions/locations';
+import JobsDrawer from '../components/jobsDrawer';
 
 class MyApp extends App {
   componentDidMount() {
@@ -23,6 +24,7 @@ class MyApp extends App {
         <PersistGate loading={null} persistor={store.persistor}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <JobsDrawer />
             <Component {...pageProps} />
           </ThemeProvider>
         </PersistGate>

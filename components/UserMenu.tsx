@@ -98,6 +98,10 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
     router.push('/profile', '/profile');
   };
 
+  const handleDashboard = () => {
+    router.push('/dashboard', '/dashboard');
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -150,6 +154,13 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
             <ListItem button onClick={handleBAV}>
               <Typography variant='body2' className={classes.menuItem}>
                 Become a vendor
+              </Typography>
+            </ListItem>
+          )}
+          {ownVendor?.id && (
+            <ListItem button onClick={handleDashboard}>
+              <Typography variant='body2' className={classes.menuItem}>
+                Vendor Dashboard
               </Typography>
             </ListItem>
           )}

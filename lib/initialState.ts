@@ -1,14 +1,16 @@
 import { IAuth, initialAuthState } from '../redux/reducers/auth';
 import { IServices, initialServicesState } from '../redux/reducers/services';
-import { IVendor, ICommon, ILocation, IJob } from '../interfaces';
+import { IVendor, ICommon, ILocation, IJob, IOrder } from '../interfaces';
 import { initialVendorsState, IVendors } from '../redux/reducers/vendor';
 import { initialCommonState } from '../redux/reducers/common';
 import { initialSMState, ISocialMedia } from '../redux/reducers/socialMedia';
 import { initialLocationState } from '../redux/reducers/locations';
 import { initialJobsState } from '../redux/reducers/jobs';
+import { initialOrderState } from '../redux/reducers/orders';
 
 export interface AppState {
   auth: IAuth;
+  orders: IOrder[];
   services: IServices;
   vendor: IVendors;
   common: ICommon;
@@ -18,6 +20,7 @@ export interface AppState {
 }
 
 const state: AppState = {
+  orders: initialOrderState,
   jobs: initialJobsState,
   auth: initialAuthState,
   locations: initialLocationState,

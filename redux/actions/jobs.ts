@@ -6,13 +6,13 @@ import { IJob } from '../../interfaces';
 import { AppState } from '../../lib/initialState';
 
 export const fetchVendorJobs = (id: string | string[]) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
 ) => {
   const url = `vendors/${id}/jobs`;
   try {
     const { data } = await instance.get(url);
     console.log(data, '=====');
-    // dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
+    dispatch(setValue(EActionTypes.FETCH_ORDERS, data));
   } catch (error) {
     console.log(error, '====');
     // dispatch(handleAuthError(error));
@@ -40,6 +40,7 @@ export const setDrawerJob = (id: string) => async (
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const data = getState().jobs.find((job) => job.id === id);
+  let data = getState().jobs.find((job) => job.id === id);
+  if(!data) data = getState().orders.find((job) => job.id === id);
   dispatch(setValue(EActionTypes.SET_DRAWER_JOB, data));
 };

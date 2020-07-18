@@ -1,3 +1,5 @@
+import { IAuth } from '../redux/reducers/auth';
+
 export interface IService {
   id: string;
   name: string;
@@ -10,7 +12,7 @@ export interface IVendor {
   id: string;
   name: string;
   serviceId: string;
-  service: IService;
+  service?: IService;
   userId: string;
   instagramToken: null | string;
   updatedAt: string;
@@ -19,13 +21,16 @@ export interface IVendor {
   phoneNumber: string;
 }
 
+interface IDrawerContent extends IJob {
+  customer?: IAuth
+}
 export interface ICommon {
   tempUri: string;
   openAuthModal: boolean;
   isLogin: string;
   tempEmail: string;
   isBAV: boolean;
-  drawerContent: IJob;
+  drawerContent: IDrawerContent;
   drawerStatus: boolean;
 }
 
@@ -55,7 +60,7 @@ export interface IJob {
   stage: string;
   canceled: any;
   accepted: any;
-  vendorStatusDates: any,
+  vendorStatusDates: any;
   vendorStatus: any;
   customerId: string;
   vendorId: string;
@@ -65,4 +70,8 @@ export interface IJob {
   updatedAt: string;
   vendor: IVendor;
   location: ILocation;
+}
+
+export interface IOrder extends IJob {
+  customer: IAuth;
 }

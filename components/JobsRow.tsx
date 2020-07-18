@@ -111,6 +111,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleDrawer = () => {
+    console.log('=====>>>', id)
     dispatch(toggleDrawer(true));
     dispatch(setDrawerJob(id));
   };

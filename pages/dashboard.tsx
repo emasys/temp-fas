@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {}
 
-export default function Profile({}: Props): ReactElement {
+export default function Jobs({}: Props): ReactElement {
   const classes = useStyles();
   const { auth, id } = useSelector((state: AppState) => state.auth);
-  const { allJobs } = useSelector((state: AppState) => getUserJobs(state));
+  const { allOrders } = useSelector((state: AppState) => getUserJobs(state));
   const ownVendor = useSelector((state: AppState) =>
     getVendorStatus(state, id)
   );
@@ -49,7 +49,6 @@ export default function Profile({}: Props): ReactElement {
       dispatch(handleAuthModal(true));
     }
     if (auth) {
-      dispatch(fetchUserJobs());
       ownVendor?.id && dispatch(fetchVendorJobs(ownVendor?.id));
     }
   }, [auth]);
@@ -63,7 +62,7 @@ export default function Profile({}: Props): ReactElement {
               <JobSearch />
             </Grid>
           </Grid>
-          {allJobs.map((job) => (
+          {allOrders.map((job) => (
             <JobsRow
               key={job.id}
               id={job.id}

@@ -128,6 +128,21 @@ const useStyles = makeStyles((theme: Theme) =>
     chatIcon: {
       marginRight: '.5rem',
     },
+    invoice: {
+      borderRadius: '1.113rem',
+      color: '#fff',
+      padding: 0,
+      minWidth: '9rem',
+      fontSize: '0.6875rem',
+      minHeight: '2rem',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: '#43CEA2',
+      '&:hover': {
+        background: '#43CEA2',
+      },
+    },
   })
 );
 
@@ -137,6 +152,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
   const status = useSelector((state: AppState) => state.common.drawerStatus);
   const content = useSelector((state: AppState) => state.common.drawerContent);
+  const isVendor = !!content.customer;
   const dispatch = useDispatch();
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
     dispatch(toggleDrawer(false));
@@ -148,6 +164,8 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     vendorStatusDates,
     address,
     description,
+    customer,
+    invoice,
     vendor: {
       name: vendorName,
       phoneNumber,
@@ -173,22 +191,24 @@ const JobsDrawer: React.FC<IProps> = (props) => {
         <Grid item xs={12} className={classes.titleWrapper}>
           <Grid item xs={10}>
             <Typography variant='body2' className={classes.subtitle}>
-              {vendorName}
+              {customer?.fullName || vendorName}
             </Typography>
-            <Grid item xs={6} className={classes.contactWrapper}>
-              <Button variant='text' className={classes.phone}>
-                <img
-                  src={phoneIcon}
-                  className={classes.phoneIcon}
-                  alt='pdf download'
-                />
-                {phoneNumber || 'Not available'}
-              </Button>
-              <Button variant='text' className={classes.chat}>
-                <img src={chat} alt='chat' className={classes.chatIcon} /> Chat
-                now
-              </Button>
-            </Grid>
+            {!isVendor && (
+              <Grid item xs={6} className={classes.contactWrapper}>
+                <Button variant='text' className={classes.phone}>
+                  <img
+                    src={phoneIcon}
+                    className={classes.phoneIcon}
+                    alt='pdf download'
+                  />
+                  {phoneNumber || 'Not available'}
+                </Button>
+                <Button variant='text' className={classes.chat}>
+                  <img src={chat} alt='chat' className={classes.chatIcon} />{' '}
+                  Chat now
+                </Button>
+              </Grid>
+            )}
             <Typography variant='body2' className={classes.link}>
               <span
                 className={classes.indicator}
@@ -235,14 +255,20 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           <Collapsible title='ORDER DESCRIPTION' body={description} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible
-            title='INVOICE'
-            download
-            body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sequi
-            quidem nesciunt asperiores dolor harum vel nam inventore itaque,
-            laudantium, in saepe dignissimos atque aliquam tempora nihil
-            aspernatur ipsum fugiat?'
-          />
+          <Collapsible title='INVOICE' download={!!invoice}>
+            {!invoice ? (
+              <Button variant='contained' className={classes.invoice}>
+                Create invoice
+              </Button>
+            ) : (
+              <Typography variant='body2'>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo,
+                unde, accusamus odio facilis excepturi, ex repellendus
+                necessitatibus laborum suscipit nobis quia corrupti. Itaque
+                deserunt similique assumenda atque quos accusamus iure.
+              </Typography>
+            )}
+          </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='DELIVERY ADDRESS' body={address} />

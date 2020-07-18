@@ -68,7 +68,7 @@ export default function Jobs({}: Props): ReactElement {
               id={job.id}
               color={job.color}
               date={job.createdAt}
-              name={job.vendor.name}
+              name={job.customer.fullName}
               amount={job.cost}
               stage={job.vendorStatus}
               status={job.status}

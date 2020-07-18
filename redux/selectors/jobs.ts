@@ -17,10 +17,10 @@ export const getUserJobs = createSelector([jobs, vendor], (job, vendor) => {
   const allJobs = job.map((item) => {
     const jobStatusMapper = {
       not_started: 'Not started',
-      started: 'Started on 2020-07-26',
-      completed: `Completed on 2020-07-26`,
-      rejected: 'Rejected on 2020-07-26',
-      accepted: 'Accepted on 2020-07-26',
+      started: 'Started',
+      completed: `Completed`,
+      rejected: 'Rejected',
+      accepted: 'Accepted',
     };
     return {
       ...item,

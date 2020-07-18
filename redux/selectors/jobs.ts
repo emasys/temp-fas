@@ -7,8 +7,8 @@ const vendor = (state: AppState) => state.vendor.activeVendor;
 const jobColorMapper = {
   not_started: '#574497',
   started: '#574497',
-  completed: 'rgba(0, 155, 106)',
-  rejected: '#FF8515',
+  completed: '#43CEA2',
+  rejected: '#fba351',
   accepted: 'rgba(0, 155, 106)',
 };
 

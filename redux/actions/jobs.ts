@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { setValue, handleAuthError, handleAuthModal } from './common';
 import { instance } from '../../config/axiosConfig';
 import { IJob } from '../../interfaces';
+import { AppState } from '../../lib/initialState';
 
 export const fetchVendorJobs = (id: string | string[]) => async (
   dispatch: Dispatch<any>
@@ -33,4 +34,12 @@ export const updateUserJob = (data: IJob) => async (
   dispatch: Dispatch<any>
 ) => {
   dispatch(setValue(EActionTypes.UPDATE_JOB, data));
+};
+
+export const setDrawerJob = (id: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  const data = getState().jobs.find((job) => job.id === id);
+  dispatch(setValue(EActionTypes.SET_DRAWER_JOB, data));
 };

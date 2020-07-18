@@ -10,6 +10,7 @@ export interface IVendor {
   id: string;
   name: string;
   serviceId: string;
+  service: IService;
   userId: string;
   instagramToken: null | string;
   updatedAt: string;
@@ -24,7 +25,8 @@ export interface ICommon {
   isLogin: string;
   tempEmail: string;
   isBAV: boolean;
-  drawerStatus: boolean
+  drawerContent: IJob;
+  drawerStatus: boolean;
 }
 
 export interface IArea {
@@ -53,6 +55,7 @@ export interface IJob {
   stage: string;
   canceled: any;
   accepted: any;
+  vendorStatusDates: any,
   vendorStatus: any;
   customerId: string;
   vendorId: string;

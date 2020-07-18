@@ -52,13 +52,14 @@ export default function Profile({}: Props): ReactElement {
       <VendorLayout title={'Profile'}>
         <>
           <Grid container className={classes.search}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={7}>
               <JobSearch />
             </Grid>
           </Grid>
           {allJobs.map((job) => (
             <JobsRow
               key={job.id}
+              id={job.id}
               color={job.color}
               date={job.createdAt}
               name={job.vendor.name}

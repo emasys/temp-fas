@@ -1,6 +1,6 @@
 import { EActionTypes } from '../actions/types';
 import { IResetAction } from './auth';
-import { ICommon } from '../../interfaces';
+import { ICommon, IJob } from '../../interfaces';
 
 interface ISaveURI {
   type: EActionTypes.SAVE_URI;
@@ -32,9 +32,15 @@ interface IToggleDrawer {
   payload: boolean;
 }
 
+interface IDrawerContent {
+  type: EActionTypes.SET_DRAWER_JOB;
+  payload: IJob;
+}
+
 export type TCommonActions =
   | ISaveURI
   | IResetAction
+  | IDrawerContent
   | IAuthModal
   | ITriggerBAV
   | ISaveEmail
@@ -46,6 +52,7 @@ export const initialCommonState = {
   openAuthModal: false,
   isLogin: 'login',
   tempEmail: '',
+  drawerContent: null,
   drawerStatus: false,
   isBAV: false,
 };
@@ -59,6 +66,11 @@ export default function vendor(
       return {
         ...state,
         tempUri: action.payload,
+      };
+    case EActionTypes.SET_DRAWER_JOB:
+      return {
+        ...state,
+        drawerContent: action.payload,
       };
     case EActionTypes.TOGGLE_DRAWER:
       return {

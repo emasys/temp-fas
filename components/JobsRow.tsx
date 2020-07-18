@@ -13,6 +13,7 @@ import moment from 'moment';
 import { formatMoney } from '../util';
 import { useDispatch } from 'react-redux';
 import { toggleDrawer } from '../redux/actions/common';
+import { setDrawerJob } from '../redux/actions/jobs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,6 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IJobsRowProps {
   date: string;
+  id: string;
   name: string;
   amount: string;
   status: string;
@@ -104,11 +106,13 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   status,
   stage,
   color,
+  id
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleDrawer = () => {
     dispatch(toggleDrawer(true));
+    dispatch(setDrawerJob(id));
   };
   return (
     <Grid container className={classes.row}>

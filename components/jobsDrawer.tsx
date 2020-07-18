@@ -11,10 +11,11 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { toggleDrawer } from '../redux/actions/common';
-import Divider from './Divider';
 import { formatMoney } from '../util';
 import Collapsible from './Collapsible';
 import Reviews from './Reviews';
+import phoneIcon from '../assets/phone.svg';
+import chat from '../assets/chat.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,11 +35,14 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#292929',
       fontSize: '1rem',
       fontWeight: 600,
+      textTransform: 'uppercase',
     },
     subtitle: {
       color: '#292929',
       fontSize: '1.5rem',
       fontWeight: 600,
+      textTransform: 'uppercase',
+      marginBottom: '.4rem',
     },
     money: {
       fontSize: '1.5rem',
@@ -52,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '.4rem',
     },
     desc: {
-      paddingTop: '2rem',
+      paddingTop: '0rem',
     },
     heading: {
       color: '#292929',
@@ -84,6 +88,42 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '1rem',
       width: '0.2rem',
     },
+    contactWrapper: {
+      display: 'flex',
+      alignItems: 'flex-end',
+      marginBottom: '2rem',
+    },
+    phone: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '1.75rem',
+      background: 'rgba(0, 0, 0, 0.25)',
+      padding: '.1rem 1rem',
+      fontWeight: 'normal',
+      fontFamily: 'Lato',
+      color: '#fff',
+      fontSize: '0.9375rem',
+    },
+    phoneIcon: {
+      marginRight: '.5rem',
+    },
+    chat: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '1.75rem',
+      background: '#43CEA2',
+      padding: '.1rem 1rem',
+      fontWeight: 'normal',
+      fontFamily: 'Lato',
+      color: '#fff',
+      fontSize: '0.9375rem',
+      marginLeft: '0.75rem',
+    },
+    chatIcon: {
+      marginRight: '.5rem',
+    },
   })
 );
 
@@ -92,10 +132,25 @@ interface IProps {}
 const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
   const status = useSelector((state: AppState) => state.common.drawerStatus);
+  const content = useSelector((state: AppState) => state.common.drawerContent);
+  console.log(content, '=====');
   const dispatch = useDispatch();
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
     dispatch(toggleDrawer(false));
   };
+
+  if (!content) return <div />;
+  const {
+    createdAt,
+    vendorStatusDates,
+    address,
+    description,
+    vendor: {
+      name: vendorName,
+      phoneNumber,
+      service: { name },
+    },
+  } = content;
 
   return (
     <Drawer
@@ -109,22 +164,35 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       <Grid container>
         <Grid item xs={12} className={classes.status}>
           <Typography variant='body2' className={classes.title}>
-            SERVICE NAME
+            {name}
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.titleWrapper}>
-          <div>
+          <Grid item xs={10}>
             <Typography variant='body2' className={classes.subtitle}>
-              VENDOR NAME
+              {vendorName}
             </Typography>
+            <Grid item xs={6} className={classes.contactWrapper}>
+              <Typography variant='body1' className={classes.phone}>
+                <img
+                  src={phoneIcon}
+                  alt='phone'
+                  className={classes.phoneIcon}
+                />
+                {phoneNumber || 'Not available'}
+              </Typography>
+              <Typography variant='body1' className={classes.chat}>
+                <img src={chat} alt='chat' className={classes.chatIcon} /> Chat
+                now
+              </Typography>
+            </Grid>
             <Typography variant='body2' className={classes.link}>
               <span
                 className={classes.indicator}
                 style={{ background: '#FF8515' }}
               />
               <span style={{ marginLeft: '.5rem' }}>
-                Contracted on{' '}
-                {moment('20111031', 'YYYYMMDD').format('MMMM Do YYYY, h:mm a')}
+                Contacted on {moment(createdAt).format('MMMM Do YYYY, h:mm a')}
               </span>
             </Typography>
             <Typography variant='body2' className={classes.link}>
@@ -133,37 +201,40 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 style={{ background: '#574497' }}
               />
               <span style={{ marginLeft: '.5rem' }}>
-                Started on{' '}
-                {moment('20111031', 'YYYYMMDD').format('MMMM Do YYYY, h:mm a')}
+                {vendorStatusDates
+                  ? `Started on{' '}
+                ${moment('20111031', 'YYYYMMDD').format(
+                  'MMMM Do YYYY, h:mm a'
+                )}`
+                  : 'Not in progress'}
               </span>
             </Typography>
-            <Typography variant='body2' className={classes.link}>
-              <span
-                className={classes.indicator}
-                style={{ background: 'rgba(0, 155, 106)' }}
-              />
-              <span style={{ marginLeft: '.5rem' }}>
-                Completed on{' '}
-                {moment('20111031', 'YYYYMMDD').format('MMMM Do YYYY, h:mm a')}
-              </span>
-            </Typography>
-          </div>
+            {vendorStatusDates && (
+              <Typography variant='body2' className={classes.link}>
+                <span
+                  className={classes.indicator}
+                  style={{ background: 'rgba(0, 155, 106)' }}
+                />
+                <span style={{ marginLeft: '.5rem' }}>
+                  Completed on{' '}
+                  {moment('20111031', 'YYYYMMDD').format(
+                    'MMMM Do YYYY, h:mm a'
+                  )}
+                </span>
+              </Typography>
+            )}
+          </Grid>
           <Typography variant='body2' className={classes.money}>
             {formatMoney(40000)}
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible
-            title='ORDER DESCRIPTION'
-            body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sequi
-            quidem nesciunt asperiores dolor harum vel nam inventore itaque,
-            laudantium, in saepe dignissimos atque aliquam tempora nihil
-            aspernatur ipsum fugiat?'
-          />
+          <Collapsible title='ORDER DESCRIPTION' body={description} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible
             title='INVOICE'
+            download
             body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sequi
             quidem nesciunt asperiores dolor harum vel nam inventore itaque,
             laudantium, in saepe dignissimos atque aliquam tempora nihil
@@ -171,27 +242,13 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Typography variant='body2' className={classes.heading}>
-            REVIEWS
-          </Typography>
-          <Reviews />
+          <Collapsible title='DELIVERY ADDRESS' body={address} />
         </Grid>
-        {/* <Grid item xs={6} className={classes.desc}>
-          <Typography variant='body2' className={classes.descTitle}>
-            DATE STARTED
-          </Typography>
-          <Typography variant='body2' className={classes.descText}>
-            {moment('20111031', 'YYYYMMDD').fromNow()}
-          </Typography>
+        <Grid item xs={12} className={classes.desc}>
+          <Collapsible title='REVIEW'>
+            <Reviews />
+          </Collapsible>
         </Grid>
-        <Grid item xs={6} className={classes.desc}>
-          <Typography variant='body2' className={classes.descTitle}>
-            DATE COMPLETED
-          </Typography>
-          <Typography variant='body2' className={classes.descText}>
-            {moment('20131031', 'YYYYMMDD').fromNow()}
-          </Typography>
-        </Grid> */}
       </Grid>
     </Drawer>
   );

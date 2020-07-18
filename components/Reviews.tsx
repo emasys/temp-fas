@@ -67,7 +67,7 @@ const Reviews: React.FC<Props> = (props) => {
         <img src={bubble} alt='bubble' />
       </div>
       <Typography variant='body2' className={classes.text}>
-        No reviews yet
+        No review yet
       </Typography>
     </div>
   );

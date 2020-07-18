@@ -6,8 +6,6 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
-import Navbar from './Navbar';
-import SearchBox from './SearchBox';
 import vendorImg from '../assets/vendorBanner.svg';
 import { formatMoney } from '../util';
 import phoneIcon from '../assets/phone.svg';
@@ -96,7 +94,7 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
       <Grid item xs={12} className={classes.rateWrapper}>
         <Typography variant='body2' className={classes.rate}>
           {formatMoney(rate)} Per day
-        </Typography>
+        </Typography> 
       </Grid>
       <Grid item xs={6} className={classes.contactWrapper}>
         <Typography variant='body1' className={classes.phone}>

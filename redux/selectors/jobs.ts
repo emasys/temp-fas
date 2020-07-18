@@ -1,12 +1,8 @@
 import { createSelector } from 'reselect';
 import { AppState } from '../../lib/initialState';
 
-const jobs = (state: AppState, vendorId?: string) => {
-  return {
-    data: state.jobs,
-    vendorId,
-  };
-};
+const jobs = (state: AppState) => state.jobs;
+const vendor = (state: AppState) => state.vendor.activeVendor;
 
 const jobColorMapper = {
   not_started: '#574497',
@@ -16,9 +12,9 @@ const jobColorMapper = {
   accepted: 'rgba(0, 155, 106)',
 };
 
-export const getUserJobs = createSelector(jobs, (job) => {
-  const isBooked = job.data.find(({ vendorId }) => job.vendorId === vendorId);
-  const allJobs = job.data.map((item) => {
+export const getUserJobs = createSelector([jobs, vendor], (job, vendor) => {
+  const isBooked = job.find(({ vendorId }) => vendor.id === vendorId);
+  const allJobs = job.map((item) => {
     const jobStatusMapper = {
       not_started: 'Not started',
       started: 'Started on 2020-07-26',

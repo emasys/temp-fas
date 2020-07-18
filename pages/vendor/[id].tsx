@@ -130,9 +130,7 @@ const Vendor: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state: AppState) => state.auth);
   const vendorObj = useSelector((state: AppState) => state.vendor.activeVendor);
-  const { isBooked } = useSelector((state: AppState) =>
-    getUserJobs(state, vendorObj?.id)
-  );
+  const { isBooked } = useSelector((state: AppState) => getUserJobs(state));
   const ownVendor = useSelector((state: AppState) =>
     getVendorStatus(state, auth.id)
   );
@@ -159,7 +157,10 @@ const Vendor: React.FC<Props> = () => {
   const isOwnPage = ownVendor?.id === vendorObj?.id;
 
   return (
-    <VendorLayout title={'General details'} path={`/services/${vendorObj?.serviceId}`}>
+    <VendorLayout
+      title={'General details'}
+      path={`/services/${vendorObj?.serviceId}`}
+    >
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <VendorBanner rate={vendorObj?.rate} phone={vendorObj?.phoneNumber} />

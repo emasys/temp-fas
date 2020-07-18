@@ -7,6 +7,7 @@ import {
   Drawer,
   Typography,
   Button,
+  IconButton,
 } from '@material-ui/core';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +18,7 @@ import Collapsible from './Collapsible';
 import Reviews from './Reviews';
 import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
+import { CloseRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,6 +70,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     status: {
       marginBottom: '1rem',
+      display: 'flex',
+      position: 'relative',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     statusText: {
       cursor: 'pointer',
@@ -143,6 +149,11 @@ const useStyles = makeStyles((theme: Theme) =>
         background: '#43CEA2',
       },
     },
+    close: {
+      position: 'absolute',
+      right: -16,
+      top: -18,
+    },
   })
 );
 
@@ -187,6 +198,9 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           <Typography variant='body2' className={classes.title}>
             {name}
           </Typography>
+          <IconButton className={classes.close} onClick={closeDrawer}>
+            <CloseRounded />
+          </IconButton>
         </Grid>
         <Grid item xs={12} className={classes.titleWrapper}>
           <Grid item xs={10}>

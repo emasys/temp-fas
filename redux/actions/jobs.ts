@@ -6,7 +6,7 @@ import { IJob } from '../../interfaces';
 import { AppState } from '../../lib/initialState';
 
 export const fetchVendorJobs = (id: string | string[]) => async (
-  dispatch: Dispatch<any>,
+  dispatch: Dispatch<any>
 ) => {
   const url = `vendors/${id}/jobs`;
   try {
@@ -35,11 +35,17 @@ export const updateUserJob = (data: IJob) => async (
   dispatch(setValue(EActionTypes.UPDATE_JOB, data));
 };
 
-export const setDrawerJob = (id: string) => async (
+export const setDrawerJob = (id: string) => (
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
   let data = getState().jobs.find((job) => job.id === id);
-  if(!data) data = getState().orders.find((job) => job.id === id);
+  if (!data) data = getState().orders.find((job) => job.id === id);
   dispatch(setValue(EActionTypes.SET_DRAWER_JOB, data));
+};
+
+export const updateJobInvoice = (id: string, data: any) => (
+  dispatch: Dispatch<any>
+) => {
+  dispatch(setValue(EActionTypes.UPDATE_JOB_INVOICE, { id, data }));
 };

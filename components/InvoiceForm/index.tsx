@@ -17,6 +17,7 @@ import {
   handleAuthModal,
   toggleModal,
   updateInvoiceValue,
+  addInvoiceValue,
 } from '../../redux/actions/common';
 import {} from '../../redux/actions/types';
 import { signUpVerify, createInvoice } from '../../api';
@@ -31,6 +32,7 @@ import MoneyInput from '../MoneyInput';
 import Form from './Form';
 import { getInvoice } from '../../redux/selectors/common';
 import FormFooter from './FormFooter';
+import { updateJobInvoice } from '../../redux/actions/jobs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -135,9 +137,13 @@ const InvoiceForm: React.FC<Props> = () => {
     netProceed,
     fee,
   } = useSelector((state: AppState) => getInvoice(state));
+  const savedValues = useSelector(
+    (state: AppState) => state.common.invoiceValues
+  );
   const { customer, vendorId, id, invoice } = useSelector(
     (state: AppState) => state.common.drawerContent
   );
+
 
   useEffect(() => {
     if (invoice) {
@@ -165,23 +171,27 @@ const InvoiceForm: React.FC<Props> = () => {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
+      if (!values.items.filter((item) => !!item.item)) {
+        return setFieldError('items', 'error');
+      }
       let payload = {
         invoice: {},
       };
       values.items.forEach((item) => {
-        payload.invoice[item.item] = Number(item.value);
+        if (item.item && item.value)
+          payload.invoice[item.item] = Number(item.value);
       });
 
-      const data = await createInvoice(vendorId, id, payload);
-      console.log(payload, '=====', data);
-      setSubmitting(true);
-      if (!data) {
+        const data = await createInvoice(vendorId, id, payload);
+        setSubmitting(true);
+        if (!data) {
+          setSubmitting(false);
+          return;
+        }
+        dispatch(updateJobInvoice(id, data.invoice))
+        dispatch(handleAuthModal(false));
+        dispatch(toggleModal('login'));
         setSubmitting(false);
-        return;
-      }
-      //   dispatch(toggleModal('login'));
-      //   dispatch(handleAuthModal(false));
-      //   setSubmitting(false);
     },
   });
   useEffect(() => {
@@ -195,7 +205,11 @@ const InvoiceForm: React.FC<Props> = () => {
   const addMoreRow = () => {
     const initValue = values.items;
     initValue.push({ item: '', value: '', id: initValue.length });
-    setFieldValue('items', initValue);
+    const payload = [
+      ...savedValues,
+      { item: '', value: '', id: initValue.length },
+    ];
+    dispatch(addInvoiceValue(payload));
   };
 
   return (

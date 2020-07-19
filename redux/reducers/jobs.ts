@@ -12,7 +12,10 @@ interface IUpdateJob {
   payload: IJob;
 }
 
-export type TActions = IFetchJobs | IResetAction | IUpdateJob;
+export type TActions =
+  | IFetchJobs
+  | IResetAction
+  | IUpdateJob
 
 export const initialJobsState = [];
 

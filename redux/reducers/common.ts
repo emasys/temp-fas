@@ -49,6 +49,10 @@ interface IAddInvoiceValue {
   type: EActionTypes.ADD_INVOICE_VALUE;
   payload: any[];
 }
+interface IUpdateOrderInvoice {
+  type: EActionTypes.UPDATE_JOB_INVOICE;
+  payload: { id: string; data: any };
+}
 
 export type TCommonActions =
   | ISaveURI
@@ -58,6 +62,7 @@ export type TCommonActions =
   | IAuthModal
   | ITriggerBAV
   | ISaveEmail
+  | IUpdateOrderInvoice
   | IInvoiceValue
   | IToggleDrawer
   | IToggleLogin;
@@ -101,6 +106,14 @@ export default function vendor(
       return {
         ...state,
         drawerContent: action.payload,
+      };
+    case EActionTypes.UPDATE_JOB_INVOICE:
+      return {
+        ...state,
+        drawerContent: {
+          ...state.drawerContent,
+          invoice: action.payload.data,
+        },
       };
     case EActionTypes.TOGGLE_DRAWER:
       return {

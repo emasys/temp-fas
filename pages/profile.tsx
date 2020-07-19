@@ -10,6 +10,7 @@ import JobsRow from '../components/JobsRow';
 import { getUserJobs } from '../redux/selectors/jobs';
 import JobsDrawer from '../components/jobsDrawer';
 import { getVendorStatus } from '../redux/selectors/vendors';
+import { getInvoice } from '../redux/selectors/common';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,7 +71,14 @@ export default function Profile({}: Props): ReactElement {
               color={job.color}
               date={job.createdAt}
               name={job.vendor.name}
-              amount={job.cost}
+              amount={
+                job?.invoice
+                  ? Object.values(job.invoice).reduce(
+                      (prev, curr) => Number(prev) + Number(curr),
+                      0
+                    )
+                  : 0
+              }
               stage={job.vendorStatus}
               status={job.status}
             />

@@ -93,7 +93,7 @@ interface IJobsRowProps {
   date: string;
   id: string;
   name: string;
-  amount: string;
+  amount: any;
   status: string;
   color: string;
   stage: string;

@@ -29,6 +29,7 @@ export interface ICommon {
   openAuthModal: boolean;
   isLogin: string;
   tempEmail: string;
+  invoiceValues: any[];
   isBAV: boolean;
   drawerContent: IDrawerContent;
   drawerStatus: boolean;

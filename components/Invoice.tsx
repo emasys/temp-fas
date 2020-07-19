@@ -43,7 +43,7 @@ const Invoice: React.FC<Props> = (props) => {
   };
   return (
     <>
-      {!content?.invoice ? (
+      {content?.invoice ? (
         <Button
           variant='contained'
           className={classes.invoice}

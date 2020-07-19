@@ -66,7 +66,6 @@ const MoneyInput: React.FC<Props> = (props) => {
       value={value}
       className={classes.inputBox}
       name={name}
-      id={name}
       label={label}
       InputProps={{
         inputComponent: moneyInput,

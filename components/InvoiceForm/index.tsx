@@ -12,14 +12,25 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../lib/initialState';
-import { handleAuthModal, toggleModal } from '../redux/actions/common';
-import {} from '../redux/actions/types';
-import { signUpVerify, createInvoice } from '../api';
-import { CloseRounded, ArrowBackIosRounded } from '@material-ui/icons';
-import { login } from '../redux/actions/auth';
-import PasswordInput from './PasswordField';
-import MoneyInput from './MoneyInput';
+import { AppState } from '../../lib/initialState';
+import {
+  handleAuthModal,
+  toggleModal,
+  updateInvoiceValue,
+} from '../../redux/actions/common';
+import {} from '../../redux/actions/types';
+import { signUpVerify, createInvoice } from '../../api';
+import {
+  CloseRounded,
+  ArrowBackIosRounded,
+  AddCircleRounded,
+} from '@material-ui/icons';
+import { login } from '../../redux/actions/auth';
+import PasswordInput from '../PasswordField';
+import MoneyInput from '../MoneyInput';
+import Form from './Form';
+import { getInvoice } from '../../redux/selectors/common';
+import FormFooter from './FormFooter';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,9 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       position: 'absolute',
-      width: '25rem',
+      overflow: 'auto',
+      width: '30rem',
+      maxHeight: '80%',
       backgroundColor: '#fff',
-      top: '20%',
+      top: '10%',
       left: 0,
       borderRadius: '.2rem',
       right: 0,
@@ -51,8 +64,13 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: '#fff',
     },
     button: {
+      marginTop: '.5rem',
+      borderRadius: '2rem',
+    },
+    addButton: {
       marginTop: '2rem',
       borderRadius: '2rem',
+      color: '#636363',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -62,14 +80,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       fontFamily: 'Alegreya',
-      fontSize: '2rem',
-      color: '#636363',
-      textAlign: 'center',
-    },
-    subtitle: {
-      marginBottom: '.5rem',
-      marginTop: '.5rem',
-      fontSize: '.9rem',
+      fontSize: '1.5rem',
+      marginBottom: '1rem',
       color: '#636363',
       textAlign: 'center',
     },
@@ -89,6 +101,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '1.5rem',
       background: 'rgba(196, 196, 196, .2)',
     },
+    net: {
+      padding: '.5rem 0',
+      borderTop: '1px solid rgba(196, 196, 196, .2)',
+    },
     signIn: {
       cursor: 'pointer',
       color: '#43CEA2',
@@ -97,48 +113,43 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '.7rem',
       padding: '0 0.9375rem',
     },
+    total: {
+      paddingBottom: '2rem',
+      background: 'rgba(128, 0, 128, 0.04)',
+    },
   })
 );
 
 const validationSchema = Yup.object().shape({
-  item: Yup.string().required(),
-  amount: Yup.string().required(),
+  items: Yup.array().required(),
 });
-
-const CodeInput = (props: any) => {
-  const { inputRef, onChange, ...other } = props;
-  return (
-    <NumberFormat
-      {...other}
-      inputMode='numeric'
-      maxLength='6'
-      getInputRef={inputRef}
-      onValueChange={(values: any) => {
-        onChange({
-          target: {
-            name: other.name,
-            value: values.value,
-          },
-        });
-      }}
-    />
-  );
-};
 
 interface Props {}
 const InvoiceForm: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const open = useSelector((state: AppState) => state.common.openAuthModal);
-  const email = useSelector((state: AppState) => state.common.tempEmail);
-  const { customer, vendorId, id } = useSelector(
+  const {
+    allEntries,
+    total,
+    netProceed,
+    fee,
+  } = useSelector((state: AppState) => getInvoice(state));
+  const { customer, vendorId, id, invoice } = useSelector(
     (state: AppState) => state.common.drawerContent
   );
+
+  useEffect(() => {
+    if (invoice) {
+      dispatch(updateInvoiceValue(invoice));
+    }
+  }, [invoice]);
 
   const {
     handleChange,
     values,
     errors,
+    setFieldValue,
     handleBlur,
     handleSubmit,
     isValid,
@@ -147,28 +158,30 @@ const InvoiceForm: React.FC<Props> = () => {
     setSubmitting,
   } = useFormik({
     initialValues: {
-      item: '',
-      amount: '',
+      items: allEntries,
     },
     validationSchema,
+    enableReinitialize: true,
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
-      const payload = {
-        invoice: {
-          [values.item]: values.amount,
-        },
+      let payload = {
+        invoice: {},
       };
+      values.items.forEach((item) => {
+        payload.invoice[item.item] = Number(item.value);
+      });
+
       const data = await createInvoice(vendorId, id, payload);
-      console.log(data, '=====');
+      console.log(payload, '=====', data);
       setSubmitting(true);
       if (!data) {
         setSubmitting(false);
-        return
+        return;
       }
-      // dispatch(toggleModal('login'));
-      // dispatch(handleAuthModal(false));
-      setSubmitting(false);
+      //   dispatch(toggleModal('login'));
+      //   dispatch(handleAuthModal(false));
+      //   setSubmitting(false);
     },
   });
   useEffect(() => {
@@ -179,6 +192,12 @@ const InvoiceForm: React.FC<Props> = () => {
     dispatch(handleAuthModal(false));
   };
 
+  const addMoreRow = () => {
+    const initValue = values.items;
+    initValue.push({ item: '', value: '', id: initValue.length });
+    setFieldValue('items', initValue);
+  };
+
   return (
     <div className={classes.paper}>
       <div className={classes.header}>
@@ -186,37 +205,32 @@ const InvoiceForm: React.FC<Props> = () => {
           <CloseRounded />
         </IconButton>
       </div>
-      <div className={classes.form}>
+      <div>
         <Typography variant='body1' className={classes.title}>
-          Generate invoice
+          Generate invoice for {customer?.fullName}
         </Typography>
-        <Typography variant='body2' className={classes.subtitle}>
-          Kindly generate a payment invoice for {customer?.fullName}
-        </Typography>
-        <TextField
-          error={!!errors.item && touched.item}
-          classes={{
-            root: classes.inputRoot,
-          }}
-          variant='standard'
-          placeholder='Workmanship, tools, etc'
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.item}
-          className={classes.inputBox}
-          name='item'
-          id='filled-error-helper-text'
-          label='Item'
-          helperText={errors.item && touched.item}
-        />
-        <MoneyInput
-          error={!!errors.amount && touched.amount}
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          label='Amount'
-          name='amount'
-          value={values.amount}
-        />
+        <div className={classes.divider} />
+      </div>
+      {values.items.map((input, index) => {
+        if (input.item !== 'total') {
+          return (
+            <Form
+              key={index}
+              item={input.item}
+              value={input.value}
+              id={input.id}
+            />
+          );
+        }
+      })}
+      <div className={classes.form}>
+        <Button
+          onClick={addMoreRow}
+          className={classes.addButton}
+          variant='outlined'
+        >
+          Add more item
+        </Button>
         <Button
           onClick={() => handleSubmit()}
           className={classes.button}
@@ -225,6 +239,12 @@ const InvoiceForm: React.FC<Props> = () => {
         >
           Continue
         </Button>
+      </div>
+      <div className={classes.total}>
+        <div className={classes.divider} />
+        <FormFooter item={total.item} value={total.value} total />
+        <FormFooter item={fee.item} value={fee.value} fee />
+        <FormFooter item={netProceed.item} value={netProceed.value} net />
       </div>
       <div className={classes.footer}>
         <div className={classes.divider} />

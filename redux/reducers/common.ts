@@ -37,13 +37,28 @@ interface IDrawerContent {
   payload: IJob;
 }
 
+interface IInvoiceValue {
+  type: EActionTypes.UPDATE_INVOICE_VALUE;
+  payload: {
+    item: string;
+    amount: string;
+  };
+}
+
+interface IAddInvoiceValue {
+  type: EActionTypes.ADD_INVOICE_VALUE;
+  payload: any[];
+}
+
 export type TCommonActions =
   | ISaveURI
+  | IAddInvoiceValue
   | IResetAction
   | IDrawerContent
   | IAuthModal
   | ITriggerBAV
   | ISaveEmail
+  | IInvoiceValue
   | IToggleDrawer
   | IToggleLogin;
 
@@ -55,6 +70,7 @@ export const initialCommonState = {
   drawerContent: null,
   drawerStatus: false,
   isBAV: false,
+  invoiceValues: [],
 };
 
 export default function vendor(
@@ -66,6 +82,20 @@ export default function vendor(
       return {
         ...state,
         tempUri: action.payload,
+      };
+    case EActionTypes.UPDATE_INVOICE_VALUE:
+      return {
+        ...state,
+        invoiceValues: Object.entries(action.payload).map((item, index) => ({
+          item: item[0],
+          value: item[1],
+          id: index,
+        })),
+      };
+    case EActionTypes.ADD_INVOICE_VALUE:
+      return {
+        ...state,
+        invoiceValues: action.payload,
       };
     case EActionTypes.SET_DRAWER_JOB:
       return {

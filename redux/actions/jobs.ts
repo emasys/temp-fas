@@ -11,7 +11,6 @@ export const fetchVendorJobs = (id: string | string[]) => async (
   const url = `vendors/${id}/jobs`;
   try {
     const { data } = await instance.get(url);
-    console.log(data, '=====');
     dispatch(setValue(EActionTypes.FETCH_ORDERS, data));
   } catch (error) {
     console.log(error, '====');

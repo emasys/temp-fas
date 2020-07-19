@@ -57,3 +57,14 @@ export const toggleDrawer = (status: boolean) => (dispatch: Dispatch) => {
 export const triggerBAV = (status: boolean) => (dispatch: Dispatch) => {
   dispatch(setValue(EActionTypes.TRIGGER_BAV, status));
 };
+
+export const addInvoiceValue = (values: any[]) => (dispatch: Dispatch) => {
+  dispatch(setValue(EActionTypes.ADD_INVOICE_VALUE, values));
+};
+
+export const updateInvoiceValue = (values: {
+  item: string;
+  amount: string;
+}) => (dispatch: Dispatch) => {
+  dispatch(setValue(EActionTypes.UPDATE_INVOICE_VALUE, values));
+};

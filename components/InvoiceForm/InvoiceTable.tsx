@@ -22,8 +22,9 @@ import { AppState } from '../../lib/initialState';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      width: '60%',
-      margin: 'auto'
+      maxWidth: '80%',
+      marginBottom: '2rem',
+      boxShadow: 'none'
     },
     table: {
       minWidth: 400,
@@ -36,6 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#101010',
       fontSize: 18,
     },
+    total: {
+      color: '#fff',
+      fontWeight: 'bold'
+    },
     value: {
       color: '#101010',
       fontSize: 18,
@@ -47,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: theme.palette.common.black,
+      backgroundColor: '#43CEA2',
       color: theme.palette.common.white,
     },
     body: {
@@ -66,6 +71,14 @@ const StyledTableRow = withStyles((theme: Theme) =>
   })
 )(TableRow);
 
+const TotalTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: '#43CEA2',
+    },
+  })
+)(TableRow);
+
 interface Props {}
 
 const InvoiceTable: React.FC<Props> = (props) => {
@@ -76,7 +89,8 @@ const InvoiceTable: React.FC<Props> = (props) => {
     fee,
     allEntries,
   } = useSelector((state: AppState) => getInvoice(state));
-  console.log(allEntries, '=====');
+  const content = useSelector((state: AppState) => state.common.drawerContent);
+  const isVendor = !!content?.customer;
   return (
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} aria-label='customized table'>
@@ -97,6 +111,46 @@ const InvoiceTable: React.FC<Props> = (props) => {
               </StyledTableCell>
             </StyledTableRow>
           ))}
+          <TotalTableRow>
+            <StyledTableCell
+              component='th'
+              scope='row'
+              className={classes.total}
+            >
+              {total.item}
+            </StyledTableCell>
+            <StyledTableCell align='right' className={classes.total}>
+              {formatMoney(total.value)}
+            </StyledTableCell>
+          </TotalTableRow>
+          {isVendor && (
+            <TotalTableRow>
+              <StyledTableCell
+                component='th'
+                scope='row'
+                className={classes.total}
+              >
+                {fee.item}
+              </StyledTableCell>
+              <StyledTableCell align='right' className={classes.total}>
+                {formatMoney(fee.value)}
+              </StyledTableCell>
+            </TotalTableRow>
+          )}
+          {isVendor && (
+            <TotalTableRow>
+              <StyledTableCell
+                component='th'
+                scope='row'
+                className={classes.total}
+              >
+                {netProceed.item}
+              </StyledTableCell>
+              <StyledTableCell align='right' className={classes.total}>
+                {formatMoney(netProceed.value)}
+              </StyledTableCell>
+            </TotalTableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

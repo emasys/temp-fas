@@ -250,7 +250,7 @@ const InvoiceForm: React.FC<Props> = () => {
           disabled={isSubmitting || !isValid}
           variant='contained'
         >
-          Continue
+          {isSubmitting ? 'Saving...' : 'Save invoice'}
         </Button>
       </div>
       <div className={classes.total}>

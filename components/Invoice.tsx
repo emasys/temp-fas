@@ -37,12 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {}
 const Invoice: React.FC<Props> = (props) => {
   const content = useSelector((state: AppState) => state.common.drawerContent);
-  // const {
-  //   total,
-  //   netProceed,
-  //   fee,
-  //   allEntries,
-  // } = useSelector((state: AppState) => getInvoice(state));
+  const isVendor = !!content?.customer;
   const dispatch = useDispatch();
   const classes = useStyles();
   const handleToggle = () => {
@@ -52,15 +47,32 @@ const Invoice: React.FC<Props> = (props) => {
   return (
     <>
       {!content?.invoice ? (
-        <Button
-          variant='contained'
-          className={classes.invoice}
-          onClick={handleToggle}
-        >
-          Create invoice
-        </Button>
+        <>
+          {isVendor ? (
+            <Button
+              variant='contained'
+              className={classes.invoice}
+              onClick={handleToggle}
+            >
+              Create invoice
+            </Button>
+          ) : (
+            <Typography variant='body2'>Awaiting invoice</Typography>
+          )}
+        </>
       ) : (
-        <InvoiceTable />
+        <div>
+          <InvoiceTable />
+          {isVendor && (
+            <Button
+              variant='contained'
+              className={classes.invoice}
+              onClick={handleToggle}
+            >
+              Edit invoice
+            </Button>
+          )}
+        </div>
       )}
     </>
   );

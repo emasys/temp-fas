@@ -91,11 +91,15 @@ export default function vendor(
     case EActionTypes.UPDATE_INVOICE_VALUE:
       return {
         ...state,
-        invoiceValues: Object.entries(action.payload).map((item, index) => ({
-          item: item[0],
-          value: item[1],
-          id: index,
-        })),
+        invoiceValues: Object.entries(action.payload).map((item, index) => {
+          if (item[1] && typeof item[1] !== 'string') {
+            return {
+              item: item[0],
+              value: item[1],
+              id: index,
+            };
+          }
+        }),
       };
     case EActionTypes.ADD_INVOICE_VALUE:
       return {

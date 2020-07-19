@@ -8,6 +8,7 @@ import SignUpForm from './SignUpForm';
 import CodeForm from './CodeForm';
 import BAVForm from './BAVForm';
 import BookingForm from './BookingForm';
+import InvoiceForm from './InvoiceForm';
 
 interface Props {}
 const _component: any = {
@@ -15,7 +16,8 @@ const _component: any = {
   signUp: <SignUpForm />,
   code: <CodeForm />,
   bav: <BAVForm />,
-  bookVendor: <BookingForm />
+  bookVendor: <BookingForm />,
+  invoice: <InvoiceForm />
 };
 const ModalComponent: React.FC<Props> = () => {
   const dispatch = useDispatch();

@@ -101,3 +101,17 @@ export const createOrder = async (data: ICreateOrder) => {
     return false;
   }
 };
+
+interface ICreateInvoice {
+  invoice: any
+}
+
+export const createInvoice = async (vendorId: string, jobId: string, data: ICreateInvoice) => {
+  try {
+    const url = `vendors/${vendorId}/jobs/${jobId}/invoice`;
+    const res = await instance.post(url, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};

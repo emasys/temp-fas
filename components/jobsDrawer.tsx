@@ -19,6 +19,7 @@ import Reviews from './Reviews';
 import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
 import { CloseRounded } from '@material-ui/icons';
+import Invoice from './Invoice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -134,21 +135,6 @@ const useStyles = makeStyles((theme: Theme) =>
     chatIcon: {
       marginRight: '.5rem',
     },
-    invoice: {
-      borderRadius: '1.113rem',
-      color: '#fff',
-      padding: 0,
-      minWidth: '9rem',
-      fontSize: '0.6875rem',
-      minHeight: '2rem',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      background: '#43CEA2',
-      '&:hover': {
-        background: '#43CEA2',
-      },
-    },
     close: {
       position: 'absolute',
       right: -16,
@@ -163,7 +149,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
   const status = useSelector((state: AppState) => state.common.drawerStatus);
   const content = useSelector((state: AppState) => state.common.drawerContent);
-  const isVendor = !!content.customer;
+  const isVendor = !!content?.customer;
   const dispatch = useDispatch();
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
     dispatch(toggleDrawer(false));
@@ -183,7 +169,6 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       service: { name },
     },
   } = content;
-  // 605470
   return (
     <Drawer
       anchor='right'
@@ -270,18 +255,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='INVOICE' download={!!invoice}>
-            {!invoice ? (
-              <Button variant='contained' className={classes.invoice}>
-                Create invoice
-              </Button>
-            ) : (
-              <Typography variant='body2'>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo,
-                unde, accusamus odio facilis excepturi, ex repellendus
-                necessitatibus laborum suscipit nobis quia corrupti. Itaque
-                deserunt similique assumenda atque quos accusamus iure.
-              </Typography>
-            )}
+            <Invoice />
           </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>

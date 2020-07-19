@@ -20,6 +20,7 @@ import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
 import { CloseRounded } from '@material-ui/icons';
 import Invoice from './Invoice';
+import { getInvoice } from '../redux/selectors/common';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.5rem',
       fontWeight: 600,
       color: 'rgb(87, 68, 151)',
+    },
+    net: {
+      fontSize: '.9rem',
+      fontWeight: 600,
+      color: '#43CEA2',
     },
     link: {
       fontWeight: 'bold',
@@ -147,6 +153,9 @@ interface IProps {}
 
 const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
+  const { total, netProceed, fee } = useSelector((state: AppState) =>
+    getInvoice(state)
+  );
   const status = useSelector((state: AppState) => state.common.drawerStatus);
   const content = useSelector((state: AppState) => state.common.drawerContent);
   const isVendor = !!content?.customer;
@@ -246,9 +255,13 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               </Typography>
             )}
           </Grid>
-          <Typography variant='body2' className={classes.money}>
-            {formatMoney(40000)}
-          </Typography>
+          <div>
+            <Typography variant='body2' className={classes.money}>
+              {invoice
+                ? formatMoney(isVendor ? netProceed?.value : total?.value)
+                : '--'}
+            </Typography>
+          </div>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='ORDER DESCRIPTION' body={description} />

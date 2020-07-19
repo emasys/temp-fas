@@ -7,7 +7,6 @@ import {
   Grid,
 } from '@material-ui/core';
 import { formatMoney } from '../../util';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

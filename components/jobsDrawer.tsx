@@ -12,7 +12,7 @@ import {
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import { toggleDrawer } from '../redux/actions/common';
+import { toggleDrawer, updateInvoiceValue } from '../redux/actions/common';
 import { formatMoney } from '../util';
 import Collapsible from './Collapsible';
 import Reviews from './Reviews';
@@ -21,6 +21,7 @@ import chat from '../assets/chat.svg';
 import { CloseRounded } from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -163,6 +164,12 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
     dispatch(toggleDrawer(false));
   };
+
+  useEffect(() => {
+    if (content?.invoice) {
+      dispatch(updateInvoiceValue(content?.invoice));
+    }
+  }, [content?.invoice]);
 
   if (!content) return <div />;
   const {

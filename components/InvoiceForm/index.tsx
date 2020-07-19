@@ -144,7 +144,6 @@ const InvoiceForm: React.FC<Props> = () => {
     (state: AppState) => state.common.drawerContent
   );
 
-
   useEffect(() => {
     if (invoice) {
       dispatch(updateInvoiceValue(invoice));
@@ -182,16 +181,16 @@ const InvoiceForm: React.FC<Props> = () => {
           payload.invoice[item.item] = Number(item.value);
       });
 
-        const data = await createInvoice(vendorId, id, payload);
-        setSubmitting(true);
-        if (!data) {
-          setSubmitting(false);
-          return;
-        }
-        dispatch(updateJobInvoice(id, data.invoice))
-        dispatch(handleAuthModal(false));
-        dispatch(toggleModal('login'));
+      const data = await createInvoice(vendorId, id, payload);
+      setSubmitting(true);
+      if (!data) {
         setSubmitting(false);
+        return;
+      }
+      dispatch(updateJobInvoice(id, data.invoice));
+      dispatch(handleAuthModal(false));
+      dispatch(toggleModal('login'));
+      setSubmitting(false);
     },
   });
   useEffect(() => {

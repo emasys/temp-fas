@@ -11,6 +11,8 @@ import next from '../assets/next.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { toggleModal, handleAuthModal } from '../redux/actions/common';
+import { getInvoice } from '../redux/selectors/common';
+import InvoiceTable from './InvoiceForm/InvoiceTable';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +37,12 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {}
 const Invoice: React.FC<Props> = (props) => {
   const content = useSelector((state: AppState) => state.common.drawerContent);
+  // const {
+  //   total,
+  //   netProceed,
+  //   fee,
+  //   allEntries,
+  // } = useSelector((state: AppState) => getInvoice(state));
   const dispatch = useDispatch();
   const classes = useStyles();
   const handleToggle = () => {
@@ -43,7 +51,7 @@ const Invoice: React.FC<Props> = (props) => {
   };
   return (
     <>
-      {content?.invoice ? (
+      {!content?.invoice ? (
         <Button
           variant='contained'
           className={classes.invoice}
@@ -52,12 +60,7 @@ const Invoice: React.FC<Props> = (props) => {
           Create invoice
         </Button>
       ) : (
-        <Typography variant='body2'>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo, unde,
-          accusamus odio facilis excepturi, ex repellendus necessitatibus
-          laborum suscipit nobis quia corrupti. Itaque deserunt similique
-          assumenda atque quos accusamus iure.
-        </Typography>
+        <InvoiceTable />
       )}
     </>
   );

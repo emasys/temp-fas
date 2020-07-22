@@ -36,17 +36,26 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('sm')]: {
         width: '5rem',
       },
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
     },
     area: {
       width: '7rem',
       [theme.breakpoints.down('sm')]: {
         width: '5rem',
       },
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
     },
     searchInput: {
       width: '17.6856rem',
       [theme.breakpoints.down('sm')]: {
         width: '17rem',
+      },
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
       },
     },
     icon: {
@@ -56,6 +65,29 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '3px',
+        overflow: 'hidden'
+      },
+    },
+    selectBoxes: {
+      display: 'flex',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '1rem',
+      },
+    },
+    selectBox: {
+      marginRight: '1.5rem',
+      [theme.breakpoints.down('xs')]: {
+        marginRight: '1rem',
+      },
+    },
+    searchWrapper: {
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
     },
     endAdornment: {
       display: 'none',
@@ -134,13 +166,13 @@ const SearchFields: React.FC<Props> = ({
     if (event.key === 'Enter') {
       handleSubmit();
     }
-  }
+  };
 
   const areaOptions = locations.find((loc) => loc.value === values.state);
 
   return (
     <Grid item xs={12} className={classes.formWrapper}>
-      <FormControl variant='filled'>
+      <FormControl variant='filled' className={classes.searchWrapper}>
         <div>
           <div {...getRootProps()}>
             <FilledInput
@@ -148,6 +180,7 @@ const SearchFields: React.FC<Props> = ({
               onKeyPress={handleKeyPress}
               type={'text'}
               name='search'
+              fullWidth
               {...getInputProps()}
               placeholder='What service are you looking for?'
               className={classes.searchInput}
@@ -174,22 +207,28 @@ const SearchFields: React.FC<Props> = ({
           ) : null}
         </div>
       </FormControl>
-      <SelectInput
-        name='state'
-        placeholder='State'
-        className={classes.state}
-        options={locations}
-        handleChange={handleChange}
-        value={values.state}
-      />
-      <SelectInput
-        name='area'
-        placeholder='Area'
-        className={classes.area}
-        options={areaOptions?.areas || []}
-        handleChange={handleChange}
-        value={values.area}
-      />
+      <div className={classes.selectBoxes}>
+        <div className={classes.selectBox}>
+          <SelectInput
+            name='state'
+            placeholder='State'
+            className={classes.state}
+            options={locations}
+            handleChange={handleChange}
+            value={values.state}
+          />
+        </div>
+        <div>
+          <SelectInput
+            name='area'
+            placeholder='Area'
+            className={classes.area}
+            options={areaOptions?.areas || []}
+            handleChange={handleChange}
+            value={values.area}
+          />
+        </div>
+      </div>
     </Grid>
   );
 };

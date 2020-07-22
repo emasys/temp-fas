@@ -18,9 +18,20 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '15.6875rem',
       margin: 'auto',
       boxShadow: '0px 11px 20px 1px rgba(0, 0, 0, 0.08)',
+      [theme.breakpoints.down('xs')]: {
+        padding: '1rem',
+        overflow: 'hidden',
+        width: '100%',
+        maxWidth: '100%'
+      },
     },
     button: {
       marginTop: '2.1456rem',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '1rem',
+        minHeight: '0rem',
+        height: '3rem'
+      },
     },
   })
 );

@@ -40,12 +40,19 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
       fontFamily: 'Alegreya',
       color: '#fff',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '1.5rem'
+      },
     },
     leadText: {
       color: '#fff',
       fontFamily: 'Lato',
       marginTop: '0.9375rem',
       fontSize: '1.0254rem',
+      [theme.breakpoints.down('xs')]: {
+        textAlign: 'center',
+        fontSize: '.8rem',
+      },
     },
     searchBox: {},
   })

@@ -26,17 +26,29 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       padding: 0,
+      [theme.breakpoints.down('xs')]: {
+        alignItems: 'center'
+      },
     },
     title: {
       color: '#5C5C5C',
       fontWeight: 500,
       fontSize: '1.5rem',
-      marginBottom: '.5rem'
+      marginBottom: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '.8rem',
+        margin: 0
+      },
     },
     button: {
       color: '#A9A9A9',
       minHeight: '2.5rem',
       fontSize: '1.1411rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '.8rem',
+        minWidth: '2rem',
+        padding: 0
+      },
     },
     icon: {
       marginLeft: '.5rem',

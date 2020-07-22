@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 18,
     },
     total: {
-      color: '#fff',
+      // color: '#fff',
       fontWeight: 'bold'
     },
     value: {
@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: '#43CEA2',
-      color: theme.palette.common.white,
+      // backgroundColor: '#43CEA2',
+      // color: theme.palette.common.white,
     },
     body: {
       fontSize: 14,
@@ -74,7 +74,7 @@ const StyledTableRow = withStyles((theme: Theme) =>
 const TotalTableRow = withStyles((theme: Theme) =>
   createStyles({
     root: {
-      backgroundColor: '#43CEA2',
+      // backgroundColor: '#43CEA2',
     },
   })
 )(TableRow);

@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       fontSize: '1rem',
       color: '#4c4c4c',
+      padding: '.5rem'
     },
     listItem: {
       paddingLeft: 0,

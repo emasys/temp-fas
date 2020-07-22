@@ -271,7 +271,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           </div>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='ORDER DESCRIPTION' body={description} />
+          <Collapsible title='DESCRIPTION' body={description} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='INVOICE' download={!!invoice}>

@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuIcon: {
       padding: 0,
+      borderRadius: 0
     },
     icon: {
       padding: 0,

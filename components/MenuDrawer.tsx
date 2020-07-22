@@ -5,27 +5,10 @@ import {
   Theme,
   createStyles,
   Drawer,
-  Typography,
-  Button,
-  IconButton,
 } from '@material-ui/core';
-import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import {
-  toggleDrawer,
-  updateInvoiceValue,
-  toggleMobileDrawer,
-} from '../redux/actions/common';
-import { formatMoney } from '../util';
-import Collapsible from './Collapsible';
-import Reviews from './Reviews';
-import phoneIcon from '../assets/phone.svg';
-import chat from '../assets/chat.svg';
-import { CloseRounded } from '@material-ui/icons';
-import Invoice from './Invoice';
-import { getInvoice } from '../redux/selectors/common';
-import { useEffect } from 'react';
+import { toggleMobileDrawer } from '../redux/actions/common';
 import MobileNav from './MobileNav';
 
 const useStyles = makeStyles((theme: Theme) =>

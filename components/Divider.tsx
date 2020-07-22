@@ -15,12 +15,18 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 2,
       background: '#F6F6F6',
       borderRadius: 10,
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
     },
     dividerInner: {
       height: 2,
       background: '#000',
       width: '21.3125rem',
       borderRadius: 10,
+      [theme.breakpoints.down('xs')]: {
+        width: '50%'
+      },
     },
     header: {
       display: 'flex',

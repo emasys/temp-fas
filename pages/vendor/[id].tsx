@@ -73,7 +73,8 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: '2.125rem',
       borderRadius: '.2rem',
       [theme.breakpoints.down('xs')]: {
-       marginTop: '1rem'
+        marginTop: '1.5rem',
+        minHeight: '1.8rem',
       },
     },
     reviewWrapper: {
@@ -94,7 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       [theme.breakpoints.down('xs')]: {
         padding: '.3rem .7rem',
-       },
+      },
     },
     icon: {
       marginRight: '0.6rem',

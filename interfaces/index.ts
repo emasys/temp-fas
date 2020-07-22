@@ -31,6 +31,7 @@ export interface ICommon {
   tempEmail: string;
   invoiceValues: any[];
   isBAV: boolean;
+  mobileDrawer: boolean;
   drawerContent: IDrawerContent;
   drawerStatus: boolean;
 }

@@ -38,9 +38,9 @@ export const login = (data: ILoginRes) => async (
     };
     instance.defaults.headers.common['Authorization'] = `Bearer ${auth_token}`;
     dispatch(setValue(EActionTypes.LOGIN, payload));
-    if (isBAV) {
-      return dispatch(toggleModal('bav'));
-    }
+    // if (isBAV) {
+    //   return dispatch(toggleModal('bav'));
+    // }
     dispatch(handleAuthModal(false));
   } catch (error) {
     console.log(error, 'error');

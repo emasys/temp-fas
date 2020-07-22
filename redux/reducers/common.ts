@@ -54,12 +54,18 @@ interface IUpdateOrderInvoice {
   payload: { id: string; data: any };
 }
 
+interface IMobileDrawer {
+  type: EActionTypes.TOGGLE_MOBILE_DRAWER;
+  payload: boolean;
+}
+
 export type TCommonActions =
   | ISaveURI
   | IAddInvoiceValue
   | IResetAction
   | IDrawerContent
   | IAuthModal
+  | IMobileDrawer
   | ITriggerBAV
   | ISaveEmail
   | IUpdateOrderInvoice
@@ -74,6 +80,7 @@ export const initialCommonState = {
   tempEmail: '',
   drawerContent: null,
   drawerStatus: false,
+  mobileDrawer: false,
   isBAV: false,
   invoiceValues: [],
 };
@@ -110,6 +117,11 @@ export default function vendor(
       return {
         ...state,
         drawerContent: action.payload,
+      };
+    case EActionTypes.TOGGLE_MOBILE_DRAWER:
+      return {
+        ...state,
+        mobileDrawer: action.payload,
       };
     case EActionTypes.UPDATE_JOB_INVOICE:
       return {

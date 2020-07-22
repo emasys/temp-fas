@@ -54,6 +54,10 @@ export const toggleDrawer = (status: boolean) => (dispatch: Dispatch) => {
   dispatch(setValue(EActionTypes.TOGGLE_DRAWER, status));
 };
 
+export const toggleMobileDrawer = (status: boolean) => (dispatch: Dispatch) => {
+  dispatch(setValue(EActionTypes.TOGGLE_MOBILE_DRAWER, status));
+};
+
 export const triggerBAV = (status: boolean) => (dispatch: Dispatch) => {
   dispatch(setValue(EActionTypes.TRIGGER_BAV, status));
 };

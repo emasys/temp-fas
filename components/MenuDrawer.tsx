@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '80%',
       maxWidth: '80%',
       padding: '2% 4%',
-      borderRadius: '1rem 0 0 1rem',
+      background: 'rgb(219, 249, 239)',
+      borderRadius: '.2rem 0 0 .2rem',
     },
   })
 );

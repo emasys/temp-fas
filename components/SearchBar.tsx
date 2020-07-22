@@ -6,10 +6,16 @@ import clx from 'clsx';
 import back from '../assets/back-arrow.svg';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { handleAuthModal, triggerBAV } from '../redux/actions/common';
+import {
+  handleAuthModal,
+  triggerBAV,
+  toggleMobileDrawer,
+} from '../redux/actions/common';
 import Login from './Modal';
 import UserMenu from './UserMenu';
 import { AppState } from '../lib/initialState';
+import menuIcon from '../assets/menuIcon-dark.svg';
+import MenuDrawer from './MenuDrawer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '0.25rem',
     },
     title: {
-      color: '#949494',
+      color: '#4c4c4c',
       fontWeight: 500,
       fontSize: '1.2rem',
       textDecoration: 'none',
@@ -44,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '1.25rem 0',
     },
     link: {
-      color: '#949494',
+      color: '#4c4c4c',
       cursor: 'pointer',
     },
     button: {
@@ -60,11 +66,31 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
     },
     menuWrapper: {
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
+    },
+    mobileNav: {
+      display: 'none',
+      [theme.breakpoints.down('xs')]: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+      },
+    },
+    menuIcon: {
+      padding: 0,
+    },
+    icon: {
+      padding: 0,
+      height: '1rem',
     },
   })
 );
@@ -92,9 +118,14 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
       handleLogin();
     }
   };
+  const openMenu = () => {
+    dispatch(toggleMobileDrawer(true));
+  };
+
   return (
     <Fragment>
       <Login />
+      <MenuDrawer />
       <Grid container justify='space-between' className={classes.root}>
         <Grid item sm={4}>
           <Typography
@@ -108,41 +139,55 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
         </Grid>
 
         {auth ? (
-          <Grid item sm={6} className={classes.menuWrapper}>
-            <UserMenu dark />
-          </Grid>
+          <>
+            <Grid item sm={6} className={classes.menuWrapper}>
+              <UserMenu dark />
+            </Grid>
+            <Grid item xs={6} className={classes.mobileNav}>
+              <IconButton className={classes.menuIcon} onClick={openMenu}>
+                <img src={menuIcon} alt='menu' className={classes.icon} />
+              </IconButton>
+            </Grid>
+          </>
         ) : (
-          <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
-            <Link href='/'>
-              <Typography variant='body1' className={classes.link}>
-                Home
+          <>
+            <Grid item sm={8} md={6} lg={4} className={classes.linkWrapper}>
+              <Link href='/'>
+                <Typography variant='body1' className={classes.link}>
+                  Home
+                </Typography>
+              </Link>
+              <Link href='/'>
+                <Typography variant='body1' className={classes.link}>
+                  About{' '}
+                </Typography>
+              </Link>
+              <Link href='/'>
+                <Typography variant='body1' className={classes.link}>
+                  All Services{' '}
+                </Typography>
+              </Link>
+              <Typography
+                variant='body1'
+                className={classes.link}
+                onClick={handleLogin}
+              >
+                Login
               </Typography>
-            </Link>
-            <Link href='/'>
-              <Typography variant='body1' className={classes.link}>
-                About{' '}
-              </Typography>
-            </Link>
-            <Link href='/'>
-              <Typography variant='body1' className={classes.link}>
-                All Services{' '}
-              </Typography>
-            </Link>
-            <Typography
-              variant='body1'
-              className={classes.link}
-              onClick={handleLogin}
-            >
-              Login
-            </Typography>
-            <Button
-              variant='contained'
-              className={classes.button}
-              onClick={handleCreateVendor}
-            >
-              Become a vendor
-            </Button>
-          </Grid>
+              <Button
+                variant='contained'
+                className={classes.button}
+                onClick={handleCreateVendor}
+              >
+                Become a vendor
+              </Button>
+            </Grid>
+            <Grid item xs={6} className={classes.mobileNav}>
+              <IconButton className={classes.menuIcon} onClick={openMenu}>
+                <img src={menuIcon} alt='menu' className={classes.icon} />
+              </IconButton>
+            </Grid>
+          </>
         )}
       </Grid>
     </Fragment>

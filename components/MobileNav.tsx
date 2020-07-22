@@ -140,7 +140,7 @@ const MobileNav: React.FC<Props> = (props) => {
         <List aria-label='profile home' style={{ width: '100%' }}>
           <Divider style={{ marginBottom: '.5rem' }} />
           <Link href='/'>
-            <ListItem button>
+            <ListItem button onClick={closeDrawer}>
               <ListItemIcon className={classes.link}>
                 <HomeRounded />
               </ListItemIcon>
@@ -150,7 +150,7 @@ const MobileNav: React.FC<Props> = (props) => {
             </ListItem>
           </Link>
           <Link href='/'>
-            <ListItem button>
+            <ListItem button onClick={closeDrawer}>
               <ListItemIcon className={classes.link}>
                 <InfoRounded />
               </ListItemIcon>
@@ -180,7 +180,7 @@ const MobileNav: React.FC<Props> = (props) => {
             </ListItem>
           )}
           {!ownVendor?.id && (
-            <ListItem>
+            <ListItem onClick={closeDrawer}>
               <Button
                 variant='contained'
                 className={classes.button}

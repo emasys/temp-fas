@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 'auto',
       outline: 'none',
       [theme.breakpoints.down('xs')]: {
-        width: '95%'
+        width: '95%',
+        top: '2%'
       },
     },
     form: {

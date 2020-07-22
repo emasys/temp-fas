@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
       minWidth: 120,
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
     },
     icon: {
       marginTop: '0.6rem',

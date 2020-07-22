@@ -84,6 +84,11 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%'
       },
     },
+    selectBoxRight: {
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
+    },
     searchWrapper: {
       [theme.breakpoints.down('xs')]: {
         width: '100%',
@@ -218,7 +223,7 @@ const SearchFields: React.FC<Props> = ({
             value={values.state}
           />
         </div>
-        <div>
+        <div className={classes.selectBoxRight}>
           <SelectInput
             name='area'
             placeholder='Area'

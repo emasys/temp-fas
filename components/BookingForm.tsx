@@ -14,10 +14,15 @@ import {
   Typography,
   TextField,
   Button,
+  IconButton,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import { setValue, handleAuthModal, validateToken } from '../redux/actions/common';
+import {
+  setValue,
+  handleAuthModal,
+  validateToken,
+} from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
 import { createVendor, createOrder } from '../api';
 import NumberFormat from 'react-number-format';
@@ -26,6 +31,7 @@ import { getLocations } from '../redux/selectors/locations';
 import { getServiceOptions } from '../redux/selectors/services';
 import MoneyInput from './MoneyInput';
 import { updateUserJob } from '../redux/actions/jobs';
+import { CloseRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
       outline: 'none',
       [theme.breakpoints.down('xs')]: {
         width: '95%',
-        top: '2%'
+        top: '2%',
       },
     },
     form: {
@@ -54,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '.2rem',
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
-        padding: '3rem 1rem'
+        padding: '3rem 1rem',
       },
     },
     button: {
@@ -105,6 +111,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     datePicker: {
       color: '#636363',
+    },
+    header: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
     },
   })
 );
@@ -158,11 +169,11 @@ const BookingForm: React.FC<Props> = () => {
       const data = await createOrder(payload);
       setSubmitting(true);
       if (!data) {
-        dispatch(validateToken())
+        dispatch(validateToken());
         setFieldError('error', 'error');
         return setSubmitting(false);
       }
-      dispatch(updateUserJob(data))
+      dispatch(updateUserJob(data));
       dispatch(handleAuthModal(false));
       setSubmitting(false);
     },
@@ -180,9 +191,18 @@ const BookingForm: React.FC<Props> = () => {
     setFieldValue('dueDate', new Date(date));
   };
 
+  const handleClose = () => {
+    dispatch(handleAuthModal(false));
+  }
+
   return (
     <div className={classes.paper}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div className={classes.header}>
+          <IconButton onClick={handleClose}>
+            <CloseRounded />
+          </IconButton>
+        </div>
         <div className={classes.form}>
           <Typography variant='body1' className={classes.title}>
             Book vendor

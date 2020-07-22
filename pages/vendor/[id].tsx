@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       minHeight: '2.125rem',
       borderRadius: '.2rem',
+      [theme.breakpoints.down('xs')]: {
+       marginTop: '1rem'
+      },
     },
     reviewWrapper: {
       marginTop: '.8rem',
@@ -89,6 +92,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '0.8125rem',
       display: 'flex',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        padding: '.3rem .7rem',
+       },
     },
     icon: {
       marginRight: '0.6rem',
@@ -196,7 +202,7 @@ const Vendor: React.FC<Props> = () => {
           </Grid>
           {isOwnPage ? (
             <Button variant='contained' className={classes.button}>
-              Edit profile
+              Edit vendor
             </Button>
           ) : (
             <Button

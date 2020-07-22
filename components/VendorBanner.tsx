@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
         height: '22rem',
         paddingTop: '1rem',
       },
+      [theme.breakpoints.down('xs')]: {
+        padding: '1rem .5rem',
+        height: '10rem'
+      },
     },
     rateWrapper: {
       display: 'flex',
@@ -41,6 +45,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '0.9375rem',
       background: 'rgba(0, 0, 0, 0.25)',
       borderRadius: '0.1875rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.8rem',
+      },
     },
     rateText: {
       fontSize: '0.625rem',
@@ -60,9 +67,15 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: 'Lato',
       color: '#fff',
       fontSize: '0.9375rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.8rem',
+      },
     },
     phoneIcon: {
       marginRight: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none'
+      },
     },
     chat: {
       display: 'flex',
@@ -76,9 +89,16 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#fff',
       fontSize: '0.9375rem',
       marginLeft: '0.75rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.8rem',
+        minWidth: '100%'
+      },
     },
     chatIcon: {
       marginRight: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none'
+      },
     },
   })
 );

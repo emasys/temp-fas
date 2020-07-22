@@ -68,20 +68,20 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '3px',
-        overflow: 'hidden'
       },
     },
     selectBoxes: {
       display: 'flex',
       [theme.breakpoints.down('xs')]: {
         marginTop: '1rem',
+        width: '100%'
       },
     },
     selectBox: {
       marginRight: '1.5rem',
       [theme.breakpoints.down('xs')]: {
         marginRight: '1rem',
+        width: '100%'
       },
     },
     searchWrapper: {

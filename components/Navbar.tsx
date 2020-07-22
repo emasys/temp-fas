@@ -66,6 +66,10 @@ const useStyles = makeStyles((theme: Theme) =>
     menuIcon: {
       padding: 0,
     },
+    icon: {
+      padding: 0,
+      height: '1rem'
+    },
   })
 );
 
@@ -106,7 +110,7 @@ const Navbar: React.FC<Props> = (props) => {
             </Grid>
             <Grid item xs={6} className={classes.mobileNav}>
               <IconButton className={classes.menuIcon} onClick={openMenu}>
-                <img src={menuIcon} alt='menu' />
+                <img src={menuIcon} alt='menu' className={classes.icon} />
               </IconButton>
             </Grid>
           </>
@@ -146,7 +150,7 @@ const Navbar: React.FC<Props> = (props) => {
             </Grid>
             <Grid item xs={6} className={classes.mobileNav}>
               <IconButton className={classes.menuIcon} onClick={openMenu}>
-                <img src={menuIcon} alt='menu' />
+                <img src={menuIcon} alt='menu' className={classes.icon} />
               </IconButton>
             </Grid>
           </>

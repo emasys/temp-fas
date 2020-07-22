@@ -47,6 +47,7 @@ const SelectInput: React.FC<Props> = ({
         labelId='custom-select'
         id='custom-select'
         name={name}
+        fullWidth
         value={value || '""'}
         classes={{
           root: className,

@@ -93,7 +93,7 @@ theme.overrides = {
     multiline: {
       height: 'auto',
       minHeight: '3.33rem',
-      paddingTop: '1rem'
+      paddingTop: '1rem',
     },
     input: {
       '&::placeholder': {
@@ -124,6 +124,11 @@ theme.overrides = {
     icon: {
       top: '1.4rem !important',
       right: '1rem !important',
+    },
+    filled: {
+      [theme.breakpoints.down('xs')]: {
+        paddingRight: '24px !important',
+      },
     },
     select: {
       '&:focus': {

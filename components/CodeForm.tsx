@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0,
       margin: 'auto',
       outline: 'none',
+      maxHeight: '95vh',
+      overflow: 'auto',
       [theme.breakpoints.down('xs')]: {
         width: '95%',
         top: '2%'

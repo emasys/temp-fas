@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '.8rem',
+      },
     },
     back: {
       marginRight: '.5rem',

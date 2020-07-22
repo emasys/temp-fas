@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       overflow: 'auto',
       width: '30rem',
-      maxHeight: '80%',
       backgroundColor: '#fff',
       top: '10%',
       left: 0,
@@ -50,6 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0,
       margin: 'auto',
       outline: 'none',
+      maxHeight: '95vh',
+      overflow: 'auto',
       [theme.breakpoints.down('xs')]: {
         width: '95%',
         top: '2%'

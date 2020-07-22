@@ -34,6 +34,11 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: 'wrap',
     },
     vendor: {},
+    noResult: {
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
+    }
   })
 );
 
@@ -63,7 +68,11 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
                 xs={12}
                 style={{ display: 'flex', justifyContent: 'center' }}
               >
-                <img src={noResult} alt='no result' />
+                <img
+                  src={noResult}
+                  alt='no result'
+                  className={classes.noResult}
+                />
               </Grid>
             ) : (
               allVendors.map((vendor) => (

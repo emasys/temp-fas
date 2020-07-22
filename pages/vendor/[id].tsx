@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       marginTop: '1rem',
+      [theme.breakpoints.down('xs')]: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+      },
     },
     button: {
       minHeight: '2.125rem',
@@ -121,6 +125,11 @@ const useStyles = makeStyles((theme: Theme) =>
     reviews: {
       margin: '3rem 0',
     },
+    vendorName: {
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
+    },
   })
 );
 
@@ -166,7 +175,7 @@ const Vendor: React.FC<Props> = () => {
           <VendorBanner rate={vendorObj?.rate} phone={vendorObj?.phoneNumber} />
         </Grid>
         <Grid item xs={12} className={classes.nameWrapper}>
-          <div>
+          <Grid item sm={6} xs={12}>
             <Typography variant='body2' className={classes.name}>
               {vendorObj?.name}
               <img
@@ -184,13 +193,12 @@ const Vendor: React.FC<Props> = () => {
                 Nil
               </Typography>
             </div>
-          </div>
-          {isOwnPage && (
+          </Grid>
+          {isOwnPage ? (
             <Button variant='contained' className={classes.button}>
               Edit profile
             </Button>
-          )}
-          {!isOwnPage && (
+          ) : (
             <Button
               variant='contained'
               onClick={handleBooking}

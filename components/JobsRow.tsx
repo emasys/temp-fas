@@ -166,7 +166,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
           {moment(date).format('yyyy-MM-DD')}
         </Typography>
       </Grid>
-      <Grid item xs={3} onClick={handleDrawer}>
+      <Grid item xs={4} sm={3} onClick={handleDrawer}>
         <Typography variant='body2' className={classes.name}>
           {name}
         </Typography>

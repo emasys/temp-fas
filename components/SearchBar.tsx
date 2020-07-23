@@ -131,7 +131,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
       <Login />
       <MenuDrawer />
       <Grid container justify='space-between' className={classes.root}>
-        <Grid item sm={4}>
+        <Grid item xs={7} sm={4}>
           <Typography
             variant='body1'
             className={classes.title}
@@ -147,7 +147,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
             <Grid item sm={6} className={classes.menuWrapper}>
               <UserMenu dark />
             </Grid>
-            <Grid item xs={6} className={classes.mobileNav}>
+            <Grid item xs={2} sm={6} className={classes.mobileNav}>
               <IconButton className={classes.menuIcon} onClick={openMenu}>
                 <img src={menuIcon} alt='menu' className={classes.icon} />
               </IconButton>

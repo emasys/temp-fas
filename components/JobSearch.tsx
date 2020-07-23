@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
     inputRoot: {
       backgroundColor: '#fff',
       width: '20rem',
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
     },
     state: {
       width: '5.5rem',
@@ -39,6 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     field: {
       marginRight: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+        margin: 0,
+        paddingRight: '.5rem'
+      },
     },
     formWrapper: {
       display: 'flex',
@@ -56,8 +64,8 @@ interface Props {}
 const JobSearch: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
-    <Grid item xs={12} className={classes.formWrapper}>
-      <div className={classes.field}>
+    <Grid container className={classes.formWrapper}>
+      <Grid item xs={6} sm={3} className={classes.field}>
         <SelectInput
           name='state'
           placeholder='All'
@@ -66,8 +74,8 @@ const JobSearch: React.FC<Props> = (props) => {
           handleChange={(e) => {}}
           value={''}
         />
-      </div>
-      <div className={classes.field}>
+      </Grid>
+      <Grid item xs={6} sm={3} className={classes.field}>
         <SelectInput
           name='area'
           placeholder='This month'
@@ -76,8 +84,8 @@ const JobSearch: React.FC<Props> = (props) => {
           handleChange={(e) => {}}
           value={''}
         />
-      </div>
-      <div className={classes.field}>
+      </Grid>
+      <Grid item xs={12} sm={4} className={classes.field}>
         <TextField
           classes={{
             root: classes.inputRoot,
@@ -95,7 +103,7 @@ const JobSearch: React.FC<Props> = (props) => {
           }}
           className={classes.inputBox}
         />
-      </div>
+      </Grid>
     </Grid>
   );
 };

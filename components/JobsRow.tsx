@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '0.2rem',
       border: '0.890421px solid #F0F0F0',
       boxSizing: 'border-box',
+      [theme.breakpoints.down('xs')]: {
+        height: '3rem',
+        justifyContent: 'space-between',
+      },
     },
     indicator: {
       position: 'absolute',
@@ -34,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '0.3125rem',
       top: '19%',
       left: '-3px',
+      [theme.breakpoints.down('xs')]: {
+        top: '.5rem',
+        height: '2rem',
+      },
     },
     pdf: {
       background: '#F6F6F6',
@@ -44,6 +52,14 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '1.113rem',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
+    },
+    date: {
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
     },
     arrow: {
       marginLeft: '.5rem',
@@ -57,6 +73,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        height: '3rem',
+      },
     },
     statusWrapper: {
       display: 'flex',
@@ -64,12 +83,19 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       paddingRight: '2rem',
       cursor: 'pointer',
+      [theme.breakpoints.down('xs')]: {
+        paddingRight: '.5rem',
+      },
     },
     statusBtn: {
       cursor: 'pointer',
       background: '#F9F9F9',
       padding: '.5rem',
       marginLeft: '2rem',
+      [theme.breakpoints.down('xs')]: {
+        padding: '.2rem',
+        marginLeft: '.5rem',
+      },
     },
     status: {
       cursor: 'pointer',
@@ -82,10 +108,18 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '1.113rem',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
+    },
+    name: {
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.7rem',
+      },
     },
     amount: {
-      fontSize: '0.7rem'
-    }
+      fontSize: '0.7rem',
+    },
   })
 );
 
@@ -106,7 +140,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   status,
   stage,
   color,
-  id
+  id,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -116,7 +150,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   };
   return (
     <Grid container className={classes.row}>
-      <Grid item xs={2} className={classes.pdfWrapper}>
+      <Grid item xs={1} sm={2} className={classes.pdfWrapper}>
         <div
           className={classes.indicator}
           style={{ backgroundColor: color || '#574497' }}
@@ -127,13 +161,15 @@ const JobsRow: React.FC<IJobsRowProps> = ({
           </Typography>
         </div>
       </Grid>
-      <Grid item xs={2} onClick={handleDrawer}>
+      <Grid item xs={2} onClick={handleDrawer} className={classes.date}>
         <Typography variant='body2'>
           {moment(date).format('yyyy-MM-DD')}
         </Typography>
       </Grid>
       <Grid item xs={3} onClick={handleDrawer}>
-        <Typography variant='body2'>{name}</Typography>
+        <Typography variant='body2' className={classes.name}>
+          {name}
+        </Typography>
       </Grid>
       <Grid item xs={2} onClick={handleDrawer}>
         <Typography

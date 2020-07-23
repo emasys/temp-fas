@@ -59,7 +59,7 @@ export default function Jobs({}: Props): ReactElement {
       <VendorLayout title={'Dashboard'}>
         <>
           <Grid container className={classes.search}>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch />
             </Grid>
           </Grid>

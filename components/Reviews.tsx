@@ -53,7 +53,10 @@ const useStyles = makeStyles((theme: Theme) =>
         height: 60,
         marginTop: 35,
         marginLeft: '1rem'
-      }
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '1rem',
+      },
     },
   })
 );

@@ -24,10 +24,16 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       maxWidth: '80%',
       marginBottom: '2rem',
-      boxShadow: 'none'
+      boxShadow: 'none',
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '100%'
+      },
     },
     table: {
       minWidth: 400,
+      [theme.breakpoints.down('xs')]: {
+        minWidth: '100%'
+      },
     },
     wrapper: {
       marginTop: 0,

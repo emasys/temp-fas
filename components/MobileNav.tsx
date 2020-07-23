@@ -14,7 +14,11 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import UserMenu from './UserMenu';
-import { handleAuthModal, triggerBAV, toggleMobileDrawer } from '../redux/actions/common';
+import {
+  handleAuthModal,
+  triggerBAV,
+  toggleMobileDrawer,
+} from '../redux/actions/common';
 import Login from './Modal';
 import {
   AccountCircleOutlined,
@@ -60,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       fontSize: '1rem',
       color: '#4c4c4c',
-      padding: '.5rem'
+      padding: '.5rem',
     },
     listItem: {
       paddingLeft: 0,
@@ -97,29 +101,34 @@ const MobileNav: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const handleLogin = () => {
+    closeDrawer();
     dispatch(handleAuthModal(true));
   };
 
   const handleCreateVendor = () => {
+    closeDrawer();
     dispatch(triggerBAV(true));
     if (!auth) {
       handleLogin();
     }
   };
 
-  const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
+  const closeDrawer = () => {
     dispatch(toggleMobileDrawer(false));
   };
 
   const handleLogOut = () => {
     dispatch(logOut());
+    closeDrawer();
   };
 
   const handleProfile = () => {
+    closeDrawer();
     router.push('/profile', '/profile');
   };
 
   const handleDashboard = () => {
+    closeDrawer();
     router.push('/dashboard', '/dashboard');
   };
 
@@ -127,7 +136,7 @@ const MobileNav: React.FC<Props> = (props) => {
     <Fragment>
       <Grid container justify='space-between' className={classes.root}>
         <Grid item xs={12} className={classes.header}>
-          <CloseRounded onClick={closeDrawer}/>
+          <CloseRounded onClick={closeDrawer} />
         </Grid>
         {auth && (
           <Grid item xs={12} className={classes.titleWrapper}>

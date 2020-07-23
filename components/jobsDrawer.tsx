@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '80%',
       maxWidth: '80%',
       padding: '2% 4%',
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '90%',
+        padding: '4%'
+      },
     },
     titleWrapper: {
       display: 'flex',
@@ -42,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1rem',
       fontWeight: 600,
       textTransform: 'uppercase',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.7rem',
+      },
     },
     subtitle: {
       color: '#292929',
@@ -49,22 +56,36 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 600,
       textTransform: 'uppercase',
       marginBottom: '.4rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.8rem',
+      },
     },
     money: {
       fontSize: '1.5rem',
       fontWeight: 600,
       color: 'rgb(87, 68, 151)',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.8rem',
+      },
     },
     net: {
       fontSize: '.9rem',
       fontWeight: 600,
       color: '#43CEA2',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.7rem',
+      },
     },
     link: {
       fontWeight: 'bold',
       fontSize: '.8rem',
       position: 'relative',
       marginBottom: '.4rem',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '0.7rem',
+        display: 'flex',
+        alignItems: 'center'
+      },
     },
     desc: {
       paddingTop: '0rem',
@@ -102,6 +123,9 @@ const useStyles = makeStyles((theme: Theme) =>
       top: '.18rem',
       borderRadius: '1rem',
       width: '0.2rem',
+      [theme.breakpoints.down('xs')]: {
+        position: 'unset'
+      },
     },
     contactWrapper: {
       display: 'flex',
@@ -119,9 +143,16 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         background: 'rgba(0,0,0,0.25)',
       },
+      [theme.breakpoints.down('xs')]: {
+        minHeight: '1.5rem',
+        minWidth: '6rem'
+      },
     },
     phoneIcon: {
       marginRight: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+       display: 'none'
+      },
     },
     chat: {
       borderRadius: '1.113rem',
@@ -138,9 +169,16 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         background: '#43CEA2',
       },
+      [theme.breakpoints.down('xs')]: {
+        minHeight: '1.5rem',
+        minWidth: '5rem'
+      },
     },
     chatIcon: {
       marginRight: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none'
+       },
     },
     close: {
       position: 'absolute',

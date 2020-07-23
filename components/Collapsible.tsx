@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '.8rem'
+      },
     },
     paper: {
       boxShadow: 'none',
@@ -36,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     btn: {
+      display: 'none',
       borderRadius: '1.113rem',
       background: '#F6F6F6',
       color: '#546380',
@@ -47,6 +51,11 @@ const useStyles = makeStyles((theme: Theme) =>
     pdf: {
       marginRight: '.5rem',
     },
+    details: {
+      [theme.breakpoints.down('xs')]: {
+        padding: '.5rem'
+      },
+    }
   })
 );
 
@@ -81,7 +90,7 @@ const Collapsible: React.FC<Props> = ({ title, body, children, download }) => {
             )}
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.details}>
           <div className={classes.content}>
             <Typography variant='body2'>{body}</Typography>
             {children}

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '80%',
       maxWidth: '80%',
       padding: '2% 4%',
-      background: 'rgb(219, 249, 239)',
+      background: 'rgb(231, 243, 239)',
       borderRadius: '.2rem 0 0 .2rem',
     },
   })

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Grid, Typography, IconButton, Button } from '@material-ui/core';
 import Router, { useRouter } from 'next/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuIcon: {
       padding: 0,
-      borderRadius: 0
+      borderRadius: 0,
     },
     icon: {
       padding: 0,
@@ -108,6 +108,15 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   const { auth } = useSelector((state: AppState) => state.auth);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    });
+  }, []);
   const handleLogin = () => {
     dispatch(handleAuthModal(true));
   };

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Grid, Typography, Button, IconButton } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import {
 import Login from './Modal';
 import menuIcon from '../assets/menuIcon.svg';
 import MenuDrawer from './MenuDrawer';
+import { Router } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,11 +66,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuIcon: {
       padding: 0,
-      borderRadius: 0
+      borderRadius: 0,
     },
     icon: {
       padding: 0,
-      height: '1rem'
+      height: '1rem',
     },
   })
 );
@@ -93,6 +94,15 @@ const Navbar: React.FC<Props> = (props) => {
   const openMenu = () => {
     dispatch(toggleMobileDrawer(true));
   };
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    });
+  }, []);
 
   return (
     <Fragment>

@@ -106,11 +106,11 @@ const MobileNav: React.FC<Props> = (props) => {
   };
 
   const handleCreateVendor = () => {
-    closeDrawer();
     dispatch(triggerBAV(true));
     if (!auth) {
       handleLogin();
     }
+    closeDrawer();
   };
 
   const closeDrawer = () => {
@@ -189,7 +189,7 @@ const MobileNav: React.FC<Props> = (props) => {
             </ListItem>
           )}
           {!ownVendor?.id && (
-            <ListItem onClick={closeDrawer}>
+            <ListItem onClick={handleCreateVendor}>
               <Button
                 variant='contained'
                 className={classes.button}

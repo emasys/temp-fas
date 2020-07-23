@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme: Theme) =>
     contactWrapper: {
       display: 'flex',
       alignItems: 'flex-end',
+      // [theme.breakpoints.down('xs')]: {
+      //   flexDirection: 'column',
+      //   alignItems: 'flex-start'
+      // },
     },
     phone: {
       display: 'flex',
@@ -68,7 +72,8 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#fff',
       fontSize: '0.9375rem',
       [theme.breakpoints.down('xs')]: {
-        fontSize: '0.8rem',
+        fontSize: '0.7rem',
+        padding: '.3rem 1rem',
       },
     },
     phoneIcon: {
@@ -90,8 +95,8 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '0.9375rem',
       marginLeft: '0.75rem',
       [theme.breakpoints.down('xs')]: {
-        fontSize: '0.8rem',
-        minWidth: '100%'
+        fontSize: '0.7rem',
+        padding: '.3rem 1rem',
       },
     },
     chatIcon: {
@@ -116,7 +121,7 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
           {formatMoney(rate)} Per day
         </Typography> 
       </Grid>
-      <Grid item xs={6} className={classes.contactWrapper}>
+      <Grid item xs={12} sm={6} className={classes.contactWrapper}>
         <Typography variant='body1' className={classes.phone}>
           <img src={phoneIcon} alt='phone' className={classes.phoneIcon} />
           {phone || 'Not available'}

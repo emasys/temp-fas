@@ -52,12 +52,21 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 'bold',
       fontSize: '2rem',
       display: 'flex',
+      textTransform: 'capitalize',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '1rem',
+      },
     },
     verifyIcon: {
       height: '1.5rem',
       marginLeft: '1rem',
       marginTop: '.49rem',
+      [theme.breakpoints.down('xs')]: {
+        height: '1rem',
+        marginLeft: '.5rem',
+        marginTop: '.1rem',
+      },
     },
     nameWrapper: {
       display: 'flex',

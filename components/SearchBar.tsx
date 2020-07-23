@@ -195,7 +195,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
                 Become a vendor
               </Button>
             </Grid>
-            <Grid item xs={6} className={classes.mobileNav}>
+            <Grid item sm={6} xs={2} className={classes.mobileNav}>
               <IconButton className={classes.menuIcon} onClick={openMenu}>
                 <img src={menuIcon} alt='menu' className={classes.icon} />
               </IconButton>

@@ -195,47 +195,47 @@ const BookingForm: React.FC<Props> = () => {
 
   const handleClose = () => {
     dispatch(handleAuthModal(false));
-  }
+  };
 
   return (
     <div className={classes.paper}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <div className={classes.header}>
-          <IconButton onClick={handleClose}>
-            <CloseRounded />
-          </IconButton>
-        </div>
-        <div className={classes.form}>
-          <Typography variant='body1' className={classes.title}>
-            Book vendor
-          </Typography>
-          <Typography variant='body2' className={classes.subtitle}>
-            Please provide an explicit description of what you want to help the
-            vendor prepare a comprehensive invoice for you.
-          </Typography>
-          {errors.error && (
-            <Alert severity='error'>
-              Unfortunately we couldn't complete this booking.
-            </Alert>
-          )}
-          <TextField
-            error={!!errors.description && touched.description}
-            classes={{
-              root: classes.inputRoot,
-            }}
-            variant='outlined'
-            onChange={handleChange}
-            value={values.description}
-            onBlur={handleBlur}
-            className={classes.inputBox}
-            name='description'
-            multiline
-            rows={4}
-            rowsMax={8}
-            id='description'
-            label='Description'
-            helperText={touched.description && errors.description}
-          />
+      <div className={classes.header}>
+        <IconButton onClick={handleClose}>
+          <CloseRounded />
+        </IconButton>
+      </div>
+      <div className={classes.form}>
+        <Typography variant='body1' className={classes.title}>
+          Book vendor
+        </Typography>
+        <Typography variant='body2' className={classes.subtitle}>
+          Please provide an explicit description of what you want to help the
+          vendor prepare a comprehensive invoice for you.
+        </Typography>
+        {errors.error && (
+          <Alert severity='error'>
+            Unfortunately we couldn't complete this booking.
+          </Alert>
+        )}
+        <TextField
+          error={!!errors.description && touched.description}
+          classes={{
+            root: classes.inputRoot,
+          }}
+          variant='outlined'
+          onChange={handleChange}
+          value={values.description}
+          onBlur={handleBlur}
+          className={classes.inputBox}
+          name='description'
+          multiline
+          rows={4}
+          rowsMax={8}
+          id='description'
+          label='Description'
+          helperText={touched.description && errors.description}
+        />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
             disableToolbar
             disablePast
@@ -251,52 +251,53 @@ const BookingForm: React.FC<Props> = () => {
               'aria-label': 'change date',
             }}
           />
-          <TextField
-            error={!!errors.address && touched.address}
-            classes={{
-              root: classes.inputRoot,
-            }}
-            variant='standard'
-            onChange={handleChange}
-            value={values.address}
-            onBlur={handleBlur}
-            className={classes.inputBox}
-            name='address'
-            id='address'
-            label='Full address'
-            helperText={touched.address && errors.address}
-          />
-          <div className={classes.selectWrapper} />
-          <SelectInput
-            name='state'
-            placeholder='State'
-            variant='standard'
-            options={locations}
-            handleChange={handleChange}
-            value={values.state}
-          />
-          <div className={classes.selectWrapper} />
-          <SelectInput
-            name='area'
-            placeholder='Area'
-            variant='standard'
-            options={areaOptions || []}
-            handleChange={handleChange}
-            value={values.area}
-          />
-          <Typography variant='body2' className={classes.caption}>
-            Please select an area closest to your address.
-          </Typography>
-          <Button
-            onClick={() => handleSubmit()}
-            className={classes.button}
-            disabled={isSubmitting || !isValid}
-            variant='contained'
-          >
-            Book vendor
-          </Button>
-        </div>
-      </MuiPickersUtilsProvider>
+        </MuiPickersUtilsProvider>
+
+        <TextField
+          error={!!errors.address && touched.address}
+          classes={{
+            root: classes.inputRoot,
+          }}
+          variant='standard'
+          onChange={handleChange}
+          value={values.address}
+          onBlur={handleBlur}
+          className={classes.inputBox}
+          name='address'
+          id='address'
+          label='Full address'
+          helperText={touched.address && errors.address}
+        />
+        <div className={classes.selectWrapper} />
+        <SelectInput
+          name='state'
+          placeholder='State'
+          variant='standard'
+          options={locations}
+          handleChange={handleChange}
+          value={values.state}
+        />
+        <div className={classes.selectWrapper} />
+        <SelectInput
+          name='area'
+          placeholder='Area'
+          variant='standard'
+          options={areaOptions || []}
+          handleChange={handleChange}
+          value={values.area}
+        />
+        <Typography variant='body2' className={classes.caption}>
+          Please select an area closest to your address.
+        </Typography>
+        <Button
+          onClick={() => handleSubmit()}
+          className={classes.button}
+          disabled={isSubmitting || !isValid}
+          variant='contained'
+        >
+          Book vendor
+        </Button>
+      </div>
     </div>
   );
 };

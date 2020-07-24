@@ -71,7 +71,7 @@ const Services: React.FC<Props> = (props) => {
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12} className={classes.divider}>
-        <Divider title='Popular services' buttonText='View all services' />
+        <Divider title='Popular services' />
       </Grid>
       <Grid item xs={12} className={classes.cardWrapper}>
         {services.map((service, index) => (

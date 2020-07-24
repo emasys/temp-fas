@@ -13,7 +13,7 @@ import SearchFields from './SearchFields';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      [theme.breakpoints.down('xl')]: {
+      [theme.breakpoints.up('xl')]: {
         maxWidth: '87%'
       },
     },

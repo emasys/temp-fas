@@ -193,13 +193,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '.8rem',
       justifyContent: 'center',
       alignItems: 'center',
-      background: 'rgb(87, 68, 151)',
-      '&:hover': {
-        background: 'rgb(87, 68, 151)',
-      },
       [theme.breakpoints.down('xs')]: {
         minHeight: '1.5rem',
-        minWidth: '5rem',
+        minWidth: '7rem',
       },
     },
     close: {

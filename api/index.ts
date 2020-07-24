@@ -115,3 +115,13 @@ export const createInvoice = async (vendorId: string, jobId: string, data: ICrea
     return false;
   }
 };
+
+export const handleJobPayment = async (jobId: string) => {
+  try {
+    const url = `/jobs/${jobId}/payments`;
+    const res = await instance.post(url);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};

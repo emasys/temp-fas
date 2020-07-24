@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
+import { usePaystackPayment } from 'react-paystack';
 import {
   Grid,
   makeStyles,
@@ -21,7 +22,8 @@ import chat from '../assets/chat.svg';
 import { CloseRounded } from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
-import { useEffect } from 'react';
+import config from '../config';
+import { handleJobPayment } from '../api';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '2% 4%',
       [theme.breakpoints.down('xs')]: {
         maxWidth: '90%',
-        padding: '4%'
+        padding: '4%',
       },
     },
     titleWrapper: {
@@ -84,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         fontSize: '0.7rem',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
       },
     },
     desc: {
@@ -124,13 +126,13 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '1rem',
       width: '0.2rem',
       [theme.breakpoints.down('xs')]: {
-        position: 'unset'
+        position: 'unset',
       },
     },
     contactWrapper: {
       display: 'flex',
       alignItems: 'flex-end',
-      marginBottom: '2rem',
+      marginBottom: '1rem',
     },
     phone: {
       borderRadius: '1.113rem',
@@ -145,13 +147,13 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       [theme.breakpoints.down('xs')]: {
         minHeight: '1.5rem',
-        minWidth: '6rem'
+        minWidth: '6rem',
       },
     },
     phoneIcon: {
       marginRight: '.5rem',
       [theme.breakpoints.down('xs')]: {
-       display: 'none'
+        display: 'none',
       },
     },
     chat: {
@@ -171,14 +173,34 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       [theme.breakpoints.down('xs')]: {
         minHeight: '1.5rem',
-        minWidth: '5rem'
+        minWidth: '5rem',
       },
     },
     chatIcon: {
       marginRight: '.5rem',
       [theme.breakpoints.down('xs')]: {
-        display: 'none'
-       },
+        display: 'none',
+      },
+    },
+    payment: {
+      borderRadius: '1.113rem',
+      color: '#fff',
+      padding: 0,
+      minWidth: '9rem',
+      fontSize: '0.6875rem',
+      minHeight: '2rem',
+      display: 'flex',
+      marginTop: '.8rem',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'rgb(87, 68, 151)',
+      '&:hover': {
+        background: 'rgb(87, 68, 151)',
+      },
+      [theme.breakpoints.down('xs')]: {
+        minHeight: '1.5rem',
+        minWidth: '5rem',
+      },
     },
     close: {
       position: 'absolute',
@@ -196,24 +218,32 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     getInvoice(state)
   );
   const status = useSelector((state: AppState) => state.common.drawerStatus);
+  const { email } = useSelector((state: AppState) => state.auth);
   const content = useSelector((state: AppState) => state.common.drawerContent);
   const isVendor = !!content?.customer;
   const dispatch = useDispatch();
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
     dispatch(toggleDrawer(false));
   };
+  const configData = {
+    reference: `${new Date().getTime()}`,
+    amount: total?.value * 100,
+    publicKey: config.paystack_key,
+    email
+  };
+  const payment = usePaystackPayment(configData);
 
   useEffect(() => {
     if (content?.invoice) {
       dispatch(updateInvoiceValue(content?.invoice));
     }
   }, [content?.invoice]);
-
   if (!content) return <div />;
   const {
     createdAt,
     vendorStatusDates,
     address,
+    id,
     description,
     customer,
     invoice,
@@ -223,6 +253,12 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       service: { name },
     },
   } = content;
+
+  const onSuccess = async (token) => {
+    const data = await handleJobPayment(token.transaction);
+    console.log(data, '=====', token);
+  };
+
   return (
     <Drawer
       anchor='right'
@@ -247,20 +283,22 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               {customer?.fullName || vendorName}
             </Typography>
             {!isVendor && (
-              <Grid item xs={6} className={classes.contactWrapper}>
-                <Button variant='text' className={classes.phone}>
-                  <img
-                    src={phoneIcon}
-                    className={classes.phoneIcon}
-                    alt='pdf download'
-                  />
-                  {phoneNumber || 'Not available'}
-                </Button>
-                <Button variant='text' className={classes.chat}>
-                  <img src={chat} alt='chat' className={classes.chatIcon} />{' '}
-                  Chat now
-                </Button>
-              </Grid>
+              <>
+                <Grid item xs={6} className={classes.contactWrapper}>
+                  <Button variant='text' className={classes.phone}>
+                    <img
+                      src={phoneIcon}
+                      className={classes.phoneIcon}
+                      alt='pdf download'
+                    />
+                    {phoneNumber || 'Not available'}
+                  </Button>
+                  <Button variant='text' className={classes.chat}>
+                    <img src={chat} alt='chat' className={classes.chatIcon} />{' '}
+                    Chat now
+                  </Button>
+                </Grid>
+              </>
             )}
             <Typography variant='body2' className={classes.link}>
               <span
@@ -298,6 +336,17 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   )}
                 </span>
               </Typography>
+            )}
+            {total?.value && (
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  className={classes.payment}
+                  onClick={() => payment(onSuccess)}
+                >
+                  Make payment
+                </Button>
+              </Grid>
             )}
           </Grid>
           <div>

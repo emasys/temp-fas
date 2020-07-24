@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     table: {
       minWidth: 400,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         minWidth: '100%'
       },
     },

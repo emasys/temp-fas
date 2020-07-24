@@ -4924,6 +4924,11 @@ react-number-format@^4.4.1:
   dependencies:
     prop-types "^15.7.2"
 
+react-paystack@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-paystack/-/react-paystack-3.0.1.tgz#520d3011a3f73923fa01e40733f35aac9cb9a2cc"
+  integrity sha512-b9Cnw/oNTWSunlCFjSMCz4RYV1/yzQgt4PZ5u+nQyu/+2F9cIFFoxJVnmk96awc0cyfYr33rdjaaK1t2dYiW7g==
+
 react-redux@^7.1.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.0.tgz#f970f62192b3981642fec46fd0db18a074fe879d"

@@ -49,3 +49,10 @@ export const updateJobInvoice = (id: string, data: any) => (
 ) => {
   dispatch(setValue(EActionTypes.UPDATE_JOB_INVOICE, { id, data }));
 };
+
+export const makeJobPayment = (data: string) => (
+  dispatch: Dispatch<any>
+) => {
+  console.log(data, '=======');
+  // dispatch(setValue(EActionTypes.UPDATE_JOB_INVOICE, { id, data }));
+};

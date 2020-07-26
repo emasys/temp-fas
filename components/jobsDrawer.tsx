@@ -222,7 +222,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     dispatch(toggleDrawer(false));
   };
   const configData = {
-    reference: `${new Date().getTime()}`,
+    reference: content?.id,
     amount: total?.value * 100,
     publicKey: config.paystack_key,
     email
@@ -251,7 +251,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   } = content;
 
   const onSuccess = async (token) => {
-    const data = await handleJobPayment(token.transaction);
+    const data = await handleJobPayment(id);
     console.log(data, '=====', token);
   };
 

@@ -14,15 +14,19 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       maxWidth: '20rem',
       minWidth: '20rem',
-      maxHeight: '18rem',
+      height: '15rem',
       overflow: 'hidden',
       cursor: 'pointer',
       paddingBottom: '1rem',
       borderRadius: '2px',
       marginRight: '3.125rem',
-      boxShadow: '0px 3px 15px 1px rgba(0, 0, 0, 0.11)',
+      transition: '400ms',
       '&:last-of-type': {
         marginRight: 0,
+      },
+      '&:hover': {
+        transition: '400ms',
+        borderBottom: '1px solid #F6F6F6',
       },
     },
     title: {
@@ -30,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.25rem',
       textTransform: 'capitalize',
       fontFamily: 'Lato',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     image: {
       width: '20rem',
@@ -46,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: '0.6rem',
     },
     textWrapper: {
-      padding: '0 0.9375rem',
+      // padding: '0 0.9375rem',
     },
     vendors: {
       position: 'absolute',
@@ -74,24 +78,19 @@ const Card: React.FC<Props> = ({ name, id }) => {
   const router = useRouter();
   const handleClick = (e: any) => {
     e.preventDefault();
-    router.push('/services/[id]',`/services/${id}`);
+    router.push('/services/[id]', `/services/${id}`);
   };
   return (
     <Grid container className={classes.container} onClick={handleClick}>
       <Grid item xs={12} className={classes.imageWrapper}>
-        <Typography variant='caption' className={classes.vendors}>
+        {/* <Typography variant='caption' className={classes.vendors}>
           100k vendors
-        </Typography>
+        </Typography> */}
         <img src={Furniture} alt='service-img' className={classes.image} />
       </Grid>
       <Grid item xs={12} className={classes.textWrapper}>
         <Typography variant='body2' className={classes.title}>
           {name}
-        </Typography>
-        <Typography variant='caption' className={classes.captions}>
-          <span className={classes.other}>Related services:</span> formwork,
-          roofing and structural work, joister, trim carpenter, furniture,
-          wardrobes, ship carpenter, framer, etc.
         </Typography>
       </Grid>
     </Grid>

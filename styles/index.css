@@ -6,4 +6,5 @@ html {
 }
 body {
   background-color: #fff !important;
+  transition: all 400ms;
 }

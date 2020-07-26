@@ -94,6 +94,10 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
     dispatch(logOut());
   };
 
+  const handleHome = () => {
+    router.push('/', '/');
+  };
+
   const handleProfile = () => {
     router.push('/profile', '/profile');
   };
@@ -150,6 +154,11 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
         }}
       >
         <List component='nav' className={classes.linkWrapper}>
+          <ListItem button onClick={handleHome}>
+            <Typography variant='body2' className={classes.menuItem}>
+              Home
+            </Typography>
+          </ListItem>
           {!ownVendor?.id && (
             <ListItem button onClick={handleBAV}>
               <Typography variant='body2' className={classes.menuItem}>

@@ -60,7 +60,7 @@ export default function Profile({}: Props): ReactElement {
       <VendorLayout title={'Profile'}>
         <>
           <Grid container className={classes.search}>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch />
             </Grid>
           </Grid>

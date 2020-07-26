@@ -41,7 +41,7 @@ export default function Jobs({}: Props): ReactElement {
   const { auth, id } = useSelector((state: AppState) => state.auth);
   const { allOrders } = useSelector((state: AppState) => getUserJobs(state));
   const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state, id)
+    getVendorStatus(state)
   );
 
   const dispatch = useDispatch();

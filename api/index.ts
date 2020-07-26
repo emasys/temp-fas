@@ -2,7 +2,6 @@ import { instance } from '../config/axiosConfig';
 import { ILogin } from '../redux/actions/auth';
 import { AxiosError } from 'axios';
 
-
 export const fetchServices = async () => {
   try {
     const url = 'services';
@@ -103,10 +102,14 @@ export const createOrder = async (data: ICreateOrder) => {
 };
 
 interface ICreateInvoice {
-  invoice: any
+  invoice: any;
 }
 
-export const createInvoice = async (vendorId: string, jobId: string, data: ICreateInvoice) => {
+export const createInvoice = async (
+  vendorId: string,
+  jobId: string,
+  data: ICreateInvoice
+) => {
   try {
     const url = `vendors/${vendorId}/jobs/${jobId}/invoice`;
     const res = await instance.post(url, data);
@@ -120,6 +123,19 @@ export const handleJobPayment = async (jobId: string) => {
   try {
     const url = `/jobs/${jobId}/payments`;
     const res = await instance.post(url);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+interface IVendorStatus {
+  status: 'started' | 'not_started' | 'completed' | 'rejected' | 'accepted';
+}
+export const updateVendorStatus = async (data: IVendorStatus, jobId: string, vendorId: string) => {
+  try {
+    const url = `vendors/${vendorId}/jobs/${jobId}/status`;
+    const res = await instance.put(url, data);
     return res.data;
   } catch (error) {
     return false;

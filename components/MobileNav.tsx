@@ -96,7 +96,7 @@ const MobileNav: React.FC<Props> = (props) => {
   const router = useRouter();
   const { auth, id, fullName } = useSelector((state: AppState) => state.auth);
   const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state, id)
+    getVendorStatus(state)
   );
   const classes = useStyles();
 

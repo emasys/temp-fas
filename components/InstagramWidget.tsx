@@ -85,7 +85,7 @@ export default function InstagramWidget({
   );
   const auth = useSelector((state: AppState) => state.auth);
   const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state, auth.id)
+    getVendorStatus(state)
   );
 
   const handlePagination = (direction: string) => {

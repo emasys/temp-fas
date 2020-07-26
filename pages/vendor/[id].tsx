@@ -157,7 +157,7 @@ const Vendor: React.FC<Props> = () => {
   const vendorObj = useSelector((state: AppState) => state.vendor.activeVendor);
   const { isBooked } = useSelector((state: AppState) => getUserJobs(state));
   const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state, auth.id)
+    getVendorStatus(state)
   );
   const {
     query: { id },

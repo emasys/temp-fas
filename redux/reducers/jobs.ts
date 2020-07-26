@@ -12,10 +12,7 @@ interface IUpdateJob {
   payload: IJob;
 }
 
-export type TActions =
-  | IFetchJobs
-  | IResetAction
-  | IUpdateJob
+export type TActions = IFetchJobs | IResetAction | IUpdateJob;
 
 export const initialJobsState = [];
 
@@ -27,7 +24,9 @@ export default function jobs(
     case EActionTypes.FETCH_JOBS:
       return action.payload;
     case EActionTypes.UPDATE_JOB:
-      return [...state, action.payload];
+      const jobs = state.filter((job) => job.id !== action.payload.id);
+      const updatedJob = state.filter((job) => job.id === action.payload.id);
+      return [...jobs, { ...updatedJob, ...action.payload }];
     case EActionTypes.RESET_STORE:
       return [];
     default:

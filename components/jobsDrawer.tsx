@@ -23,7 +23,12 @@ import { CloseRounded } from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
 import config from '../config';
-import { handleJobPayment } from '../api';
+import { handleJobPayment, updateVendorStatus } from '../api';
+import {
+  updateUserJob,
+  fetchUserJobs,
+  fetchVendorJobs,
+} from '../redux/actions/jobs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -225,7 +230,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     reference: content?.id,
     amount: total?.value * 100,
     publicKey: config.paystack_key,
-    email
+    email,
   };
   const payment = usePaystackPayment(configData);
 
@@ -235,6 +240,8 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     }
   }, [content?.invoice]);
   if (!content) return <div />;
+  console.log(content, '====');
+
   const {
     createdAt,
     vendorStatusDates,
@@ -243,16 +250,24 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     description,
     customer,
     invoice,
+    dueDate,
     vendor: {
+      id: vendorId,
       name: vendorName,
       phoneNumber,
       service: { name },
     },
   } = content;
 
-  const onSuccess = async (token) => {
+  const onSuccess = async () => {
     const data = await handleJobPayment(id);
-    console.log(data, '=====', token);
+    dispatch(fetchUserJobs());
+  };
+
+  const startJob = async () => {
+    const data = await updateVendorStatus({ status: 'started' }, id, vendorId);
+    dispatch(fetchVendorJobs(vendorId));
+    console.log(data, '======');
   };
 
   return (
@@ -308,12 +323,36 @@ const JobsDrawer: React.FC<IProps> = (props) => {
             <Typography variant='body2' className={classes.link}>
               <span
                 className={classes.indicator}
+                style={{ background: '#FF8515' }}
+              />
+              <span style={{ marginLeft: '.5rem' }}>
+                Estimated delivery date -{' '}
+                {moment(dueDate).format('MMMM Do YYYY')}
+              </span>
+            </Typography>
+            {vendorStatusDates && (
+              <Typography variant='body2' className={classes.link}>
+                <span
+                  className={classes.indicator}
+                  style={{ background: '#574497' }}
+                />
+                <span style={{ marginLeft: '.5rem' }}>
+                  {`${customer ? customer.fullName : 'You'} made payment on
+                ${moment(vendorStatusDates.paymentDate).format(
+                  'MMMM Do YYYY, h:mm a'
+                )}`}
+                </span>
+              </Typography>
+            )}
+            <Typography variant='body2' className={classes.link}>
+              <span
+                className={classes.indicator}
                 style={{ background: '#574497' }}
               />
               <span style={{ marginLeft: '.5rem' }}>
-                {vendorStatusDates
-                  ? `Started on{' '}
-                ${moment('20111031', 'YYYYMMDD').format(
+                {vendorStatusDates?.startedDate
+                  ? `Started on
+                ${moment(vendorStatusDates.startedDate).format(
                   'MMMM Do YYYY, h:mm a'
                 )}`
                   : 'Not in progress'}
@@ -333,17 +372,29 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 </span>
               </Typography>
             )}
-            {total?.value && (
-              <Grid item xs={12}>
-                <Button
-                  variant='contained'
-                  className={classes.payment}
-                  onClick={() => payment(onSuccess)}
-                >
-                  Make payment
-                </Button>
-              </Grid>
-            )}
+            {total?.value &&
+              vendorStatusDates &&
+              !vendorStatusDates?.startedDate && (
+                <Grid item xs={12}>
+                  {isVendor ? (
+                    <Button
+                      variant='contained'
+                      className={classes.payment}
+                      onClick={startJob}
+                    >
+                      Start job
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='contained'
+                      className={classes.payment}
+                      onClick={() => payment(onSuccess)}
+                    >
+                      Make payment
+                    </Button>
+                  )}
+                </Grid>
+              )}
           </Grid>
           <div>
             <Typography variant='body2' className={classes.money}>

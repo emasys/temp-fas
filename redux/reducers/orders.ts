@@ -12,7 +12,16 @@ interface IUpdateOrderInvoice {
   payload: { id: string; data: any };
 }
 
-export type TActions = IFetchJobs | IResetAction | IUpdateOrderInvoice;
+interface IUpdateJob {
+  type: EActionTypes.UPDATE_JOB;
+  payload: IOrder;
+}
+
+export type TActions =
+  | IFetchJobs
+  | IResetAction
+  | IUpdateOrderInvoice
+  | IUpdateJob;
 
 export const initialOrderState = [];
 
@@ -34,6 +43,10 @@ export default function jobs(
         return job;
       });
       return job;
+    case EActionTypes.UPDATE_JOB:
+      const jobs = state.filter((job) => job.id !== action.payload.id);
+      const updatedJob = state.filter((job) => job.id === action.payload.id);
+      return [...jobs, { ...updatedJob, ...action.payload }];
     case EActionTypes.RESET_STORE:
       return [];
     default:

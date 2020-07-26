@@ -80,10 +80,7 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   const classes = useStyles();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const auth = useSelector((state: AppState) => state.auth);
-  const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state, auth.id)
-  );
+  const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -116,6 +113,8 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   };
 
   const open = Boolean(anchorEl);
+
+  console.log(ownVendor, '======');
 
   return (
     <div className={classes.container}>

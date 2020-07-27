@@ -412,7 +412,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 ) : (
                   <Button
                     variant='contained'
-                    disabled={!!vendorStatusDates?.startedDate}
+                    disabled={!!vendorStatusDates?.paymentDate}
                     className={classes.payment}
                     onClick={() => payment(onSuccess)}
                   >

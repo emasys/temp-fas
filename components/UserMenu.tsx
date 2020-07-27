@@ -114,8 +114,6 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
 
   const open = Boolean(anchorEl);
 
-  console.log(ownVendor, '======');
-
   return (
     <div className={classes.container}>
       <div className={classes.iconWrapper}>

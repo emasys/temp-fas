@@ -51,3 +51,15 @@ export const logOut = () => (dispatch: Dispatch<any>) => {
   dispatch(setValue(EActionTypes.LOG_OUT, null));
   instance.defaults.headers.common['Authorization'] = null;
 };
+
+export const fetchUser = () => async (
+  dispatch: Dispatch<any>
+) => {
+  const url = `user`;
+  try {
+    const { data } = await instance.get(url);
+    dispatch(setValue(EActionTypes.FETCH_USER, data));
+  } catch (error) {
+    console.log(error, '====');
+  }
+};

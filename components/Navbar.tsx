@@ -14,6 +14,7 @@ import Login from './Modal';
 import menuIcon from '../assets/menuIcon.svg';
 import MenuDrawer from './MenuDrawer';
 import { Router } from 'next/router';
+import { fetchUser } from '../redux/actions/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,6 +81,12 @@ const Navbar: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state: AppState) => state.auth);
   const classes = useStyles();
+  useEffect(() => {
+    if (auth) {
+      dispatch(fetchUser());
+    }
+  }, [auth]);
+  
   const handleLogin = () => {
     dispatch(handleAuthModal(true));
   };

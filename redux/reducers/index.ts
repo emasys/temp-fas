@@ -7,9 +7,11 @@ import socialMedia from './socialMedia';
 import locations from './locations';
 import jobs from './jobs';
 import orders from './orders';
+import user from './user';
 
 const reducers = {
   common,
+  user,
   orders,
   jobs,
   locations,

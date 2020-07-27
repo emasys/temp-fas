@@ -7,9 +7,11 @@ import { initialSMState, ISocialMedia } from '../redux/reducers/socialMedia';
 import { initialLocationState } from '../redux/reducers/locations';
 import { initialJobsState } from '../redux/reducers/jobs';
 import { initialOrderState } from '../redux/reducers/orders';
+import { IUser, initialUserState } from '../redux/reducers/user';
 
 export interface AppState {
   auth: IAuth;
+  user: IUser;
   orders: IOrder[];
   services: IServices;
   vendor: IVendors;
@@ -20,6 +22,7 @@ export interface AppState {
 }
 
 const state: AppState = {
+  user: initialUserState,
   orders: initialOrderState,
   jobs: initialJobsState,
   auth: initialAuthState,

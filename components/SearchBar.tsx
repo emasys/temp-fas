@@ -16,6 +16,7 @@ import UserMenu from './UserMenu';
 import { AppState } from '../lib/initialState';
 import menuIcon from '../assets/menuIcon-dark.svg';
 import MenuDrawer from './MenuDrawer';
+import { fetchUser } from '../redux/actions/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -107,6 +108,11 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   const classes = useStyles();
   const { auth } = useSelector((state: AppState) => state.auth);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (auth) {
+      dispatch(fetchUser());
+    }
+  }, [auth]);
 
   useEffect(() => {
     Router.events.on('routeChangeComplete', () => {

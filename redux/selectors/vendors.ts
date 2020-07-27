@@ -1,13 +1,8 @@
 import { createSelector } from 'reselect';
 import { AppState } from '../../lib/initialState';
 
-const vendors = (state: AppState) => state.vendor.allVendors;
-const user = (state: AppState) => state.auth;
+const user = (state: AppState) => state.user;
 
-export const getVendorStatus = createSelector(
-  [vendors, user],
-  (vendor, user) => {
-    console.log(vendor, user);
-    return vendor.find(({ userId }) => userId === user.id);
-  }
-);
+export const getVendorStatus = createSelector([user], (user) => {
+  return user?.vendorProfile;
+});

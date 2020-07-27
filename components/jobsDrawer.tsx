@@ -32,6 +32,7 @@ import {
   updateUserJob,
   fetchUserJobs,
   fetchVendorJobs,
+  makeJobPayment,
 } from '../redux/actions/jobs';
 import {
   MuiPickersUtilsProvider,
@@ -281,11 +282,14 @@ const JobsDrawer: React.FC<IProps> = (props) => {
 
   const onSuccess = async () => {
     const data = await handleJobPayment(id);
+    dispatch(makeJobPayment(data));
   };
 
   const startJob = async () => {
     const data = await updateVendorStatus({ status: 'started' }, id, vendorId);
     dispatch(fetchVendorJobs(vendorId));
+    // temp
+    dispatch(makeJobPayment(data));
   };
 
   const handleDateChange = async (date: Date | null) => {
@@ -408,6 +412,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 ) : (
                   <Button
                     variant='contained'
+                    disabled={!!vendorStatusDates?.startedDate}
                     className={classes.payment}
                     onClick={() => payment(onSuccess)}
                   >

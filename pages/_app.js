@@ -29,15 +29,13 @@ class MyApp extends App {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={store.persistor}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <ErrorBoundary>
-              <>
-                <JobsDrawer />
-                <Component {...pageProps} />
-              </>
-            </ErrorBoundary>
-          </ThemeProvider>
+          <ErrorBoundary>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <JobsDrawer />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </ErrorBoundary>
         </PersistGate>
       </Provider>
     );

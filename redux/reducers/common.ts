@@ -59,8 +59,14 @@ interface IMobileDrawer {
   payload: boolean;
 }
 
+interface IMakePayment {
+  type: EActionTypes.UPDATE_PAYMENT_STATUS;
+  payload: IJob;
+}
+
 export type TCommonActions =
   | ISaveURI
+  | IMakePayment
   | IAddInvoiceValue
   | IResetAction
   | IDrawerContent
@@ -129,6 +135,14 @@ export default function vendor(
         drawerContent: {
           ...state.drawerContent,
           invoice: action.payload.data,
+        },
+      };
+    case EActionTypes.UPDATE_PAYMENT_STATUS:
+      return {
+        ...state,
+        drawerContent: {
+          ...state.drawerContent,
+          vendorStatusDates: action.payload.vendorStatusDates,
         },
       };
     case EActionTypes.TOGGLE_DRAWER:

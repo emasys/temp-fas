@@ -40,7 +40,7 @@ theme.overrides = {
     },
     h4: {
       color: '#181818',
-      fontSize: '3rem',
+      fontSize: '2rem',
       fontWeight: 'normal',
       lineHeight: 1.5,
       [theme.breakpoints.down('sm')]: {

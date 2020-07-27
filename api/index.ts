@@ -132,9 +132,23 @@ export const handleJobPayment = async (jobId: string) => {
 interface IVendorStatus {
   status: 'started' | 'not_started' | 'completed' | 'rejected' | 'accepted';
 }
-export const updateVendorStatus = async (data: IVendorStatus, jobId: string, vendorId: string) => {
+export const updateVendorStatus = async (
+  data: IVendorStatus,
+  jobId: string,
+  vendorId: string
+) => {
   try {
     const url = `vendors/${vendorId}/jobs/${jobId}/status`;
+    const res = await instance.put(url, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const updateJobDate = async (data: { date: string }, jobId: string) => {
+  try {
+    const url = `/jobs/${jobId}/due-date`;
     const res = await instance.put(url, data);
     return res.data;
   } catch (error) {

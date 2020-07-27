@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { usePaystackPayment } from 'react-paystack';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   Grid,
   makeStyles,
@@ -9,6 +10,9 @@ import {
   Typography,
   Button,
   IconButton,
+  useMediaQuery,
+  Paper,
+  ThemeProvider,
 } from '@material-ui/core';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,12 +27,17 @@ import { CloseRounded } from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
 import config from '../config';
-import { handleJobPayment, updateVendorStatus } from '../api';
+import { handleJobPayment, updateVendorStatus, updateJobDate } from '../api';
 import {
   updateUserJob,
   fetchUserJobs,
   fetchVendorJobs,
 } from '../redux/actions/jobs';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+  DatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,9 +46,13 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: '80%',
       padding: '2% 4%',
       [theme.breakpoints.down('xs')]: {
-        maxWidth: '90%',
+        maxWidth: '95%',
         padding: '4%',
       },
+    },
+    datePicker: {
+      fontSize: '1rem',
+      color: '#636363',
     },
     titleWrapper: {
       display: 'flex',
@@ -208,6 +221,10 @@ const useStyles = makeStyles((theme: Theme) =>
       right: -16,
       top: -18,
     },
+    dateLabel: {
+      color: '#181818',
+      marginBottom: '.5rem',
+    },
   })
 );
 
@@ -215,12 +232,16 @@ interface IProps {}
 
 const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
+  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('xs'));
   const { total, netProceed, fee } = useSelector((state: AppState) =>
     getInvoice(state)
   );
   const status = useSelector((state: AppState) => state.common.drawerStatus);
   const { email } = useSelector((state: AppState) => state.auth);
   const content = useSelector((state: AppState) => state.common.drawerContent);
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date(content?.dueDate)
+  );
   const isVendor = !!content?.customer;
   const dispatch = useDispatch();
   const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -269,6 +290,14 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     dispatch(fetchVendorJobs(vendorId));
     console.log(data, '======');
   };
+
+  const handleDateChange = async (date: Date | null) => {
+    setSelectedDate(date);
+    const data = await updateJobDate({ date: moment(date).format() }, id);
+    console.log(moment(date).format(), '====', data);
+  };
+
+  console.log(isMobile, '=====');
 
   return (
     <Drawer
@@ -406,6 +435,26 @@ const JobsDrawer: React.FC<IProps> = (props) => {
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='DESCRIPTION' body={description} />
+        </Grid>
+        <Grid item xs={12} className={classes.desc}>
+          <Collapsible title='DUE DATE'>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Typography variant='body2' className={classes.dateLabel}>
+                You can still modify the due date
+              </Typography>
+              <DatePicker
+                autoOk
+                minDate={dueDate}
+                disableToolbar={isMobile}
+                orientation={isMobile ? 'portrait' : 'landscape'}
+                variant='static'
+                openTo='date'
+                className={classes.datePicker}
+                value={selectedDate}
+                onChange={handleDateChange}
+              />
+            </MuiPickersUtilsProvider>
+          </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='INVOICE' download={!!invoice}>

@@ -65,11 +65,12 @@ export default function Jobs({}: Props): ReactElement {
           </Grid>
           {allOrders.map((job) => (
             <JobsRow
-              key={job.id}
-              id={job.id}
-              color={job.color}
-              date={job.createdAt}
-              name={job.customer.fullName}
+              key={job?.id}
+              id={job?.id}
+              vendor
+              color={job?.color}
+              date={job?.createdAt}
+              name={job?.customer?.fullName}
               amount={
                 job?.invoice
                   ? Object.values(job.invoice).reduce(

@@ -44,6 +44,7 @@ const Invoice: React.FC<Props> = (props) => {
     dispatch(toggleModal('invoice'));
     dispatch(handleAuthModal(true));
   };
+  console.log(!content?.invoice, '====>>>>>', isVendor)
   return (
     <>
       {!content?.invoice ? (

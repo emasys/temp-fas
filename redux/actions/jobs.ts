@@ -35,12 +35,16 @@ export const updateUserJob = (data: IJob) => async (
   dispatch(setValue(EActionTypes.UPDATE_JOB, data));
 };
 
-export const setDrawerJob = (id: string) => (
+export const setDrawerJob = (id: string, vendor?: boolean) => (
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  let data = getState().jobs.find((job) => job.id === id);
-  if (!data) data = getState().orders.find((job) => job.id === id);
+  let data = {};
+  if (vendor) {
+    data = getState().orders.find((job) => job.id === id);
+  } else {
+    data = getState().jobs.find((job) => job.id === id);
+  }
   dispatch(setValue(EActionTypes.SET_DRAWER_JOB, data));
 };
 
@@ -50,9 +54,7 @@ export const updateJobInvoice = (id: string, data: any) => (
   dispatch(setValue(EActionTypes.UPDATE_JOB_INVOICE, { id, data }));
 };
 
-export const makeJobPayment = (data: string) => (
-  dispatch: Dispatch<any>
-) => {
+export const makeJobPayment = (data: string) => (dispatch: Dispatch<any>) => {
   console.log(data, '=======');
-  // dispatch(setValue(EActionTypes.UPDATE_JOB_INVOICE, { id, data }));
+  dispatch(setValue(EActionTypes.UPDATE_JOB_INVOICE, { id, data }));
 };

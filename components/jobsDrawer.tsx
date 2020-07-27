@@ -261,7 +261,6 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     }
   }, [content?.invoice]);
   if (!content) return <div />;
-  console.log(content, '====');
 
   const {
     createdAt,
@@ -282,22 +281,17 @@ const JobsDrawer: React.FC<IProps> = (props) => {
 
   const onSuccess = async () => {
     const data = await handleJobPayment(id);
-    dispatch(fetchUserJobs());
   };
 
   const startJob = async () => {
     const data = await updateVendorStatus({ status: 'started' }, id, vendorId);
     dispatch(fetchVendorJobs(vendorId));
-    console.log(data, '======');
   };
 
   const handleDateChange = async (date: Date | null) => {
     setSelectedDate(date);
     const data = await updateJobDate({ date: moment(date).format() }, id);
-    console.log(moment(date).format(), '====', data);
   };
-
-  console.log(isMobile, '=====');
 
   return (
     <Drawer
@@ -387,7 +381,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   : 'Not in progress'}
               </span>
             </Typography>
-            {vendorStatusDates && (
+            {vendorStatusDates?.completedDate && (
               <Typography variant='body2' className={classes.link}>
                 <span
                   className={classes.indicator}
@@ -395,35 +389,33 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 />
                 <span style={{ marginLeft: '.5rem' }}>
                   Completed on{' '}
-                  {moment('20111031', 'YYYYMMDD').format(
-                    'MMMM Do YYYY, h:mm a'
+                  {moment(vendorStatusDates?.completedDate).format(
+                    'MMMM Do YYYY'
                   )}
                 </span>
               </Typography>
             )}
-            {total?.value &&
-              vendorStatusDates &&
-              !vendorStatusDates?.startedDate && (
-                <Grid item xs={12}>
-                  {isVendor ? (
-                    <Button
-                      variant='contained'
-                      className={classes.payment}
-                      onClick={startJob}
-                    >
-                      Start job
-                    </Button>
-                  ) : (
-                    <Button
-                      variant='contained'
-                      className={classes.payment}
-                      onClick={() => payment(onSuccess)}
-                    >
-                      Make payment
-                    </Button>
-                  )}
-                </Grid>
-              )}
+            {!!total?.value && !vendorStatusDates?.startedDate && (
+              <Grid item xs={12}>
+                {isVendor ? (
+                  <Button
+                    variant='contained'
+                    className={classes.payment}
+                    onClick={startJob}
+                  >
+                    Start job
+                  </Button>
+                ) : (
+                  <Button
+                    variant='contained'
+                    className={classes.payment}
+                    onClick={() => payment(onSuccess)}
+                  >
+                    Make payment
+                  </Button>
+                )}
+              </Grid>
+            )}
           </Grid>
           <div>
             <Typography variant='body2' className={classes.money}>

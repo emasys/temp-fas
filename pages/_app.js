@@ -10,11 +10,18 @@ import theme from '../styles/primary';
 import { getServices } from '../redux/actions/services';
 import { fetchAllLocations } from '../redux/actions/locations';
 import JobsDrawer from '../components/jobsDrawer';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 class MyApp extends App {
   componentDidMount() {
     this.props.store.dispatch(getServices());
     this.props.store.dispatch(fetchAllLocations());
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log('CUSTOM ERROR HANDLING', error);
+    // This is needed to render errors correctly in development / production
+    super.componentDidCatch(error, errorInfo);
   }
 
   render() {
@@ -24,8 +31,12 @@ class MyApp extends App {
         <PersistGate loading={null} persistor={store.persistor}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <JobsDrawer />
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <>
+                <JobsDrawer />
+                <Component {...pageProps} />
+              </>
+            </ErrorBoundary>
           </ThemeProvider>
         </PersistGate>
       </Provider>

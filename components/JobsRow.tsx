@@ -128,6 +128,7 @@ interface IJobsRowProps {
   id: string;
   name: string;
   amount: any;
+  vendor?: boolean;
   status: string;
   color: string;
   stage: string;
@@ -138,6 +139,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   name,
   amount,
   status,
+  vendor,
   stage,
   color,
   id,
@@ -146,7 +148,8 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   const dispatch = useDispatch();
   const handleDrawer = () => {
     dispatch(toggleDrawer(true));
-    dispatch(setDrawerJob(id));
+    console.log(id, vendor, 'clicked')
+    dispatch(setDrawerJob(id, vendor));
   };
   return (
     <Grid container className={classes.row}>

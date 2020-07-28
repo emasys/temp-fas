@@ -241,7 +241,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   const { email } = useSelector((state: AppState) => state.auth);
   const content = useSelector((state: AppState) => state.common.drawerContent);
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date(content?.dueDate)
+    content?.dueDate ? content?.dueDate : new Date()
   );
   const isVendor = !!content?.customer;
   const dispatch = useDispatch();
@@ -296,6 +296,10 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     setSelectedDate(date);
     const data = await updateJobDate({ date: moment(date).format() }, id);
   };
+
+  useEffect(() => {
+    if (dueDate) setSelectedDate(dueDate);
+  }, [dueDate]);
 
   return (
     <Drawer
@@ -354,7 +358,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               />
               <span style={{ marginLeft: '.5rem' }}>
                 Estimated delivery date -{' '}
-                {moment(dueDate).format('MMMM Do YYYY')}
+                {dueDate ? moment(dueDate).format('MMMM Do YYYY') : 'N/A'}
               </span>
             </Typography>
             {vendorStatusDates && (
@@ -379,9 +383,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               <span style={{ marginLeft: '.5rem' }}>
                 {vendorStatusDates?.startedDate
                   ? `Started on
-                ${moment(vendorStatusDates.startedDate).format(
-                  'MMMM Do YYYY'
-                )}`
+                ${moment(vendorStatusDates.startedDate).format('MMMM Do YYYY')}`
                   : 'Not in progress'}
               </span>
             </Typography>
@@ -441,7 +443,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               </Typography>
               <DatePicker
                 autoOk
-                minDate={dueDate}
+                minDate={dueDate ? dueDate : new Date()}
                 disableToolbar={isMobile}
                 orientation={isMobile ? 'portrait' : 'landscape'}
                 variant='static'

@@ -24,7 +24,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <VendorLayout title="We are looking into it">
+        <VendorLayout title="Oops!">
           <FallBack />
         </VendorLayout>
       );

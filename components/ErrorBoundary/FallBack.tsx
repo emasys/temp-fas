@@ -10,10 +10,10 @@ const FallBack: React.FC<Props> = (props) => {
   return (
     <Grid container justify='center'>
       <Grid item xs={12} className={classes.container}>
-        <Typography variant='h2'>
+        <Typography variant='h6'>
           Sorry, looks like we are having some server issues
         </Typography>
-        <Typography variant='h3' style={{ margin: '15px 0' }}>
+        <Typography variant='body1' style={{ margin: '15px 0' }}>
           We are looking into what went wrong.
         </Typography>
         <a href='/' className={classes.link}>

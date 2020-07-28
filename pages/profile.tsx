@@ -38,13 +38,13 @@ interface Props {}
 
 export default function Profile({}: Props): ReactElement {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { auth, id } = useSelector((state: AppState) => state.auth);
   const { allJobs } = useSelector((state: AppState) => getUserJobs(state));
   const ownVendor = useSelector((state: AppState) =>
     getVendorStatus(state)
   );
 
-  const dispatch = useDispatch();
   useEffect(() => {
     if (!auth) {
       dispatch(handleAuthModal(true));
@@ -79,7 +79,7 @@ export default function Profile({}: Props): ReactElement {
                     )
                   : 0
               }
-              stage={job.vendorStatus}
+              stage={job.stage}
               status={job.status}
             />
           ))}

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { AppState } from '../../lib/initialState';
+import moment from 'moment';
 
 const jobs = (state: AppState) => state.jobs;
 const vendor = (state: AppState) => state.vendor.activeVendor;
@@ -13,35 +14,47 @@ const jobColorMapper = {
   accepted: 'rgba(0, 155, 106)',
 };
 
-export const getUserJobs = createSelector([jobs, vendor, orders], (job, vendor, orders) => {
-  const isBooked = job.find(({ vendorId }) => vendor.id === vendorId);
-  const allJobs = job.map((item) => {
-    const jobStatusMapper = {
-      not_started: 'Not started',
-      started: 'Started',
-      completed: `Completed`,
-      rejected: 'Rejected',
-      accepted: 'Accepted',
-    };
-    return {
-      ...item,
-      status: jobStatusMapper[item.vendorStatus],
-      color: jobColorMapper[item.vendorStatus]
-    };
-  });
-  let allOrders = orders.map((item) => {
-    const jobStatusMapper = {
-      not_started: 'Not started',
-      started: 'Started',
-      completed: `Completed`,
-      rejected: 'Rejected',
-      accepted: 'Accepted',
-    };
-    return {
-      ...item,
-      status: jobStatusMapper[item.vendorStatus],
-      color: jobColorMapper[item.vendorStatus]
-    };
-  });
-  return { isBooked, allJobs, allOrders };
-});
+const formatDate = (date: string = '') => {
+  return moment(date).fromNow();
+}
+
+export const getUserJobs = createSelector(
+  [jobs, vendor, orders],
+  (job, vendor, orders) => {
+    const isBooked = job.find(
+      ({ vendorId, vendorStatus }) =>
+        vendor.id === vendorId && vendorStatus !== 'completed'
+    );
+    const allJobs = job.map((item) => {
+      const jobStatusMapper = {
+        not_started: 'Not started',
+        started: `Started ${formatDate(item.vendorStatusDates?.startedDate)}`,
+        completed: `Completed ${formatDate(item.vendorStatusDates?.completedDate)}`,
+        rejected: 'Rejected',
+        accepted: 'Accepted',
+      };
+      return {
+        ...item,
+        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment not completed',
+        status: jobStatusMapper[item.vendorStatus],
+        color: jobColorMapper[item.vendorStatus],
+      };
+    });
+    let allOrders = orders.map((item) => {
+      const jobStatusMapper = {
+        not_started: 'Not started',
+        started: `Started ${formatDate(item.vendorStatusDates?.startedDate)}`,
+        completed: `Completed ${formatDate(item.vendorStatusDates?.completedDate)}`,
+        rejected: 'Rejected',
+        accepted: 'Accepted',
+      };
+      return {
+        ...item,
+        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment not completed',
+        status: jobStatusMapper[item.vendorStatus],
+        color: jobColorMapper[item.vendorStatus],
+      };
+    });
+    return { isBooked, allJobs, allOrders };
+  }
+);

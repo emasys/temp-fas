@@ -344,7 +344,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 style={{ background: '#FF8515' }}
               />
               <span style={{ marginLeft: '.5rem' }}>
-                Contacted on {moment(createdAt).format('MMMM Do YYYY, h:mm a')}
+                Contacted on {moment(createdAt).format('MMMM Do YYYY')}
               </span>
             </Typography>
             <Typography variant='body2' className={classes.link}>
@@ -366,7 +366,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 <span style={{ marginLeft: '.5rem' }}>
                   {`${customer ? customer.fullName : 'You'} made payment on
                 ${moment(vendorStatusDates.paymentDate).format(
-                  'MMMM Do YYYY, h:mm a'
+                  'MMMM Do YYYY'
                 )}`}
                 </span>
               </Typography>
@@ -380,7 +380,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 {vendorStatusDates?.startedDate
                   ? `Started on
                 ${moment(vendorStatusDates.startedDate).format(
-                  'MMMM Do YYYY, h:mm a'
+                  'MMMM Do YYYY'
                 )}`
                   : 'Not in progress'}
               </span>

@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     pdf: {
-      background: '#F6F6F6',
+      background: 'rgba(25, 183, 182, 0.1)',
       color: '#5C5C5C',
       height: '2.2262rem',
-      width: '5.6463rem',
+      width: '80%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: '.5rem',
     },
     pdfText: {
+      color: '#043333',
       fontSize: '0.6919rem',
     },
     pdfWrapper: {
@@ -148,9 +149,10 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   const dispatch = useDispatch();
   const handleDrawer = () => {
     dispatch(toggleDrawer(true));
-    console.log(id, vendor, 'clicked')
     dispatch(setDrawerJob(id, vendor));
   };
+
+  const isPaid = stage === 'Payment completed';
   return (
     <Grid container className={classes.row}>
       <Grid item xs={1} sm={2} className={classes.pdfWrapper}>
@@ -158,9 +160,22 @@ const JobsRow: React.FC<IJobsRowProps> = ({
           className={classes.indicator}
           style={{ backgroundColor: color || '#574497' }}
         />
-        <div className={classes.pdf}>
-          <Typography variant='body2' className={classes.pdfText}>
-            PDF <img src={arrow} alt='arrow' className={classes.arrow} />
+        <div
+          className={classes.pdf}
+          style={{
+            backgroundColor: isPaid
+              ? 'rgba(25, 183, 182, 0.1)'
+              : 'rgba(255, 133, 21, 0.1)',
+          }}
+        >
+          <Typography
+            variant='body2'
+            className={classes.pdfText}
+            style={{
+              color: isPaid ? '#007777' : '#984900',
+            }}
+          >
+            {stage}
           </Typography>
         </div>
       </Grid>

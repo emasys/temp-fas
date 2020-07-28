@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
+      minHeight: '50rem',
       padding: '3rem',
       borderRadius: '.2rem',
       backgroundColor: '#fff',
@@ -118,6 +119,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '2rem'
+      },
     },
   })
 );

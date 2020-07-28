@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
+      height: '100%',
       padding: '3rem',
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {

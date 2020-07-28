@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
+      height: '100%',
       borderRadius: '.2rem',
       padding: '3rem',
       paddingTop: 0,

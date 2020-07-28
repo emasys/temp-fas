@@ -51,7 +51,7 @@ export default function Profile({}: Props): ReactElement {
     }
     if (auth) {
       dispatch(fetchUserJobs());
-      ownVendor?.id && dispatch(fetchVendorJobs(ownVendor?.id));
+      // ownVendor?.id && dispatch(fetchVendorJobs(ownVendor?.id));
     }
   }, [auth]);
 

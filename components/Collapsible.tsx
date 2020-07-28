@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
       [theme.breakpoints.down('xs')]: {
-        fontSize: '.8rem'
+        fontSize: '.8rem',
       },
     },
     paper: {
@@ -53,9 +53,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     details: {
       [theme.breakpoints.down('xs')]: {
-        padding: '.5rem'
+        padding: '.5rem',
       },
-    }
+    },
   })
 );
 
@@ -63,17 +63,24 @@ interface Props {
   title: string;
   body?: string;
   download?: boolean;
+  noDefaultOpen?: boolean;
   children?: ReactChild;
 }
-const Collapsible: React.FC<Props> = ({ title, body, children, download }) => {
+const Collapsible: React.FC<Props> = ({
+  title,
+  body,
+  children,
+  download,
+  noDefaultOpen,
+}) => {
   const classes = useStyles();
   const handleDownload = (e) => {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
   return (
     <div className={classes.root}>
-      <Accordion defaultExpanded className={classes.paper}>
+      <Accordion defaultExpanded={!noDefaultOpen} className={classes.paper}>
         <AccordionSummary
           className={classes.summary}
           expandIcon={<ExpandMoreIcon />}
@@ -83,9 +90,12 @@ const Collapsible: React.FC<Props> = ({ title, body, children, download }) => {
           <Typography variant='body2' className={classes.heading}>
             {title}{' '}
             {download && (
-              <Button variant='text' className={classes.btn} onClick={handleDownload}>
-                <img src={pdf} className={classes.pdf} alt='pdf download' />
-                Download invoice
+              <Button
+                variant='text'
+                className={classes.btn}
+                onClick={handleDownload}
+              >
+                Make payment
               </Button>
             )}
           </Typography>

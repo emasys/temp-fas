@@ -11,3 +11,7 @@ export const formatMoney = (value: number | string) => {
     return 0;
   }
 };
+
+export const capitalize = (word: string) => {
+  return word?.replace(/\w/, c => c.toUpperCase())
+}

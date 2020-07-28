@@ -13,6 +13,7 @@ import {
   useMediaQuery,
   Paper,
   ThemeProvider,
+  capitalize,
 } from '@material-ui/core';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -105,7 +106,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         fontSize: '0.7rem',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-start',
       },
     },
     desc: {
@@ -146,12 +147,16 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '0.2rem',
       [theme.breakpoints.down('xs')]: {
         position: 'unset',
+        marginTop: '2px'
       },
     },
     contactWrapper: {
       display: 'flex',
       alignItems: 'flex-end',
       marginBottom: '1rem',
+      [theme.breakpoints.down('xs')]: {
+       display: 'none'
+      },
     },
     phone: {
       borderRadius: '1.113rem',
@@ -342,65 +347,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 </Grid>
               </>
             )}
-            <Typography variant='body2' className={classes.link}>
-              <span
-                className={classes.indicator}
-                style={{ background: '#FF8515' }}
-              />
-              <span style={{ marginLeft: '.5rem' }}>
-                Contacted on {moment(createdAt).format('MMMM Do YYYY')}
-              </span>
-            </Typography>
-            <Typography variant='body2' className={classes.link}>
-              <span
-                className={classes.indicator}
-                style={{ background: '#FF8515' }}
-              />
-              <span style={{ marginLeft: '.5rem' }}>
-                Estimated delivery date -{' '}
-                {dueDate ? moment(dueDate).format('MMMM Do YYYY') : 'N/A'}
-              </span>
-            </Typography>
-            {vendorStatusDates && (
-              <Typography variant='body2' className={classes.link}>
-                <span
-                  className={classes.indicator}
-                  style={{ background: '#574497' }}
-                />
-                <span style={{ marginLeft: '.5rem' }}>
-                  {`${customer ? customer.fullName : 'You'} made payment on
-                ${moment(vendorStatusDates.paymentDate).format(
-                  'MMMM Do YYYY'
-                )}`}
-                </span>
-              </Typography>
-            )}
-            <Typography variant='body2' className={classes.link}>
-              <span
-                className={classes.indicator}
-                style={{ background: '#574497' }}
-              />
-              <span style={{ marginLeft: '.5rem' }}>
-                {vendorStatusDates?.startedDate
-                  ? `Started on
-                ${moment(vendorStatusDates.startedDate).format('MMMM Do YYYY')}`
-                  : 'Not in progress'}
-              </span>
-            </Typography>
-            {vendorStatusDates?.completedDate && (
-              <Typography variant='body2' className={classes.link}>
-                <span
-                  className={classes.indicator}
-                  style={{ background: 'rgba(0, 155, 106)' }}
-                />
-                <span style={{ marginLeft: '.5rem' }}>
-                  Completed on{' '}
-                  {moment(vendorStatusDates?.completedDate).format(
-                    'MMMM Do YYYY'
-                  )}
-                </span>
-              </Typography>
-            )}
+
             {!!total?.value && !vendorStatusDates?.startedDate && (
               <Grid item xs={12}>
                 {isVendor ? (
@@ -433,10 +380,74 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           </div>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
+          <Collapsible title='ACTIVITY' noDefaultOpen>
+            <Grid>
+              <Typography variant='body2' className={classes.link}>
+                <span
+                  className={classes.indicator}
+                  style={{ background: '#FF8515' }}
+                />
+                <span style={{ marginLeft: '.5rem' }}>
+                  {customer ? customer.fullName : 'You'} booked {capitalize(vendorName)} on {moment(createdAt).format('MMMM Do YYYY')}
+                </span>
+              </Typography>
+              {vendorStatusDates && (
+                <Typography variant='body2' className={classes.link}>
+                  <span
+                    className={classes.indicator}
+                    style={{ background: '#574497' }}
+                  />
+                  <span style={{ marginLeft: '.5rem' }}>
+                    {`${customer ? customer.fullName : 'You'} made payment on
+                ${moment(vendorStatusDates.paymentDate).format(
+                  'MMMM Do YYYY'
+                )}`}
+                  </span>
+                </Typography>
+              )}
+              <Typography variant='body2' className={classes.link}>
+                <span
+                  className={classes.indicator}
+                  style={{ background: '#574497' }}
+                />
+                <span style={{ marginLeft: '.5rem' }}>
+                  {vendorStatusDates?.startedDate
+                    ? `${capitalize(vendorName)} started this project on
+                ${moment(vendorStatusDates.startedDate).format('MMMM Do YYYY')}`
+                    : 'Not in progress'}
+                </span>
+              </Typography>
+              {vendorStatusDates?.completedDate && (
+                <Typography variant='body2' className={classes.link}>
+                  <span
+                    className={classes.indicator}
+                    style={{ background: 'rgba(0, 155, 106)' }}
+                  />
+                  <span style={{ marginLeft: '.5rem' }}>
+                    Completed on{' '}
+                    {moment(vendorStatusDates?.completedDate).format(
+                      'MMMM Do YYYY'
+                    )}
+                  </span>
+                </Typography>
+              )}
+            </Grid>
+          </Collapsible>
+        </Grid>
+        <Grid item xs={12} className={classes.desc}>
+          <Collapsible title='INVOICE' download={true}>
+            <Invoice />
+          </Collapsible>
+        </Grid>
+        <Grid item xs={12} className={classes.desc}>
           <Collapsible title='DESCRIPTION' body={description} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='DUE DATE'>
+          <Collapsible
+            title={`DUE DATE - ${
+              dueDate ? moment(dueDate).format('MMMM Do YYYY') : 'Not set'
+            }`}
+          >
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Typography variant='body2' className={classes.dateLabel}>
                 You can still modify the due date
@@ -453,11 +464,6 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 onChange={handleDateChange}
               />
             </MuiPickersUtilsProvider>
-          </Collapsible>
-        </Grid>
-        <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='INVOICE' download={!!invoice}>
-            <Invoice />
           </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>

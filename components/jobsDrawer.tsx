@@ -24,7 +24,7 @@ import Collapsible from './Collapsible';
 import Reviews from './Reviews';
 import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
-import { CloseRounded } from '@material-ui/icons';
+import { CloseRounded, Phone, PhoneRounded } from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
 import config from '../config';
@@ -147,7 +147,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '0.2rem',
       [theme.breakpoints.down('xs')]: {
         position: 'unset',
-        marginTop: '2px'
+        marginTop: '2px',
       },
     },
     contactWrapper: {
@@ -155,7 +155,8 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'flex-end',
       marginBottom: '1rem',
       [theme.breakpoints.down('xs')]: {
-       display: 'none'
+        flexDirection: 'column',
+        alignItems: 'flex-start',
       },
     },
     phone: {
@@ -170,14 +171,19 @@ const useStyles = makeStyles((theme: Theme) =>
         background: 'rgba(0,0,0,0.25)',
       },
       [theme.breakpoints.down('xs')]: {
-        minHeight: '1.5rem',
-        minWidth: '6rem',
+        color: '#292929',
+        minHeight: 'auto',
+        background: 'transparent',
+        minWidth: 'auto',
       },
     },
     phoneIcon: {
       marginRight: '.5rem',
       [theme.breakpoints.down('xs')]: {
-        display: 'none',
+        // display: 'none',
+        marginRight: '.2rem',
+        fontSize: '.9rem',
+        color: '#000',
       },
     },
     chat: {
@@ -197,7 +203,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       [theme.breakpoints.down('xs')]: {
         minHeight: '1.5rem',
-        minWidth: '5rem',
+        minWidth: 'auto',
+        display: 'none',
       },
     },
     chatIcon: {
@@ -333,11 +340,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               <>
                 <Grid item xs={6} className={classes.contactWrapper}>
                   <Button variant='text' className={classes.phone}>
-                    <img
-                      src={phoneIcon}
-                      className={classes.phoneIcon}
-                      alt='pdf download'
-                    />
+                    <PhoneRounded className={classes.phoneIcon} />
                     {phoneNumber || 'Not available'}
                   </Button>
                   <Button variant='text' className={classes.chat}>
@@ -388,7 +391,9 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   style={{ background: '#FF8515' }}
                 />
                 <span style={{ marginLeft: '.5rem' }}>
-                  {customer ? customer.fullName : 'You'} booked {capitalize(vendorName)} on {moment(createdAt).format('MMMM Do YYYY')}
+                  {customer ? customer.fullName : 'You'} booked{' '}
+                  {capitalize(vendorName)} on{' '}
+                  {moment(createdAt).format('MMMM Do YYYY')}
                 </span>
               </Typography>
               {vendorStatusDates && (
@@ -447,6 +452,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
             title={`DUE DATE - ${
               dueDate ? moment(dueDate).format('MMMM Do YYYY') : 'Not set'
             }`}
+            noDefaultOpen
           >
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Typography variant='body2' className={classes.dateLabel}>

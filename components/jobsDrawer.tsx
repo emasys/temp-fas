@@ -179,6 +179,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     phoneIcon: {
       marginRight: '.5rem',
+      fontSize: '1rem',
       [theme.breakpoints.down('xs')]: {
         marginRight: '.2rem',
         fontSize: '.9rem',

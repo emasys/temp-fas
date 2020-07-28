@@ -64,6 +64,7 @@ export interface IJob {
   accepted: any;
   vendorStatusDates: any;
   vendorStatus: any;
+  review?: any;
   customerId: string;
   customer?: any;
   vendorId: string;

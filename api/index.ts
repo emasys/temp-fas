@@ -155,3 +155,18 @@ export const updateJobDate = async (data: { date: string }, jobId: string) => {
     return false;
   }
 };
+
+export const postJobRating = async (
+  data: {
+    rating: number;
+    comment?: string;
+  },
+  jobId: string
+) => {
+  try {
+    const res = await instance.post(`jobs/${jobId}/review`, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};

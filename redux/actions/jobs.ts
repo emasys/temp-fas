@@ -58,3 +58,7 @@ export const makeJobPayment = (data: string) => (dispatch: Dispatch<any>) => {
   dispatch(setValue(EActionTypes.UPDATE_PAYMENT_STATUS, data));
   dispatch(fetchUserJobs());
 };
+
+export const updateJobReview = (data: any) => (dispatch: Dispatch<any>) => {
+  dispatch(setValue(EActionTypes.UPDATE_JOB_REVIEW, data))
+}

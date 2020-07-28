@@ -27,7 +27,7 @@ import {
 } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
 import { fetchVendor } from '../../redux/actions/vendors';
-import Reviews from '../../components/Reviews';
+import Review from '../../components/Review';
 import { getVendorStatus } from '../../redux/selectors/vendors';
 import { fetchUserJobs } from '../../redux/actions/jobs';
 import { getUserJobs } from '../../redux/selectors/jobs';
@@ -238,7 +238,7 @@ const Vendor: React.FC<Props> = () => {
           <Divider title='Reviews' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.reviews}>
-          <Reviews />
+          <Review />
         </Grid>
       </Grid>
     </VendorLayout>

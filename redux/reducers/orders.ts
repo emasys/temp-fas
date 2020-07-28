@@ -17,11 +17,17 @@ interface IUpdateJob {
   payload: IOrder;
 }
 
+interface IUpdateJobReview {
+  type: EActionTypes.UPDATE_JOB_REVIEW;
+  payload: any;
+}
+
 export type TActions =
   | IFetchJobs
   | IResetAction
   | IUpdateOrderInvoice
-  | IUpdateJob;
+  | IUpdateJob
+  | IUpdateJobReview;
 
 export const initialOrderState = [];
 
@@ -43,6 +49,17 @@ export default function jobs(
         return job;
       });
       return job;
+    case EActionTypes.UPDATE_JOB_INVOICE:
+      const updatedJobs = state.map((job) => {
+        if (job.id === action.payload.id) {
+          return {
+            ...job,
+            review: action.payload.data,
+          };
+        }
+        return job;
+      });
+      return updatedJobs;
     case EActionTypes.UPDATE_JOB:
       const jobs = state.filter((job) => job.id !== action.payload.id);
       const updatedJob = state.filter((job) => job.id === action.payload.id);

@@ -261,6 +261,10 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       dispatch(updateInvoiceValue(content?.invoice));
     }
   }, [content?.invoice]);
+
+  useEffect(() => {
+    if (content?.dueDate) setSelectedDate(content?.dueDate);
+  }, [content?.dueDate]);
   if (!content) return <div />;
 
   const {
@@ -296,10 +300,6 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     setSelectedDate(date);
     const data = await updateJobDate({ date: moment(date).format() }, id);
   };
-
-  useEffect(() => {
-    if (dueDate) setSelectedDate(dueDate);
-  }, [dueDate]);
 
   return (
     <Drawer

@@ -15,6 +15,7 @@ import menuIcon from '../assets/menuIcon.svg';
 import MenuDrawer from './MenuDrawer';
 import { Router } from 'next/router';
 import { fetchUser } from '../redux/actions/auth';
+import Meta from './Meta';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -115,6 +116,7 @@ const Navbar: React.FC<Props> = (props) => {
     <Fragment>
       <Login />
       <MenuDrawer />
+      <Meta />
       <Grid container justify='space-between' className={classes.root}>
         <Grid item sm={3}>
           <Typography variant='body1' style={{ color: '#fff' }}>

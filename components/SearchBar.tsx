@@ -17,6 +17,7 @@ import { AppState } from '../lib/initialState';
 import menuIcon from '../assets/menuIcon-dark.svg';
 import MenuDrawer from './MenuDrawer';
 import { fetchUser } from '../redux/actions/auth';
+import Meta from './Meta';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -145,6 +146,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
     <Fragment>
       <Login />
       <MenuDrawer />
+      <Meta />
       <Grid container justify='space-between' className={classes.root}>
         <Grid item xs={7} sm={4}>
           <Typography

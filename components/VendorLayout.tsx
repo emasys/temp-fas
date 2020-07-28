@@ -1,6 +1,7 @@
 import React, { ReactChild } from 'react';
 import { Grid, createStyles, makeStyles, Theme } from '@material-ui/core';
 import SearchBar from './SearchBar';
+import Meta from './Meta';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

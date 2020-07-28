@@ -180,7 +180,6 @@ const useStyles = makeStyles((theme: Theme) =>
     phoneIcon: {
       marginRight: '.5rem',
       [theme.breakpoints.down('xs')]: {
-        // display: 'none',
         marginRight: '.2rem',
         fontSize: '.9rem',
         color: '#000',

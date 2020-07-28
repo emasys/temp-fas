@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
   Divider,
+  IconButton,
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import Furniture from '../assets/furniture.svg';
@@ -32,6 +33,7 @@ import { getLocations } from '../redux/selectors/locations';
 import { getServiceOptions } from '../redux/selectors/services';
 import MoneyInput from './MoneyInput';
 import { updateVendor } from '../redux/actions/vendors';
+import { CloseRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,19 +53,19 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'auto',
       [theme.breakpoints.down('xs')]: {
         width: '95%',
-        top: '2%'
+        top: '2%',
       },
     },
     form: {
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
-      height: '100%',
+      minHeight: '50rem',
       padding: '3rem',
       borderRadius: '.2rem',
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
-        padding: '3rem 1rem'
+        padding: '3rem 1rem',
       },
     },
     button: {
@@ -108,6 +110,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     selectWrapper: {
       marginTop: '.5rem',
+    },
+    header: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      marginTop: '2rem',
     },
   })
 );
@@ -195,6 +203,10 @@ const BAVForm: React.FC<Props> = () => {
     },
   });
 
+  const handleClose = () => {
+    dispatch(handleAuthModal(false));
+  };
+
   const areaOptions = locations.find((loc) => loc.value === values.state)
     ?.areas;
 
@@ -204,6 +216,11 @@ const BAVForm: React.FC<Props> = () => {
 
   return (
     <div className={classes.paper}>
+      <div className={classes.header}>
+        <IconButton onClick={handleClose}>
+          <CloseRounded />
+        </IconButton>
+      </div>
       <div className={classes.form}>
         <Typography variant='body1' className={classes.title}>
           Become a vendor

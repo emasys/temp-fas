@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
+      height: '100%',
       padding: '3rem',
       borderRadius: '.2rem',
       backgroundColor: '#fff',

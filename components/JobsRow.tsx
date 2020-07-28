@@ -114,6 +114,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     name: {
+      textTransform: 'capitalize',
       [theme.breakpoints.down('xs')]: {
         fontSize: '0.7rem',
       },

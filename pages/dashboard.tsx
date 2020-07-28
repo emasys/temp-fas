@@ -79,7 +79,7 @@ export default function Jobs({}: Props): ReactElement {
                     )
                   : 0
               }
-              stage={job.vendorStatus}
+              stage={job.stage}
               status={job.status}
             />
           ))}

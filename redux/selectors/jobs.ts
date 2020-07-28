@@ -35,7 +35,7 @@ export const getUserJobs = createSelector(
       };
       return {
         ...item,
-        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment not completed',
+        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment pending',
         status: jobStatusMapper[item.vendorStatus],
         color: jobColorMapper[item.vendorStatus],
       };
@@ -50,7 +50,7 @@ export const getUserJobs = createSelector(
       };
       return {
         ...item,
-        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment not completed',
+        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment pending',
         status: jobStatusMapper[item.vendorStatus],
         color: jobColorMapper[item.vendorStatus],
       };

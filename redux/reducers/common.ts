@@ -64,6 +64,11 @@ interface IMakePayment {
   payload: IJob;
 }
 
+interface IUpdateJobReview {
+  type: EActionTypes.UPDATE_JOB_REVIEW;
+  payload: any;
+}
+
 export type TCommonActions =
   | ISaveURI
   | IMakePayment
@@ -77,7 +82,8 @@ export type TCommonActions =
   | IUpdateOrderInvoice
   | IInvoiceValue
   | IToggleDrawer
-  | IToggleLogin;
+  | IToggleLogin
+  | IUpdateJobReview;
 
 export const initialCommonState = {
   tempUri: '',
@@ -135,6 +141,14 @@ export default function vendor(
         drawerContent: {
           ...state.drawerContent,
           invoice: action.payload.data,
+        },
+      };
+    case EActionTypes.UPDATE_JOB_REVIEW:
+      return {
+        ...state,
+        drawerContent: {
+          ...state.drawerContent,
+          review: action.payload,
         },
       };
     case EActionTypes.UPDATE_PAYMENT_STATUS:

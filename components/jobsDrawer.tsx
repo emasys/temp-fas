@@ -21,7 +21,7 @@ import { AppState } from '../lib/initialState';
 import { toggleDrawer, updateInvoiceValue } from '../redux/actions/common';
 import { formatMoney } from '../util';
 import Collapsible from './Collapsible';
-import Reviews from './Reviews';
+import Review from './Review';
 import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
 import { CloseRounded, Phone, PhoneRounded } from '@material-ui/icons';
@@ -294,6 +294,8 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       phoneNumber,
       service: { name },
     },
+    review,
+    stage,
   } = content;
 
   const onSuccess = async () => {
@@ -477,7 +479,12 @@ const JobsDrawer: React.FC<IProps> = (props) => {
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible title='REVIEW'>
-            <Reviews />
+            <Review
+              value={review}
+              isCustomer={!isVendor}
+              jobId={id}
+              canPost={stage === "done"}
+            />
           </Collapsible>
         </Grid>
       </Grid>

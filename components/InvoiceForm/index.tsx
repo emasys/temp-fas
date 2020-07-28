@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: '95vh',
       [theme.breakpoints.down('xs')]: {
         width: '95%',
-        top: '2%'
+        top: '2%',
       },
     },
     header: {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: 0,
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
-        padding: '3rem 1rem'
+        padding: '3rem 1rem',
       },
     },
     button: {
@@ -152,10 +152,12 @@ const InvoiceForm: React.FC<Props> = () => {
   );
 
   useEffect(() => {
-    if (invoice) {
+    if (!invoice) {
+      dispatch(addInvoiceValue(invoice));
+    } else {
       dispatch(updateInvoiceValue(invoice));
     }
-  }, [invoice]);
+  }, []);
 
   const {
     handleChange,

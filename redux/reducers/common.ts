@@ -83,7 +83,7 @@ export const initialCommonState = {
   tempUri: '',
   openAuthModal: false,
   isLogin: 'login',
-  tempEmail: '',
+  tempEmail: '', 
   drawerContent: null,
   drawerStatus: false,
   mobileDrawer: false,
@@ -117,7 +117,7 @@ export default function vendor(
     case EActionTypes.ADD_INVOICE_VALUE:
       return {
         ...state,
-        invoiceValues: action.payload,
+        invoiceValues: action.payload || [],
       };
     case EActionTypes.SET_DRAWER_JOB:
       return {

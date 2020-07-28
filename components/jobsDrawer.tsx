@@ -193,11 +193,12 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '9rem',
       fontSize: '0.6875rem',
       minHeight: '2rem',
-      display: 'flex',
+      // display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       background: '#43CEA2',
       marginLeft: '0.75rem',
+      display: 'none',
       '&:hover': {
         background: '#43CEA2',
       },
@@ -304,7 +305,11 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   };
 
   const startJob = async () => {
-    const data = await updateVendorStatus({ status: 'started' }, id, vendorId);
+    const data = await updateVendorStatus(
+      { status: vendorStatusDates?.startedDate ? 'completed' : 'started' },
+      id,
+      vendorId
+    );
     dispatch(fetchVendorJobs(vendorId));
     // temp
     dispatch(makeJobPayment(data));
@@ -353,15 +358,18 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               </>
             )}
 
-            {!!total?.value && !vendorStatusDates?.startedDate && (
+            {!!total?.value && (
               <Grid item xs={12}>
                 {isVendor ? (
                   <Button
                     variant='contained'
                     className={classes.payment}
+                    disabled={!!vendorStatusDates?.completedDate}
                     onClick={startJob}
                   >
-                    Start job
+                    {vendorStatusDates?.startedDate
+                      ? 'Complete Job'
+                      : 'Start Job'}
                   </Button>
                 ) : (
                   <Button
@@ -483,7 +491,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               value={review}
               isCustomer={!isVendor}
               jobId={id}
-              canPost={stage === "done"}
+              canPost={stage === 'done'}
             />
           </Collapsible>
         </Grid>

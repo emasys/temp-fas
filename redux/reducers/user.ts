@@ -1,8 +1,17 @@
 import { EActionTypes } from '../actions/types';
 import { IVendor } from '../../interfaces';
 
+export interface IBank {
+  accountName: string;
+  accountNumber: string;
+  bankName: string;
+  createdAt: string;
+  id: string;
+  updatedAt: string;
+  userId: string;
+}
 export interface IUser {
-  bankDetails?: any;
+  bankDetails?: IBank;
   vendorProfile?: IVendor;
   fullName: string;
   email: string;

@@ -11,12 +11,18 @@ import { getUserJobs } from '../redux/selectors/jobs';
 import JobsDrawer from '../components/jobsDrawer';
 import { getVendorStatus } from '../redux/selectors/vendors';
 import { getInvoice } from '../redux/selectors/common';
+import JobsCard from '../components/JobsCard';
+import RequestCard from '../components/RequestCard';
+import PaymentCard from '../components/PaymentCard';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {},
     search: {
       margin: '2rem 0',
+    },
+    cards: {
+      margin: '2rem 0 0',
     },
     wrapper: {
       minHeight: '100vh',
@@ -40,9 +46,7 @@ export default function Jobs({}: Props): ReactElement {
   const classes = useStyles();
   const { auth, id } = useSelector((state: AppState) => state.auth);
   const { allOrders } = useSelector((state: AppState) => getUserJobs(state));
-  const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state)
-  );
+  const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -51,6 +55,7 @@ export default function Jobs({}: Props): ReactElement {
     }
     if (auth) {
       ownVendor?.id && dispatch(fetchVendorJobs(ownVendor?.id));
+      dispatch(fetchUserJobs());
     }
   }, [auth]);
 
@@ -58,6 +63,17 @@ export default function Jobs({}: Props): ReactElement {
     <div className={auth ? classes.container : classes.blur}>
       <VendorLayout title={'Dashboard'}>
         <>
+          <Grid container spacing={2}>
+            <Grid item xs={4} className={classes.cards}>
+              <JobsCard />
+            </Grid>
+            <Grid item xs={4} className={classes.cards}>
+              <PaymentCard />
+            </Grid>
+            <Grid item xs={4} className={classes.cards}>
+              <RequestCard />
+            </Grid>
+          </Grid>
           <Grid container className={classes.search}>
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch />
@@ -71,14 +87,7 @@ export default function Jobs({}: Props): ReactElement {
               color={job?.color}
               date={job?.createdAt}
               name={job?.customer?.fullName}
-              amount={
-                job?.invoice
-                  ? Object.values(job.invoice).reduce(
-                      (prev, curr) => Number(prev) + Number(curr),
-                      0
-                    )
-                  : 0
-              }
+              amount={job.cost}
               stage={job.stage}
               status={job.status}
             />

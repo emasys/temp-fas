@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '1rem',
     },
     iconWrapper: {
-      background: '#C4C4C4',
+      background: 'rgba(255, 133, 21, 0.1)',
       borderRadius: '50%',
       display: 'flex',
       marginRight: '.5rem',
@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       height: '1.5rem',
       width: '1.5rem',
+    },
+    icon: {
+      // color: '#737373'
     },
     link: {
       fontWeight: 400,
@@ -117,7 +120,7 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   return (
     <div className={classes.container}>
       <div className={classes.iconWrapper}>
-        <AccountCircle />
+        <AccountCircle className={classes.icon} />
       </div>
       <Typography
         aria-describedby='menu'

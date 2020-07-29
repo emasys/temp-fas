@@ -17,7 +17,7 @@ export const getInvoice = createSelector(invoice, (data) => {
   };
   const fee = {
     id: 'net',
-    value: total.value * 0.04,
+    value: total.value * 0.02,
     item: 'Transaction fee',
   };
   const netProceed = {

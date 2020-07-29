@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { AppState } from '../../lib/initialState';
 import moment from 'moment';
+import { getInvoiceTotal } from '../../util';
 
 const jobs = (state: AppState) => state.jobs;
 const vendor = (state: AppState) => state.vendor.activeVendor;
@@ -16,7 +17,7 @@ const jobColorMapper = {
 
 const formatDate = (date: string = '') => {
   return moment(date).fromNow();
-}
+};
 
 export const getUserJobs = createSelector(
   [jobs, vendor, orders],
@@ -29,13 +30,24 @@ export const getUserJobs = createSelector(
       const jobStatusMapper = {
         not_started: 'Not started',
         started: `Started ${formatDate(item.vendorStatusDates?.startedDate)}`,
-        completed: `Completed ${formatDate(item.vendorStatusDates?.completedDate)}`,
+        completed: `Completed ${formatDate(
+          item.vendorStatusDates?.completedDate
+        )}`,
         rejected: 'Rejected',
         accepted: 'Accepted',
       };
+      const total = item?.invoice
+        ? Object.values(item?.invoice).reduce(
+            (prev, curr) => Number(prev) + Number(curr),
+            0
+          )
+        : 0;
       return {
         ...item,
-        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment pending',
+        stage: item.vendorStatusDates?.paymentDate
+          ? 'Payment completed'
+          : 'Payment pending',
+        cost: Number(total),
         status: jobStatusMapper[item.vendorStatus],
         color: jobColorMapper[item.vendorStatus],
       };
@@ -44,17 +56,53 @@ export const getUserJobs = createSelector(
       const jobStatusMapper = {
         not_started: 'Not started',
         started: `Started ${formatDate(item.vendorStatusDates?.startedDate)}`,
-        completed: `Completed ${formatDate(item.vendorStatusDates?.completedDate)}`,
+        completed: `Completed ${formatDate(
+          item.vendorStatusDates?.completedDate
+        )}`,
         rejected: 'Rejected',
         accepted: 'Accepted',
       };
+      const total = item?.invoice
+        ? Object.values(item?.invoice).reduce(
+            (prev, curr) => Number(prev) + Number(curr),
+            0
+          )
+        : 0;
       return {
         ...item,
-        stage: item.vendorStatusDates?.paymentDate ? 'Payment completed' : 'Payment pending',
+        stage: item.vendorStatusDates?.paymentDate
+          ? 'Payment completed'
+          : 'Payment pending',
+        cost: Number(total) - Number(total) * 0.02,
         status: jobStatusMapper[item.vendorStatus],
         color: jobColorMapper[item.vendorStatus],
       };
     });
-    return { isBooked, allJobs, allOrders };
+    let totalCost = 0;
+    let earnedAmount = 0;
+    allOrders.forEach((job) => {
+      if (job.invoice) {
+        totalCost += getInvoiceTotal(job.invoice);
+        if (job.vendorStatus === 'completed') {
+          earnedAmount += getInvoiceTotal(job.invoice);
+        }
+      }
+    });
+
+    const jobStat = {
+      total: allOrders.length,
+      totalRequest: allJobs.length,
+      completedRequest: allJobs.filter(
+        (job) => job.vendorStatus === 'completed'
+      ).length,
+      completed: allOrders.filter((job) => job.vendorStatus === 'completed')
+        .length,
+      rejected: allOrders.filter((job) => job.vendorStatus === 'rejected')
+        .length,
+      earnedAmount,
+      totalCost,
+    };
+    console.log(jobStat, '=======');
+    return { isBooked, allJobs, allOrders, jobStat };
   }
 );

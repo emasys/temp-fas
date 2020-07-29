@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '6rem',
       marginBottom: '1rem',
       borderRadius: '0.2rem',
-      border: '0.890421px solid #F0F0F0',
+      background: '#fbfbfb',
+      // background: 'linear-gradient(90.81deg, rgb(225 239 234 / 10%) 0.44%, rgb(216 228 241 / 10%) 98.43%)',
       boxSizing: 'border-box',
       [theme.breakpoints.down('xs')]: {
         height: '3rem',
@@ -173,7 +174,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
             variant='body2'
             className={classes.pdfText}
             style={{
-              color: isPaid ? '#007777' : '#984900',
+              color: isPaid ? '#007777' : 'rgb(249 132 23)',
             }}
           >
             {stage}

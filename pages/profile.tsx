@@ -41,9 +41,7 @@ export default function Profile({}: Props): ReactElement {
   const dispatch = useDispatch();
   const { auth, id } = useSelector((state: AppState) => state.auth);
   const { allJobs } = useSelector((state: AppState) => getUserJobs(state));
-  const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state)
-  );
+  const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
 
   useEffect(() => {
     if (!auth) {
@@ -58,6 +56,7 @@ export default function Profile({}: Props): ReactElement {
     <div className={auth ? classes.container : classes.blur}>
       <VendorLayout title={'Profile'}>
         <>
+        
           <Grid container className={classes.search}>
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch />
@@ -70,14 +69,7 @@ export default function Profile({}: Props): ReactElement {
               color={job.color}
               date={job.createdAt}
               name={job.vendor.name}
-              amount={
-                job?.invoice
-                  ? Object.values(job.invoice).reduce(
-                      (prev, curr) => Number(prev) + Number(curr),
-                      0
-                    )
-                  : 0
-              }
+              amount={job.cost}
               stage={job.stage}
               status={job.status}
             />

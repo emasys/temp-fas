@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     date: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         display: 'none',
       },
     },
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     statusBtn: {
       cursor: 'pointer',
-      background: '#F9F9F9',
+      background: '#f7f3f3',
       padding: '.5rem',
       marginLeft: '2rem',
       [theme.breakpoints.down('xs')]: {
@@ -157,7 +157,7 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   const isPaid = stage === 'Payment completed';
   return (
     <Grid container className={classes.row}>
-      <Grid item xs={1} sm={2} className={classes.pdfWrapper}>
+      <Grid item xs={1} sm={3} md={2} className={classes.pdfWrapper}>
         <div
           className={classes.indicator}
           style={{ backgroundColor: color || '#574497' }}
@@ -203,6 +203,8 @@ const JobsRow: React.FC<IJobsRowProps> = ({
       <Grid
         item
         xs={3}
+        sm={4}
+        md={3}
         className={classes.statusWrapper}
         onClick={handleDrawer}
       >

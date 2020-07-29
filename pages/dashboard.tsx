@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
     cards: {
       margin: '2rem 0 0',
     },
+    cardsMobile: {
+      margin: '2rem 0 0',
+      width: '100%',
+      marginRight: '1rem',
+    },
     wrapper: {
       minHeight: '100vh',
       paddingTop: '5rem',
@@ -36,6 +41,28 @@ const useStyles = makeStyles((theme: Theme) =>
       '-o-filter': 'blur(1rem)',
       '-ms-filter': 'blur(1rem)',
       filter: 'blur(1rem)',
+    },
+    cardWrapper: {
+      display: 'flex',
+      maxWidth: '100%',
+      height: 'auto',
+      overflow: 'scroll',
+      '-ms-overflow-style': 'none',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+    },
+    mobileWrapper: {
+      display: 'none',
+      [theme.breakpoints.down('xs')]: {
+        display: 'flex',
+      },
+    },
+    desktopWrapper: {
+      display: 'flex',
+      [theme.breakpoints.down('xs')]: {
+        display: 'none',
+      },
     },
   })
 );
@@ -63,7 +90,7 @@ export default function Jobs({}: Props): ReactElement {
     <div className={auth ? classes.container : classes.blur}>
       <VendorLayout title={'Dashboard'}>
         <>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className={classes.desktopWrapper}>
             <Grid item xs={4} className={classes.cards}>
               <JobsCard />
             </Grid>
@@ -74,6 +101,20 @@ export default function Jobs({}: Props): ReactElement {
               <RequestCard />
             </Grid>
           </Grid>
+          <Grid container className={classes.mobileWrapper}>
+            <Grid item xs={12} className={classes.cardWrapper}>
+              <Grid item className={classes.cardsMobile}>
+                <JobsCard />
+              </Grid>
+              <Grid item className={classes.cardsMobile}>
+                <PaymentCard />
+              </Grid>
+              <Grid item className={classes.cardsMobile}>
+                <RequestCard />
+              </Grid>
+            </Grid>
+          </Grid>
+
           <Grid container className={classes.search}>
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch />

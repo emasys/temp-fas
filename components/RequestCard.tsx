@@ -40,7 +40,14 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '0.2rem',
       padding: '2rem',
       background: 'rgba(87, 68, 151, 0.04)',
-      minHeight: '10rem'
+      minHeight: '10rem',
+      [theme.breakpoints.down('sm')]: {
+        padding: '.5rem',
+      },
+      [theme.breakpoints.down('xs')]: {
+        padding: '1rem',
+        minWidth: '18rem',
+      },
     },
     title: {
       color: '#5A5A5A',

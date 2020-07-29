@@ -92,13 +92,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
-const PaymentCard: React.FC<Props> = (props) => {
+interface Props {
+  active?: boolean;
+}
+const PaymentCard: React.FC<Props> = ({ active }) => {
   const classes = useStyles();
   const { jobStat } = useSelector((state: AppState) => getUserJobs(state));
   const initialPercent = (jobStat?.earnedAmount * 100) / jobStat?.totalCost;
   return (
-    <Grid container className={classes.container}>
+    <Grid
+      container
+      className={classes.container}
+      style={{ boxShadow: active ? '0px 11px 20px 3px #00000012' : 'none' }}
+    >
       <Grid item xs={12} className={classes.content}>
         <IconButton className={classes.work}>
           <AccountBalanceRounded className={classes.workIcon} />

@@ -25,7 +25,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
       borderRadius: 5,
     },
     colorPrimary: {
-      backgroundColor:'rgba(87, 68, 151, 0.04)',
+      backgroundColor: 'rgba(87, 68, 151, 0.04)',
     },
     bar: {
       borderRadius: 5,
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     workIcon: {
-      color: 'rgba(87, 68, 151, 1)'
+      color: 'rgba(87, 68, 151, 1)',
     },
     content: {
       display: 'flex',
@@ -90,14 +90,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
-const RequestCard: React.FC<Props> = (props) => {
+interface Props {
+  active?: boolean;
+}
+const RequestCard: React.FC<Props> = ({ active }) => {
   const classes = useStyles();
   const { jobStat } = useSelector((state: AppState) => getUserJobs(state));
   const initialPercent =
     (jobStat?.completedRequest * 100) / jobStat?.totalRequest;
   return (
-    <Grid container className={classes.container}>
+    <Grid
+      container
+      className={classes.container}
+      style={{ boxShadow: active ? '0px 11px 20px 3px #00000012' : 'none' }}
+    >
       <Grid item xs={12} className={classes.content}>
         <IconButton className={classes.work}>
           <NextWeekRounded className={classes.workIcon} />

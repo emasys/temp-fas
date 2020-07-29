@@ -108,7 +108,7 @@ export default function Jobs({}: Props): ReactElement {
                   className={classes.cards}
                   onClick={() => setType('vendor')}
                 >
-                  <JobsCard />
+                  <JobsCard active={userType === 'vendor'}/>
                 </Grid>
                 <Grid item xs={4} className={classes.cards}>
                   <PaymentCard />
@@ -119,19 +119,19 @@ export default function Jobs({}: Props): ReactElement {
                   className={classes.cards}
                   onClick={() => setType('user')}
                 >
-                  <RequestCard />
+                  <RequestCard active={userType === 'user'}/>
                 </Grid>
               </Grid>
               <Grid container className={classes.mobileWrapper}>
                 <Grid item xs={12} className={classes.cardWrapper}>
                   <Grid item className={classes.cardsMobile}>
-                    <JobsCard />
+                    <JobsCard active={userType === 'vendor'}/>
                   </Grid>
                   <Grid item className={classes.cardsMobile}>
                     <PaymentCard />
                   </Grid>
                   <Grid item className={classes.cardsMobile}>
-                    <RequestCard />
+                    <RequestCard active={userType === 'user'}/>
                   </Grid>
                 </Grid>
               </Grid>{' '}

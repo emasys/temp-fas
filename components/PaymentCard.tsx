@@ -112,17 +112,19 @@ const PaymentCard: React.FC<Props> = (props) => {
           </Typography>
         </div>
       </Grid>
-      <Grid item xs={12} className={classes.progress}>
-        <div className={classes.progressInner}>
-          <Typography variant='body2' className={classes.progressText}>
-            Earned
-          </Typography>
-          <Typography variant='body2' className={classes.progressText}>
-            {formatMoney(jobStat?.earnedAmount)}
-          </Typography>
-        </div>
-        <BorderLinearProgress variant='determinate' value={initialPercent} />
-      </Grid>
+      {!!jobStat?.totalCost && (
+        <Grid item xs={12} className={classes.progress}>
+          <div className={classes.progressInner}>
+            <Typography variant='body2' className={classes.progressText}>
+              Earned
+            </Typography>
+            <Typography variant='body2' className={classes.progressText}>
+              {formatMoney(jobStat?.earnedAmount)}
+            </Typography>
+          </div>
+          <BorderLinearProgress variant='determinate' value={initialPercent} />
+        </Grid>
+      )}
     </Grid>
   );
 };

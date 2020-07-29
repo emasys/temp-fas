@@ -3,7 +3,13 @@ import VendorLayout from '../components/VendorLayout';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { handleAuthModal } from '../redux/actions/common';
-import { makeStyles, Theme, createStyles, Grid } from '@material-ui/core';
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 import JobSearch from '../components/JobSearch';
 import { fetchUserJobs, fetchVendorJobs } from '../redux/actions/jobs';
 import JobsRow from '../components/JobsRow';
@@ -54,27 +60,8 @@ export default function Profile({}: Props): ReactElement {
 
   return (
     <div className={auth ? classes.container : classes.blur}>
-      <VendorLayout title={'Profile'}>
-        <>
-        
-          <Grid container className={classes.search}>
-            <Grid item xs={12} sm={10} md={8} lg={6}>
-              <JobSearch />
-            </Grid>
-          </Grid>
-          {allJobs.map((job) => (
-            <JobsRow
-              key={job.id}
-              id={job.id}
-              color={job.color}
-              date={job.createdAt}
-              name={job.vendor.name}
-              amount={job.cost}
-              stage={job.stage}
-              status={job.status}
-            />
-          ))}
-        </>
+      <VendorLayout title={'General settings'}>
+        <Typography variant='h5'>Settings page</Typography>
       </VendorLayout>
     </div>
   );

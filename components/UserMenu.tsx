@@ -166,16 +166,14 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
               </Typography>
             </ListItem>
           )}
-          {ownVendor?.id && (
-            <ListItem button onClick={handleDashboard}>
-              <Typography variant='body2' className={classes.menuItem}>
-                Vendor Dashboard
-              </Typography>
-            </ListItem>
-          )}
+          <ListItem button onClick={handleDashboard}>
+            <Typography variant='body2' className={classes.menuItem}>
+              Dashboard
+            </Typography>
+          </ListItem>
           <ListItem button onClick={handleProfile}>
             <Typography variant='body2' className={classes.menuItem}>
-              Profile
+              Settings
             </Typography>
           </ListItem>
           <ListItem button onClick={handleLogOut}>

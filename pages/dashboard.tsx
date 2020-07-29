@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import VendorLayout from '../components/VendorLayout';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
@@ -14,6 +14,7 @@ import { getInvoice } from '../redux/selectors/common';
 import JobsCard from '../components/JobsCard';
 import RequestCard from '../components/RequestCard';
 import PaymentCard from '../components/PaymentCard';
+import { IJob } from '../interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     cards: {
       margin: '2rem 0 0',
+      cursor: 'pointer',
     },
     cardsMobile: {
       margin: '2rem 0 0',
@@ -72,9 +74,16 @@ interface Props {}
 export default function Jobs({}: Props): ReactElement {
   const classes = useStyles();
   const { auth, id } = useSelector((state: AppState) => state.auth);
-  const { allOrders } = useSelector((state: AppState) => getUserJobs(state));
+  const open = useSelector((state: AppState) => state.common.openAuthModal);
+  const { allOrders, allJobs } = useSelector((state: AppState) =>
+    getUserJobs(state)
+  );
   const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
-
+  const [userType, setType] = useState(ownVendor?.id ? 'vendor' : 'user');
+  const type = {
+    vendor: allOrders,
+    user: allJobs,
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     if (!auth) {
@@ -84,50 +93,64 @@ export default function Jobs({}: Props): ReactElement {
       ownVendor?.id && dispatch(fetchVendorJobs(ownVendor?.id));
       dispatch(fetchUserJobs());
     }
-  }, [auth]);
+  }, [auth, open]);
 
   return (
     <div className={auth ? classes.container : classes.blur}>
       <VendorLayout title={'Dashboard'}>
         <>
-          <Grid container spacing={2} className={classes.desktopWrapper}>
-            <Grid item xs={4} className={classes.cards}>
-              <JobsCard />
-            </Grid>
-            <Grid item xs={4} className={classes.cards}>
-              <PaymentCard />
-            </Grid>
-            <Grid item xs={4} className={classes.cards}>
-              <RequestCard />
-            </Grid>
-          </Grid>
-          <Grid container className={classes.mobileWrapper}>
-            <Grid item xs={12} className={classes.cardWrapper}>
-              <Grid item className={classes.cardsMobile}>
-                <JobsCard />
+          {!!ownVendor?.id && (
+            <>
+              <Grid container spacing={2} className={classes.desktopWrapper}>
+                <Grid
+                  item
+                  xs={4}
+                  className={classes.cards}
+                  onClick={() => setType('vendor')}
+                >
+                  <JobsCard />
+                </Grid>
+                <Grid item xs={4} className={classes.cards}>
+                  <PaymentCard />
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  className={classes.cards}
+                  onClick={() => setType('user')}
+                >
+                  <RequestCard />
+                </Grid>
               </Grid>
-              <Grid item className={classes.cardsMobile}>
-                <PaymentCard />
-              </Grid>
-              <Grid item className={classes.cardsMobile}>
-                <RequestCard />
-              </Grid>
-            </Grid>
-          </Grid>
+              <Grid container className={classes.mobileWrapper}>
+                <Grid item xs={12} className={classes.cardWrapper}>
+                  <Grid item className={classes.cardsMobile}>
+                    <JobsCard />
+                  </Grid>
+                  <Grid item className={classes.cardsMobile}>
+                    <PaymentCard />
+                  </Grid>
+                  <Grid item className={classes.cardsMobile}>
+                    <RequestCard />
+                  </Grid>
+                </Grid>
+              </Grid>{' '}
+            </>
+          )}
 
           <Grid container className={classes.search}>
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch />
             </Grid>
           </Grid>
-          {allOrders.map((job) => (
+          {type[userType].map((job) => (
             <JobsRow
               key={job?.id}
               id={job?.id}
-              vendor
+              vendor={!!job?.customer?.fullName}
               color={job?.color}
               date={job?.createdAt}
-              name={job?.customer?.fullName}
+              name={job?.customer?.fullName || job?.vendor?.name}
               amount={job.cost}
               stage={job.stage}
               status={job.status}

@@ -110,17 +110,19 @@ const JobsCard: React.FC<Props> = (props) => {
           </Typography>
         </div>
       </Grid>
-      <Grid item xs={12} className={classes.progress}>
-        <div className={classes.progressInner}>
-          <Typography variant='body2' className={classes.progressText}>
-            Completed
-          </Typography>
-          <Typography variant='body2' className={classes.progressText}>
-            {jobStat?.completed}
-          </Typography>
-        </div>
-        <BorderLinearProgress variant='determinate' value={initialPercent} />
-      </Grid>
+      {!!jobStat?.total && (
+        <Grid item xs={12} className={classes.progress}>
+          <div className={classes.progressInner}>
+            <Typography variant='body2' className={classes.progressText}>
+              Completed
+            </Typography>
+            <Typography variant='body2' className={classes.progressText}>
+              {jobStat?.completed}
+            </Typography>
+          </div>
+          <BorderLinearProgress variant='determinate' value={initialPercent} />
+        </Grid>
+      )}
     </Grid>
   );
 };

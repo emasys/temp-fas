@@ -94,7 +94,6 @@ interface Props {}
 const RequestCard: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { jobStat } = useSelector((state: AppState) => getUserJobs(state));
-  console.log(jobStat);
   const initialPercent =
     (jobStat?.completedRequest * 100) / jobStat?.totalRequest;
   return (

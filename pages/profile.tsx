@@ -170,6 +170,10 @@ export default function Profile({}: Props): ReactElement {
     }
   }, [auth, open]);
 
+  useEffect(() => {
+    setValue(index);
+  }, [router]);
+
   const handleTab = (name: string) => {
     const url = `/profile?tab=${name}`;
     router.push(url, undefined, { shallow: true });

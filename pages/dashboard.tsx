@@ -49,9 +49,13 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: '100%',
       height: 'auto',
       overflow: 'scroll',
+      padding: '.5rem',
       '-ms-overflow-style': 'none',
       '&::-webkit-scrollbar': {
         display: 'none',
+      },
+      [theme.breakpoints.down('xs')]: {
+        paddingRight: '3rem'
       },
     },
     mobileWrapper: {
@@ -133,8 +137,11 @@ export default function Jobs({}: Props): ReactElement {
                   <Grid item className={classes.cardsMobile}>
                     <RequestCard active={userType === 'user'}/>
                   </Grid>
+                  <Grid item className={classes.cardsMobile}>
+                    <div style={{ width: '2rem' }}/>
+                  </Grid>
                 </Grid>
-              </Grid>{' '}
+              </Grid>
             </>
           )}
 

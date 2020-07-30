@@ -103,7 +103,11 @@ const PaymentCard: React.FC<Props> = ({ active }) => {
     <Grid
       container
       className={classes.container}
-      style={{ boxShadow: active ? '0px 11px 20px 3px #00000012' : 'none' }}
+      style={{
+        boxShadow: active
+          ? '#ffffff 0px 0px 0px 3px, #19B7B6 0px 0px 0px 4px'
+          : 'none',
+      }}
     >
       <Grid item xs={12} className={classes.content}>
         <IconButton className={classes.work}>

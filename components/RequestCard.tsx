@@ -102,7 +102,11 @@ const RequestCard: React.FC<Props> = ({ active }) => {
     <Grid
       container
       className={classes.container}
-      style={{ boxShadow: active ? '0px 11px 20px 3px #00000012' : 'none' }}
+      style={{
+        boxShadow: active
+          ? 'rgb(255, 255, 255) 0px 0px 0px 3px, rgb(87, 68, 151) 0px 0px 0px 4px'
+          : 'none',
+      }}
     >
       <Grid item xs={12} className={classes.content}>
         <IconButton className={classes.work}>

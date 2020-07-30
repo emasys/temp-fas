@@ -173,7 +173,7 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
           </ListItem>
           <ListItem button onClick={handleProfile}>
             <Typography variant='body2' className={classes.menuItem}>
-              Settings
+              Profile
             </Typography>
           </ListItem>
           <ListItem button onClick={handleLogOut}>

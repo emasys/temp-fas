@@ -60,7 +60,7 @@ export default function Profile({}: Props): ReactElement {
 
   return (
     <div className={auth ? classes.container : classes.blur}>
-      <VendorLayout title={'General settings'}>
+      <VendorLayout title={'User profile'}>
         <Typography variant='h5'>Settings page</Typography>
       </VendorLayout>
     </div>

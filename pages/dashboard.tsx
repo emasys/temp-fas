@@ -128,13 +128,13 @@ export default function Jobs({}: Props): ReactElement {
               </Grid>
               <Grid container className={classes.mobileWrapper}>
                 <Grid item xs={12} className={classes.cardWrapper}>
-                  <Grid item className={classes.cardsMobile}>
+                  <Grid item className={classes.cardsMobile} onClick={() => setType('vendor')}>
                     <JobsCard active={userType === 'vendor'}/>
                   </Grid>
                   <Grid item className={classes.cardsMobile}>
                     <PaymentCard />
                   </Grid>
-                  <Grid item className={classes.cardsMobile}>
+                  <Grid item className={classes.cardsMobile} onClick={() => setType('user')}>
                     <RequestCard active={userType === 'user'}/>
                   </Grid>
                   <Grid item className={classes.cardsMobile}>

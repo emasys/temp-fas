@@ -142,7 +142,7 @@ theme.overrides = {
   },
   MuiFilledInput: {
     root: {
-      background: '#fbfbfb !important',
+      background: '#f7f8f9 !important',
       borderRadius: '0.375rem',
       padding: 0,
       '&:before': {

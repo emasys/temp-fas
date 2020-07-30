@@ -159,9 +159,7 @@ theme.overrides = {
       background: 'rgba(251,234,232,0.32) !important',
     },
     disabled: {
-      '&:before': {
-        borderBottomStyle: 'solid !important',
-      },
+      background: 'rgba(25, 183, 182, 0.04) !important',
     },
   },
   MuiButton: {

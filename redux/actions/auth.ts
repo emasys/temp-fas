@@ -8,6 +8,7 @@ import {
 } from './common';
 import { instance } from '../../config/axiosConfig';
 import { AppState } from '../../lib/initialState';
+import { IUser } from '../reducers/user';
 
 export interface ILogin {
   email: string;
@@ -52,13 +53,21 @@ export const logOut = () => (dispatch: Dispatch<any>) => {
   instance.defaults.headers.common['Authorization'] = null;
 };
 
-export const fetchUser = () => async (
-  dispatch: Dispatch<any>
-) => {
+export const fetchUser = () => async (dispatch: Dispatch<any>) => {
   const url = `user`;
   try {
     const { data } = await instance.get(url);
     dispatch(setValue(EActionTypes.FETCH_USER, data));
+  } catch (error) {
+    console.log(error, '====');
+  }
+};
+
+export const updateUser = (data: IUser) => (
+  dispatch: Dispatch<any>
+) => {
+  try {
+    dispatch(setValue(EActionTypes.UPDATE_USER_NAME, data));
   } catch (error) {
     console.log(error, '====');
   }

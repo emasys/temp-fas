@@ -170,3 +170,12 @@ export const postJobRating = async (
     return false;
   }
 };
+
+export const updateUserApi = async (data: { fullName: string }) => {
+  try {
+    const res = await instance.put(`user`, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};

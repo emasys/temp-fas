@@ -23,12 +23,17 @@ interface IFetchUserAction {
   payload: IUser;
 }
 
+interface IUpdateUserName {
+  type: EActionTypes.UPDATE_USER_NAME;
+  payload: { fullName: string };
+}
+
 export interface IResetAction {
   type: EActionTypes.RESET_STORE;
   payload: null;
 }
 
-export type TUserActions = IFetchUserAction | IResetAction;
+export type TUserActions = IFetchUserAction | IResetAction | IUpdateUserName;
 
 export const initialUserState = {
   fullName: '',
@@ -43,6 +48,8 @@ export default function user(
   switch (action.type) {
     case EActionTypes.FETCH_USER:
       return action.payload;
+    case EActionTypes.UPDATE_USER_NAME:
+      return { ...state, ...action.payload };
     case EActionTypes.RESET_STORE:
       return initialUserState;
     default:

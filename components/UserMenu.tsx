@@ -78,7 +78,7 @@ interface Props {
   dark?: boolean;
 }
 const UserMenu: React.FC<Props> = ({ dark }) => {
-  const { fullName } = useSelector((state: AppState) => state.auth);
+  const { fullName } = useSelector((state: AppState) => state.user);
   const dispatch = useDispatch();
   const classes = useStyles();
   const router = useRouter();

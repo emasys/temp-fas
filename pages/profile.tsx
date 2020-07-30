@@ -27,6 +27,7 @@ import {
   SettingsRounded,
 } from '@material-ui/icons';
 import UserInfo from '../components/UserInfo';
+import BankDetails from '../components/BankDetails';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -212,7 +213,7 @@ export default function Profile({}: Props): ReactElement {
             <UserInfo />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            bank details
+           <BankDetails />
           </TabPanel>
           <TabPanel value={value} index={2}>
             payment

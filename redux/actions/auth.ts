@@ -8,7 +8,7 @@ import {
 } from './common';
 import { instance } from '../../config/axiosConfig';
 import { AppState } from '../../lib/initialState';
-import { IUser } from '../reducers/user';
+import { IUser, IBank } from '../reducers/user';
 
 export interface ILogin {
   email: string;
@@ -63,12 +63,12 @@ export const fetchUser = () => async (dispatch: Dispatch<any>) => {
   }
 };
 
-export const updateUser = (data: IUser) => (
+export const updateUser = (data: IUser) => (dispatch: Dispatch<any>) => {
+  dispatch(setValue(EActionTypes.UPDATE_USER_NAME, data));
+};
+
+export const updateUserBankDetails = (data: IBank) => (
   dispatch: Dispatch<any>
 ) => {
-  try {
-    dispatch(setValue(EActionTypes.UPDATE_USER_NAME, data));
-  } catch (error) {
-    console.log(error, '====');
-  }
+  dispatch(setValue(EActionTypes.UPDATE_BANK_DETAILS, data));
 };

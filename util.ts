@@ -24,3 +24,7 @@ export const getInvoiceTotal = (invoice: any) => {
   }).reduce((prev, curr) => Number(prev) + Number(curr), 0);
   return Number(value) - (Number(value) * 0.02);
 };
+
+export const formatPhoneNumber = (phone: string) => {
+  return phone?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+};

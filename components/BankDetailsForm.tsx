@@ -17,7 +17,11 @@ import {
 import { useRouter } from 'next/router';
 import Furniture from '../assets/furniture.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, updateUser } from '../redux/actions/auth';
+import {
+  login,
+  updateUser,
+  updateUserBankDetails,
+} from '../redux/actions/auth';
 import { AppState } from '../lib/initialState';
 import {
   setValue,
@@ -25,10 +29,11 @@ import {
   toggleModal,
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
-import { updateUserApi } from '../api';
+import { updateUserApi, updateBankApi } from '../api';
 import PasswordInput from './PasswordField';
 import Alert from '@material-ui/lab/Alert';
 import { CloseRounded } from '@material-ui/icons';
+import ToggleField from './ToggleField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +61,8 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       marginTop: '2rem',
       borderRadius: '2rem',
+      width: '5rem',
+      minHeight: '2rem',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -91,15 +98,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 let validationSchema = Yup.object().shape({
-  email: Yup.string().email().required(),
-  fullName: Yup.string().required(),
+  bankName: Yup.string().required('This field is required'),
+  accountName: Yup.string().required('This field is required'),
+  accountNumber: Yup.string()
+    .length(10, 'Provide your 10-digit account number')
+    .required('This field is required'),
 });
 
 interface Props {}
-const UserInfoForm: React.FC<Props> = () => {
+const BankDetailsForm: React.FC<Props> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [show, setOpen] = React.useState(false);
+  const [edit, setEdit] = React.useState<null | boolean>(null);
   const user = useSelector((state: AppState) => state.user);
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const {
@@ -114,24 +125,25 @@ const UserInfoForm: React.FC<Props> = () => {
     setSubmitting,
   } = useFormik({
     initialValues: {
-      email: user.email || '',
-      fullName: user.fullName || '',
+      bankName: user?.bankDetails?.bankName || '',
+      accountName: user?.bankDetails?.accountName || '',
+      accountNumber: user?.bankDetails?.accountNumber || '',
     },
     validationSchema,
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
-      const { email, ...rest } = values;
-      const data = await updateUserApi(rest);
+      const data = await updateBankApi(values);
       setSubmitting(true);
       if (!data) {
         setSubmitting(false);
         return setErrors({
-          fullName: 'Invalid input characters',
+          bankName: 'Invalid input characters',
         });
       }
-      dispatch(updateUser(data));
+      dispatch(updateUserBankDetails(data));
       setOpen(true);
+      setEdit(false);
       setTimeout(() => {
         setOpen(false);
       }, 3000);
@@ -142,16 +154,13 @@ const UserInfoForm: React.FC<Props> = () => {
     setSubmitting(false);
   }, [open]);
 
-  const handleSignUp = () => {
-    dispatch(toggleModal('signUp'));
-  };
-
   return (
     <div className={classes.paper}>
       <div className={classes.form}>
         <Collapse in={show}>
           <Alert
             severity='success'
+            style={{ marginBottom: '.5rem' }}
             action={
               <IconButton
                 aria-label='close'
@@ -168,37 +177,43 @@ const UserInfoForm: React.FC<Props> = () => {
             Changes saved!
           </Alert>
         </Collapse>
-        <TextField
-          error={!!errors.fullName && touched.fullName}
-          classes={{
-            root: classes.inputRoot,
-          }}
-          variant='filled'
-          onChange={handleChange}
-          value={values.fullName}
-          onBlur={handleBlur}
-          className={classes.inputBox}
-          name='fullName'
-          id='filled-error-helper-text'
-          placeholder='Full name'
-          helperText={touched.fullName && errors.fullName}
-        />
-        <TextField
-          error={!!errors.email && touched.email}
-          classes={{
-            root: classes.inputRoot,
-          }}
-          variant='filled'
-          disabled
-          onChange={handleChange}
-          value={values.email}
-          onBlur={handleBlur}
-          className={classes.inputBox}
-          name='email'
-          id='filled-error-helper-text'
-          placeholder='Email'
-          helperText={touched.email && errors.email}
-        />
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <ToggleField
+              value={values.bankName}
+              error={touched.bankName && errors.bankName}
+              handleBlur={handleBlur}
+              editStatus={edit}
+              handleChange={handleChange}
+              name='bankName'
+              label='Bank name'
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ToggleField
+              value={values.accountName}
+              error={touched.accountName && errors.accountName}
+              handleBlur={handleBlur}
+              editStatus={edit}
+              handleChange={handleChange}
+              name='accountName'
+              label='Account name'
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ToggleField
+              error={touched.accountNumber && errors.accountNumber}
+              value={values.accountNumber}
+              handleBlur={handleBlur}
+              fieldType='number'
+              editStatus={edit}
+              handleChange={handleChange}
+              name='accountNumber'
+              label='Account Number'
+            />
+          </Grid>
+        </Grid>
+
         <Button
           onClick={() => handleSubmit()}
           className={classes.button}
@@ -212,4 +227,4 @@ const UserInfoForm: React.FC<Props> = () => {
   );
 };
 
-export default UserInfoForm;
+export default BankDetailsForm;

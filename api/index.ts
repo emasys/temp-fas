@@ -1,6 +1,7 @@
 import { instance } from '../config/axiosConfig';
 import { ILogin } from '../redux/actions/auth';
 import { AxiosError } from 'axios';
+import { IBank } from '../redux/reducers/user';
 
 export const fetchServices = async () => {
   try {
@@ -174,6 +175,15 @@ export const postJobRating = async (
 export const updateUserApi = async (data: { fullName: string }) => {
   try {
     const res = await instance.put(`user`, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const updateBankApi = async (data: IBank) => {
+  try {
+    const res = await instance.put(`user/bank-details`, data);
     return res.data;
   } catch (error) {
     return false;

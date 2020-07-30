@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const moneyInput = (props: any) => {
+export const numberInput = (props: any) => {
   const { inputRef, left, onChange, ...other } = props;
   return (
     <NumberFormat
@@ -35,9 +35,6 @@ export const moneyInput = (props: any) => {
           },
         });
       }}
-      thousandSeparator
-      prefix='₦'
-      allowNegative={false}
       inputMode='numeric'
     />
   );
@@ -48,31 +45,42 @@ interface Props {
   value: string;
   name: string;
   label: string;
+  variant?: 'filled' | 'outlined' | 'standard';
   handleChange: (e: React.ChangeEvent<any>) => void;
   handleBlur: (e: React.ChangeEvent<any>) => void;
 }
-const MoneyInput: React.FC<Props> = (props) => {
+const NumberInput: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { error, handleBlur, handleChange, value, name, label } = props;
+  const {
+    error,
+    handleBlur,
+    handleChange,
+    value,
+    name,
+    label,
+    variant,
+  } = props;
   return (
     <TextField
       error={!!error}
       classes={{
         root: classes.inputRoot,
       }}
-      variant='standard'
+      variant={variant ? variant : 'filled'}
       onChange={handleChange}
       onBlur={handleBlur}
       value={value}
+      fullWidth
       className={classes.inputBox}
       name={name}
-      label={label}
+      label={variant === 'filled' ? '' : label}
+      placeholder={label}
       InputProps={{
-        inputComponent: moneyInput,
+        inputComponent: numberInput,
       }}
       helperText={error}
     />
   );
 };
 
-export default MoneyInput;
+export default NumberInput;

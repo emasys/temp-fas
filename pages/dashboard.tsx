@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
       [theme.breakpoints.down('xs')]: {
-        paddingRight: '3rem'
+        // paddingRight: '3rem'
       },
     },
     mobileWrapper: {

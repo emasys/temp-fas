@@ -18,19 +18,26 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       padding: '3rem',
+      [theme.breakpoints.down('sm')]: {
+        padding: '1rem'
+      },
     },
     imageWrapper: {
       borderRadius: '50%',
       background: 'rgba(255, 133, 21, 0.1)',
       width: '13rem',
       height: '13rem',
-      marginBottom: '1rem'
+      marginBottom: '1rem',
+
     },
     imageContainer: {
       display: 'flex',
       // justifyContent: 'center',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: '1.5rem'
+      },
     }
   })
 );
@@ -39,17 +46,15 @@ interface Props {}
 const UserInfo: React.FC<Props> = (props) => {
   const classes = useStyles();
   const user = useSelector((state: AppState) => state.user);
-  console.log(user, '=====');
-
   return (
     <Grid container className={classes.container}>
-      <Grid item xs={3} className={classes.imageContainer}>
+      <Grid item xs={12} lg={3} className={classes.imageContainer}>
         <div className={classes.imageWrapper}></div>
         <Typography variant="body2">
           {user.fullName}
         </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} lg={6}>
         <div>
           <UserInfoForm />
         </div>

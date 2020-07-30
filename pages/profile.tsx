@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tabs: {
       borderRight: `1px solid ${theme.palette.divider}`,
+      [theme.breakpoints.down('xs')]: {
+        width: '3rem'
+      },
     },
     search: {
       margin: '2rem 0',
@@ -59,6 +62,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tabIcon: {
       marginRight: '.5rem',
+      [theme.breakpoints.down('xs')]: {
+        marginRight: '3rem'
+      },
     },
     tabInner: {
       textTransform: 'none',
@@ -75,6 +81,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: theme.typography.fontWeightRegular,
       [theme.breakpoints.down('xs')]: {
         fontSize: '.8rem',
+        // width: '50%'
       },
     },
     tabIndicator: {
@@ -84,6 +91,15 @@ const useStyles = makeStyles((theme: Theme) =>
     tabContainer: {
       marginTop: '2rem',
     },
+    content: {
+      width: '90%',
+      [theme.breakpoints.down('sm')]: {
+        width: '80%'
+      },
+      [theme.breakpoints.down('xs')]: {
+        width: '90%'
+      },
+    }
   })
 );
 
@@ -96,11 +112,12 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
+  const classes = useStyles();
   const { children, value, index, ...other } = props;
 
   return (
     <div
-      style={{ width: '90%' }}
+      className={classes.content}
       role='tabpanel'
       hidden={value !== index}
       id={`profile-tabpanel-${index}`}

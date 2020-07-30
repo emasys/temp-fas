@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: 0,
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
-        padding: '3rem 1rem',
+        padding: '.5rem .5rem',
       },
     },
     button: {

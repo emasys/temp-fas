@@ -120,6 +120,7 @@ const UserInfoForm: React.FC<Props> = () => {
     validationSchema,
     validateOnBlur: true,
     validateOnChange: true,
+    enableReinitialize: true,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       const { email, ...rest } = values;
       const data = await updateUserApi(rest);
@@ -141,10 +142,6 @@ const UserInfoForm: React.FC<Props> = () => {
   useEffect(() => {
     setSubmitting(false);
   }, [open]);
-
-  const handleSignUp = () => {
-    dispatch(toggleModal('signUp'));
-  };
 
   return (
     <div className={classes.paper}>

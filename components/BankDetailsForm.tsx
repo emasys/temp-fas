@@ -132,6 +132,7 @@ const BankDetailsForm: React.FC<Props> = () => {
     validationSchema,
     validateOnBlur: true,
     validateOnChange: true,
+    enableReinitialize: true,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       const data = await updateBankApi(values);
       setSubmitting(true);
@@ -146,6 +147,7 @@ const BankDetailsForm: React.FC<Props> = () => {
       setEdit(false);
       setTimeout(() => {
         setOpen(false);
+        setEdit(null);
       }, 3000);
       setSubmitting(false);
     },

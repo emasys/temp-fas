@@ -28,6 +28,7 @@ import {
 } from '@material-ui/icons';
 import UserInfo from '../components/UserInfo';
 import BankDetails from '../components/BankDetails';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
     tabs: {
       borderRight: `1px solid ${theme.palette.divider}`,
       [theme.breakpoints.down('xs')]: {
-        width: '3rem'
+        width: '3rem',
       },
     },
     search: {
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
     tabIcon: {
       marginRight: '.5rem',
       [theme.breakpoints.down('xs')]: {
-        marginRight: '3rem'
+        marginRight: '3rem',
       },
     },
     tabInner: {
@@ -95,12 +96,12 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       width: '90%',
       [theme.breakpoints.down('sm')]: {
-        width: '80%'
+        width: '80%',
       },
       [theme.breakpoints.down('xs')]: {
-        width: '90%'
+        width: '90%',
       },
-    }
+    },
   })
 );
 
@@ -137,14 +138,26 @@ function a11yProps(index: any) {
   };
 }
 
+const mapIndex = {
+  bank: 1,
+  user: 0,
+  payment: 2,
+  settings: 3,
+};
+
 export default function Profile({}: Props): ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { auth, id } = useSelector((state: AppState) => state.auth);
-  const { allJobs } = useSelector((state: AppState) => getUserJobs(state));
-  const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
-  const [value, setValue] = React.useState(0);
-
+  const router = useRouter();
+  const { auth } = useSelector((state: AppState) => state.auth);
+  const open = useSelector((state: AppState) => state.common.openAuthModal);
+  const index =
+    mapIndex[
+      typeof router.query?.tab === 'string'
+        ? router.query?.tab
+        : 'user' || 'user'
+    ];
+  const [value, setValue] = React.useState(index);
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -155,7 +168,12 @@ export default function Profile({}: Props): ReactElement {
     if (auth) {
       dispatch(fetchUserJobs());
     }
-  }, [auth]);
+  }, [auth, open]);
+
+  const handleTab = (name: string) => {
+    const url = `/profile?tab=${name}`;
+    router.push(url, undefined, { shallow: true });
+  };
 
   return (
     <div className={auth ? classes.container : classes.blur}>
@@ -178,6 +196,7 @@ export default function Profile({}: Props): ReactElement {
               classes={{
                 wrapper: classes.tabInner,
               }}
+              onClick={() => handleTab('user')}
               icon={<PersonRounded className={classes.tabIcon} />}
               className={classes.tabInner}
             />
@@ -187,6 +206,7 @@ export default function Profile({}: Props): ReactElement {
               classes={{
                 wrapper: classes.tabInner,
               }}
+              onClick={() => handleTab('bank')}
               icon={<AccountBalanceRounded className={classes.tabIcon} />}
               className={classes.tabInner}
             />
@@ -196,6 +216,7 @@ export default function Profile({}: Props): ReactElement {
               classes={{
                 wrapper: classes.tabInner,
               }}
+              onClick={() => handleTab('payment')}
               icon={<PaymentRounded className={classes.tabIcon} />}
               className={classes.tabInner}
             />
@@ -205,6 +226,7 @@ export default function Profile({}: Props): ReactElement {
               classes={{
                 wrapper: classes.tabInner,
               }}
+              onClick={() => handleTab('settings')}
               icon={<SettingsRounded className={classes.tabIcon} />}
               className={classes.tabInner}
             />
@@ -213,7 +235,7 @@ export default function Profile({}: Props): ReactElement {
             <UserInfo />
           </TabPanel>
           <TabPanel value={value} index={1}>
-           <BankDetails />
+            <BankDetails />
           </TabPanel>
           <TabPanel value={value} index={2}>
             payment

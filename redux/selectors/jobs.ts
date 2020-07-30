@@ -102,7 +102,6 @@ export const getUserJobs = createSelector(
       earnedAmount,
       totalCost,
     };
-    console.log(jobStat, '=======');
     return { isBooked, allJobs, allOrders, jobStat };
   }
 );

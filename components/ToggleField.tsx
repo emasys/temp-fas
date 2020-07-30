@@ -65,12 +65,12 @@ const ToggleField: React.FC<IToggleProps> = ({
   fieldType,
 }) => {
   const classes = useStyles();
-  const [edit, setEdit] = useState(!!editStatus);
+  const [edit, setEdit] = useState(!value);
   const toggleEdit = () => {
     setEdit(!edit);
   };
   useEffect(() => {
-    setEdit(editStatus);
+    if (value) setEdit(editStatus);
   }, [editStatus]);
   const number = fieldType === 'number';
   const _inputType = number ? (

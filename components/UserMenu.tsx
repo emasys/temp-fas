@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '1.5rem',
     },
     icon: {
-      // color: '#737373'
+      color: '#c9c7e2',
     },
     link: {
       fontWeight: 400,
@@ -124,13 +124,16 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   return (
     <div className={classes.container}>
       <div className={classes.iconWrapper}>
-        <AccountCircle className={classes.icon} />
+        <AccountCircle
+          className={classes.icon}
+          style={{ color: dark ? '#5C5C5C' : '#c9c7e2' }}
+        />
       </div>
       <Typography
         aria-describedby='menu'
         variant='body1'
         className={classes.link}
-        style={{ color: dark ? '#5C5C5C' : '#fff' }}
+        style={{ color: dark ? '#5C5C5C' : '#c9c7e2' }}
         onClick={handleClick}
       >
         {fullName || 'Hi there '}{' '}

@@ -173,6 +173,9 @@ theme.overrides = {
       textTransform: 'inherit',
       fontWeight: 'normal',
       fontFamily: 'Lato',
+      [theme.breakpoints.down('xs')]: {
+        minHeight: '2rem',
+      },
     },
     text: {
       // '&:hover': {

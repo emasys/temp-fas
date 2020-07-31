@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '0.25rem',
     },
     title: {
-      color: 'linear-gradient(90.34deg, #43CEA2 0.44%, #185A9D 98.43%)',
+      color: 'rgba(0, 0, 0, 0.87)',
       fontWeight: 400,
       fontSize: '1rem',
       letterSpacing: '.2rem',
@@ -166,7 +166,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
       <Grid container justify='space-between' className={classes.root}>
         <Grid
           item
-          xs={7}
+          xs={8}
           sm={4}
           className={classes.logoWrapper}
           onClick={goBack}

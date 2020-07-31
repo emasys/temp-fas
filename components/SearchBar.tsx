@@ -17,7 +17,9 @@ import { AppState } from '../lib/initialState';
 import menuIcon from '../assets/menuIcon-dark.svg';
 import MenuDrawer from './MenuDrawer';
 import { fetchUser } from '../redux/actions/auth';
-import Meta from './Meta';
+import Meta from './Meta/Meta';
+import { ArrowBackIosRounded } from '@material-ui/icons';
+import logo from '../assets/logo-dark.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,9 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '0.25rem',
     },
     title: {
-      color: '#4c4c4c',
-      fontWeight: 500,
-      fontSize: '1.2rem',
+      color: 'linear-gradient(90.34deg, #43CEA2 0.44%, #185A9D 98.43%)',
+      fontWeight: 400,
+      fontSize: '1rem',
+      letterSpacing: '.2rem',
       textDecoration: 'none',
       cursor: 'pointer',
       display: 'flex',
@@ -98,6 +101,19 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       height: '1rem',
     },
+    logo: {
+      height: '1rem',
+      width: '2rem',
+    },
+    logoText: {
+      color: '#fff',
+      fontWeight: 400,
+    },
+    logoWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      cursor: 'pointer',
+    },
   })
 );
 
@@ -148,17 +164,19 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
       <MenuDrawer />
       <Meta />
       <Grid container justify='space-between' className={classes.root}>
-        <Grid item xs={7} sm={4}>
-          <Typography
-            variant='body1'
-            className={classes.title}
-            onClick={goBack}
-          >
-            <img src={back} alt='back' className={classes.back} />
+        <Grid
+          item
+          xs={7}
+          sm={4}
+          className={classes.logoWrapper}
+          onClick={goBack}
+        >
+          <ArrowBackIosRounded className={classes.back} />
+          <Typography variant='body1' className={classes.title}>
             {prevPageTitle}
+            <img src={logo} alt='logo' className={classes.logo} />
           </Typography>
         </Grid>
-
         {auth ? (
           <>
             <Grid item sm={6} className={classes.menuWrapper}>

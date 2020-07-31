@@ -15,14 +15,14 @@ import menuIcon from '../assets/menuIcon.svg';
 import MenuDrawer from './MenuDrawer';
 import { Router } from 'next/router';
 import { fetchUser } from '../redux/actions/auth';
-import Meta from './Meta';
+import Meta from './Meta/Meta';
+import logo from '../assets/logo.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {},
     root: {
       maxWidth: '1440px',
-      padding: '0 4%',
       margin: 'auto',
       [theme.breakpoints.down('xs')]: {
         padding: 0,
@@ -74,6 +74,19 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       height: '1rem',
     },
+    logoWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      cursor: 'pointer'
+    },
+    logo: {
+      height: '1.5rem',
+      width: '2rem'
+    },
+    logoText: {
+      color: '#fff',
+      fontWeight: 400
+    }
   })
 );
 
@@ -118,9 +131,10 @@ const Navbar: React.FC<Props> = (props) => {
       <MenuDrawer />
       <Meta />
       <Grid container justify='space-between' className={classes.root}>
-        <Grid item sm={3}>
-          <Typography variant='body1' style={{ color: '#fff' }}>
-            Service Finder
+        <Grid item sm={3} className={classes.logoWrapper}>
+          <img src={logo} alt="logo" className={classes.logo} />
+          <Typography variant='body2' className={classes.logoText}>
+            Find a service
           </Typography>
         </Grid>
         {auth && (

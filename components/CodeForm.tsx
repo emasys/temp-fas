@@ -48,7 +48,10 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: '95vh',
       overflow: 'auto',
       [theme.breakpoints.down('xs')]: {
-        width: '95%',
+        width: '100%',
+        maxWidth: '100%',
+        overflowX: 'hidden',
+        minHeight: '100%',
         top: '2%'
       },
     },

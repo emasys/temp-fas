@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         width: '100%',
         maxWidth: '100%',
+        overflowX: 'hidden',
         minHeight: '100%',
         top: '2%',
       },
@@ -146,6 +147,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      [theme.breakpoints.down('xs')]: {
+        left: '2rem'
+      },
     },
   })
 );

@@ -38,6 +38,7 @@ export const initialVendorsState = {
     serviceId: '',
     userId: '',
     instagramToken: null,
+    locationId: '',
     updatedAt: '',
     createdAt: '',
     rate: 0,

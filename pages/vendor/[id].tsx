@@ -183,7 +183,7 @@ const Vendor: React.FC<Props> = () => {
 
   return (
     <VendorLayout
-      title={'General details'}
+      title={'Vendor details'}
       path={`/services/${vendorObj?.serviceId}`}
     >
       <Grid container className={classes.container}>

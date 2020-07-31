@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '2%'
+        top: '30%',
       },
     },
     form: {
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: 0,
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
-        padding: '3rem 1rem'
+        padding: '3rem 1rem',
       },
     },
     button: {
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     subtitle: {
       marginBottom: '.5rem',
-      marginTop: '3rem',
+      marginTop: '0',
       fontSize: '.9rem',
       color: '#636363',
       textAlign: 'center',
@@ -161,7 +161,7 @@ const SignUpForm: React.FC<Props> = () => {
 
   const handleClose = () => {
     dispatch(handleAuthModal(false));
-  }
+  };
 
   return (
     <div className={classes.paper}>
@@ -178,8 +178,7 @@ const SignUpForm: React.FC<Props> = () => {
       </div>
       <div className={classes.form}>
         <Typography variant='body2' className={classes.subtitle}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo nam
-          quidem voluptas distinctio
+          Provide a valid email address to continue your registration process
         </Typography>
         <TextField
           error={!!errors.email}

@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '2%'
+        top: '30%'
       },
     },
     form: {

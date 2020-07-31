@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '2%',
+        top: '0',
       },
     },
     form: {
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -118,9 +118,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      [theme.breakpoints.down('xs')]: {
-        marginTop: '2rem',
-      },
     },
   })
 );
@@ -161,7 +158,7 @@ const BAVForm: React.FC<Props> = () => {
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const services = useSelector((state: AppState) => getServiceOptions(state));
   const locations = useSelector((state: AppState) => getLocations(state));
-
+const router = useRouter();
   const {
     handleChange,
     values,
@@ -203,8 +200,9 @@ const BAVForm: React.FC<Props> = () => {
         return setSubmitting(false);
       }
       dispatch(setValue(EActionTypes.UPDATE_VENDOR, data));
-      dispatch(handleAuthModal(false));
       setSubmitting(false);
+      router.push('/', '/');
+      dispatch(handleAuthModal(false));
     },
   });
 

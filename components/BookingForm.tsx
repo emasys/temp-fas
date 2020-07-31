@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '2%',
+        top: 0,
       },
     },
     form: {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
       alignItems: 'center',
       [theme.breakpoints.down('xs')]: {
-        marginTop: '2rem',
+        // marginTop: '2rem',
       },
     },
   })

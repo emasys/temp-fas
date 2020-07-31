@@ -17,6 +17,7 @@ import {
   handleAuthModal,
   triggerBAV,
   toggleMobileDrawer,
+  toggleModal,
 } from '../redux/actions/common';
 import Login from './Modal';
 import {
@@ -105,8 +106,10 @@ const MobileNav: React.FC<Props> = (props) => {
   const handleCreateVendor = () => {
     dispatch(triggerBAV(true));
     if (!auth) {
-      handleLogin();
+      return handleLogin();
     }
+    dispatch(toggleModal('bav'));
+    dispatch(handleAuthModal(true));
     closeDrawer();
   };
 
@@ -159,7 +162,6 @@ const MobileNav: React.FC<Props> = (props) => {
               </Typography>
             </ListItem>
           </Link>
-
           {ownVendor?.id && (
             <ListItem button onClick={handleVendorPage}>
               <ListItemIcon className={classes.link}>
@@ -189,13 +191,8 @@ const MobileNav: React.FC<Props> = (props) => {
             </ListItem>
           )}
           {!ownVendor?.id && (
-            <ListItem onClick={handleCreateVendor}>
-              <Button
-                variant='contained'
-                className={classes.button}
-                fullWidth
-                onClick={handleCreateVendor}
-              >
+            <ListItem button onClick={handleCreateVendor}>
+              <Button variant='contained' className={classes.button} fullWidth>
                 Become a vendor
               </Button>
             </ListItem>

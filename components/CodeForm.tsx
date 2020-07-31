@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '2%'
+        top: '20%'
       },
     },
     header: {
@@ -90,8 +90,8 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
     },
     subtitle: {
-      marginBottom: '.5rem',
-      marginTop: '3rem',
+      marginBottom: '1rem',
+      marginTop: '0',
       fontSize: '.9rem',
       color: '#636363',
       textAlign: 'center',

@@ -63,12 +63,12 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
-      // minHeight: '50rem',
       padding: '3rem',
       borderRadius: '.2rem',
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
         padding: '3rem 1rem',
+        minHeight: '50rem',
       },
     },
     button: {

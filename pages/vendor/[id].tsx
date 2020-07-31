@@ -247,7 +247,7 @@ const Vendor: React.FC<Props> = () => {
           <Divider title='Reviews' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.reviews}>
-          <Review />
+          {/* <Review /> */}
         </Grid>
       </Grid>
     </VendorLayout>

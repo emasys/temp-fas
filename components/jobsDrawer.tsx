@@ -506,14 +506,14 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           <Collapsible title='DELIVERY ADDRESS' body={address} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='REVIEW'>
+          {/* <Collapsible title='REVIEW'>
             <Review
               value={review}
               isCustomer={!isVendor}
               jobId={id}
               canPost={stage === 'done'}
             />
-          </Collapsible>
+          </Collapsible> */}
         </Grid>
       </Grid>
     </Drawer>

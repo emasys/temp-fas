@@ -53,7 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: '80%',
       padding: '2% 4%',
       [theme.breakpoints.down('xs')]: {
-        maxWidth: '95%',
+        maxWidth: '100vw',
+        overflowX: 'hidden',
         padding: '4%',
       },
     },

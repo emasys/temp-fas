@@ -102,6 +102,10 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
     router.push('/profile', '/profile');
   };
 
+  const handleVendorPage = () => {
+    router.push(`/vendor/${ownVendor.id}`, `/vendor/${ownVendor.id}`);
+  };
+
   const handleDashboard = () => {
     router.push('/dashboard', '/dashboard');
   };
@@ -163,6 +167,13 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
             <ListItem button onClick={handleBAV}>
               <Typography variant='body2' className={classes.menuItem}>
                 Become a vendor
+              </Typography>
+            </ListItem>
+          )}
+          {ownVendor?.id && (
+            <ListItem button onClick={handleVendorPage}>
+              <Typography variant='body2' className={classes.menuItem}>
+                Vendor profile
               </Typography>
             </ListItem>
           )}

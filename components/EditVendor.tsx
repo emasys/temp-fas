@@ -196,6 +196,7 @@ const EditVendor: React.FC<Props> = () => {
       const { service, state, area, rate, ...rest } = values;
       const payload = {
         ...rest,
+        serviceId: service,
         rate: Number(rate),
         locationId: area ? area : state,
       };

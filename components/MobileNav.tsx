@@ -13,7 +13,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import UserMenu from './UserMenu';
 import {
   handleAuthModal,
   triggerBAV,
@@ -22,14 +21,14 @@ import {
 import Login from './Modal';
 import {
   AccountCircleOutlined,
-  HomeOutlined,
-  CloseRounded,
   AccountCircleRounded,
   HomeRounded,
   InfoRounded,
   ExitToAppRounded,
   PersonRounded,
   SupervisorAccountRounded,
+  WorkRounded,
+  CloseRounded,
 } from '@material-ui/icons';
 import { logOut } from '../redux/actions/auth';
 import { getVendorStatus } from '../redux/selectors/vendors';
@@ -95,9 +94,7 @@ const MobileNav: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { auth, id, fullName } = useSelector((state: AppState) => state.auth);
-  const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state)
-  );
+  const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
   const classes = useStyles();
 
   const handleLogin = () => {
@@ -132,6 +129,10 @@ const MobileNav: React.FC<Props> = (props) => {
     router.push('/dashboard', '/dashboard');
   };
 
+  const handleVendorPage = () => {
+    router.push(`/vendor/${ownVendor.id}`, `/vendor/${ownVendor.id}`);
+  };
+
   return (
     <Fragment>
       <Grid container justify='space-between' className={classes.root}>
@@ -158,26 +159,25 @@ const MobileNav: React.FC<Props> = (props) => {
               </Typography>
             </ListItem>
           </Link>
-          <Link href='/'>
-            <ListItem button onClick={closeDrawer}>
-              <ListItemIcon className={classes.link}>
-                <InfoRounded />
-              </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
-                About
-              </Typography>
-            </ListItem>
-          </Link>
+
           {ownVendor?.id && (
-            <ListItem button onClick={handleDashboard}>
+            <ListItem button onClick={handleVendorPage}>
               <ListItemIcon className={classes.link}>
-                <SupervisorAccountRounded />
+                <WorkRounded />
               </ListItemIcon>
               <Typography variant='body2' className={classes.link}>
-                Dashboard
+                Vendor profile
               </Typography>
             </ListItem>
           )}
+          <ListItem button onClick={handleDashboard}>
+            <ListItemIcon className={classes.link}>
+              <SupervisorAccountRounded />
+            </ListItemIcon>
+            <Typography variant='body2' className={classes.link}>
+              Dashboard
+            </Typography>
+          </ListItem>
           {auth && (
             <ListItem button onClick={handleProfile}>
               <ListItemIcon className={classes.link}>
@@ -200,6 +200,16 @@ const MobileNav: React.FC<Props> = (props) => {
               </Button>
             </ListItem>
           )}
+          <Link href='/'>
+            <ListItem button onClick={closeDrawer}>
+              <ListItemIcon className={classes.link}>
+                <InfoRounded />
+              </ListItemIcon>
+              <Typography variant='body2' className={classes.link}>
+                About
+              </Typography>
+            </ListItem>
+          </Link>
           <Divider style={{ marginBottom: '.5rem', marginTop: '1rem' }} />
           {auth ? (
             <ListItem button onClick={handleLogOut}>

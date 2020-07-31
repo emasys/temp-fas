@@ -9,7 +9,8 @@ import CodeForm from './CodeForm';
 import BAVForm from './BAVForm';
 import BookingForm from './BookingForm';
 import InvoiceForm from './InvoiceForm';
-import ReviewForm from './ReviewForm'
+import ReviewForm from './ReviewForm';
+import EditVendor from './EditVendor';
 
 interface Props {}
 const _component: any = {
@@ -17,6 +18,7 @@ const _component: any = {
   signUp: <SignUpForm />,
   code: <CodeForm />,
   bav: <BAVForm />,
+  editVendor: <EditVendor />,
   bookVendor: <BookingForm />,
   invoice: <InvoiceForm />,
   review: <ReviewForm />

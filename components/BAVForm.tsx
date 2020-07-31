@@ -115,7 +115,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      marginTop: '2rem',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '2rem',
+      },
     },
   })
 );

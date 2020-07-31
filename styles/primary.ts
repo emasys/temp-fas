@@ -155,6 +155,7 @@ theme.overrides = {
     input: {
       padding: '1rem',
     },
+    
     error: {
       background: 'rgba(251,234,232,0.32) !important',
     },

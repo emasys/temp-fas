@@ -14,6 +14,7 @@ export interface IVendor {
   serviceId: string;
   service?: IService;
   userId: string;
+  locationId: null| string;
   instagramToken: null | string;
   updatedAt: string;
   createdAt: string;

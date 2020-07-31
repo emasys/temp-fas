@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'rgba(0, 0, 0, 0.25)',
       borderRadius: '0.1875rem',
       [theme.breakpoints.down('xs')]: {
-        fontSize: '0.8rem',
+        fontSize: '0.7rem',
       },
     },
     rateText: {
@@ -133,7 +133,7 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
       <img src={bannerIcon} alt='banner icon' className={classes.bannerIcon} />
       <Grid item xs={12} className={classes.rateWrapper}>
         <Typography variant='body2' className={classes.rate}>
-          {formatMoney(rate)} Per day
+          {formatMoney(rate)} per job
         </Typography>
       </Grid>
       <Grid item xs={12} sm={7} md={6} className={classes.contactWrapper}>

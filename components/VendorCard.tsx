@@ -7,9 +7,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import Router, { useRouter } from 'next/router';
-import Furniture from '../assets/furniture.svg';
 import { formatMoney } from '../util';
 import Link from 'next/link';
+import bannerIcon from '../assets/banner.svg';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,10 +34,16 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '.2rem',
     },
     image: {
-      width: '100%',
+      width: '10rem',
+      position: 'absolute',
+      opacity: '.1',
+      right: '1rem',
+      bottom: '-2rem'
     },
     imageWrapper: {
-      maxHeight: '12rem',
+      height: '12rem',
+      width: '20rem',
+      background: 'linear-gradient(93.74deg, #43CEA2 -0.25%, #3E72A3 97.83%)',
       overflow: 'hidden',
       position: 'relative',
     },
@@ -88,7 +95,7 @@ const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
         <Typography variant='caption' className={classes.vendors}>
           new
         </Typography>
-        <img src={Furniture} alt='service-img' className={classes.image} />
+        <img src={bannerIcon} alt='service-img' className={classes.image} />
       </Grid>
       <Grid item xs={12} className={classes.textWrapper}>
         <Typography variant='body2' className={classes.title}>

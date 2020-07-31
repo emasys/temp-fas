@@ -179,6 +179,15 @@ const Vendor: React.FC<Props> = () => {
     dispatch(toggleModal('bookVendor'));
   };
 
+  const handleEdit = () => {
+    if (!auth.auth) {
+      dispatch(toggleModal('login'));
+      return dispatch(handleAuthModal(true));
+    }
+    dispatch(handleAuthModal(true));
+    dispatch(toggleModal('editVendor'));
+  };
+
   const isOwnPage = ownVendor?.id === vendorObj?.id;
 
   return (
@@ -211,7 +220,7 @@ const Vendor: React.FC<Props> = () => {
             </div>
           </Grid>
           {isOwnPage ? (
-            <Button variant='contained' className={classes.button}>
+            <Button variant='contained' className={classes.button} onClick={handleEdit}>
               Edit vendor
             </Button>
           ) : (

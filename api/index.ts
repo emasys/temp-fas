@@ -85,6 +85,16 @@ export const createVendor = async (serviceId: string, data: ICreateVendor) => {
   }
 };
 
+export const updateVendorAPI = async (vendorId: string, data: ICreateVendor) => {
+  try {
+    const url = `vendors/${vendorId}`;
+    const res = await instance.put(url, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
 interface ICreateOrder {
   vendorId: string;
   description: string;
@@ -184,6 +194,15 @@ export const updateUserApi = async (data: { fullName: string }) => {
 export const updateBankApi = async (data: IBank) => {
   try {
     const res = await instance.put(`user/bank-details`, data);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const getLocation = async (id: string) => {
+  try {
+    const res = await instance.get(`locations/${id}`);
     return res.data;
   } catch (error) {
     return false;

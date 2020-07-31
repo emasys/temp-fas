@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import {
   TextField,
-  InputAdornment,
-  IconButton,
   makeStyles,
   Theme,
   createStyles,
 } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
 import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputRoot: {
       backgroundColor: '#fff',
+      width: '100%',
     },
   })
 );
@@ -45,28 +43,38 @@ export const moneyInput = (props: any) => {
 
 interface Props {
   error: any;
-  value: string;
+  value: string | number;
   name: string;
+  variant?: 'filled' | 'standard' | 'outlined';
   label: string;
   handleChange: (e: React.ChangeEvent<any>) => void;
   handleBlur: (e: React.ChangeEvent<any>) => void;
 }
 const MoneyInput: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { error, handleBlur, handleChange, value, name, label } = props;
+  const {
+    error,
+    handleBlur,
+    handleChange,
+    value,
+    name,
+    label,
+    variant,
+  } = props;
   return (
     <TextField
       error={!!error}
       classes={{
         root: classes.inputRoot,
       }}
-      variant='standard'
+      variant={variant ? variant : 'standard'}
       onChange={handleChange}
       onBlur={handleBlur}
       value={value}
       className={classes.inputBox}
       name={name}
-      label={label}
+      label={variant !== 'filled' ? label : ''}
+      placeholder={variant === 'filled' ? label : ''}
       InputProps={{
         inputComponent: moneyInput,
       }}

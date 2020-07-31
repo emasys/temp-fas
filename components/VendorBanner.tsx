@@ -139,7 +139,7 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
       <Grid item xs={12} sm={7} md={6} className={classes.contactWrapper}>
         <Typography variant='body1' className={classes.phone}>
           <img src={phoneIcon} alt='phone' className={classes.phoneIcon} />
-          {phone || 'Not available'}
+          <a href={`tel:${phone}`}>{phone || 'Not available'}</a>
         </Typography>
         <Typography variant='body1' className={classes.chat}>
           <img src={chat} alt='chat' className={classes.chatIcon} /> Chat now

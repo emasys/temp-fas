@@ -24,7 +24,12 @@ import Collapsible from './Collapsible';
 import Review from './Review';
 import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
-import { CloseRounded, Phone, PhoneRounded } from '@material-ui/icons';
+import {
+  CloseRounded,
+  Phone,
+  PhoneRounded,
+  WhatsApp,
+} from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
 import config from '../config';
@@ -76,6 +81,8 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#292929',
       fontSize: '1.5rem',
       fontWeight: 600,
+      display: 'flex',
+      alignItems: 'center',
       textTransform: 'uppercase',
       marginBottom: '.4rem',
       [theme.breakpoints.down('xs')]: {
@@ -178,12 +185,22 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     phoneIcon: {
-      marginRight: '.5rem',
-      fontSize: '1rem',
+      background: '#f7f3f3',
+      padding: '.5rem',
+      marginLeft: '1rem',
       [theme.breakpoints.down('xs')]: {
-        marginRight: '.2rem',
-        fontSize: '.9rem',
-        color: '#000',
+        padding: '.2rem',
+      },
+    },
+    wAIcon: {
+      background: '#43CEA2',
+      padding: '.5rem',
+      marginLeft: '1rem',
+      '&:hover': {
+        background: '#43CEA2',
+      },
+      [theme.breakpoints.down('xs')]: {
+        padding: '.2rem',
       },
     },
     chat: {
@@ -342,22 +359,25 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           <Grid item xs={10}>
             <Typography variant='body2' className={classes.subtitle}>
               {customer?.fullName || vendorName}
+              {!isVendor && (
+                <>
+                  <IconButton
+                    className={classes.phoneIcon}
+                    href={`tel:${phoneNumber}`}
+                  >
+                    <PhoneRounded style={{ fontSize: '1rem' }} />
+                  </IconButton>
+                  <IconButton
+                    className={classes.wAIcon}
+                    href={`http://api.whatsapp.com/send?phone=+234${phoneNumber}`}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <WhatsApp style={{ fontSize: '1rem', color: '#fff' }} />
+                  </IconButton>
+                </>
+              )}
             </Typography>
-            {!isVendor && (
-              <>
-                <Grid item xs={6} className={classes.contactWrapper}>
-                  <Button variant='text' className={classes.phone}>
-                    <PhoneRounded className={classes.phoneIcon} />
-                    {phoneNumber || 'Not available'}
-                  </Button>
-                  <Button variant='text' className={classes.chat}>
-                    <img src={chat} alt='chat' className={classes.chatIcon} />{' '}
-                    Chat now
-                  </Button>
-                </Grid>
-              </>
-            )}
-
             {!!total?.value && (
               <Grid item xs={12}>
                 {isVendor ? (

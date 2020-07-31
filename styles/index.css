@@ -8,3 +8,8 @@ body {
   background-color: #fff !important;
   transition: all 400ms;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

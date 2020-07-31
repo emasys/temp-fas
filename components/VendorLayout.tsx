@@ -9,7 +9,12 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       padding: '0 4%',
       maxWidth: '1440px',
-      margin: 'auto'
+      margin: 'auto',
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+        maxWidth: '100vw',
+        overflow: 'hidden'
+      },
     },
     content: {},
     divider: {
@@ -20,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     nav: {
       // padding: '0 4%'
-    }
+    },
   })
 );
 

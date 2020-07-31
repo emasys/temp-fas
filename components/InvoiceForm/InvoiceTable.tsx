@@ -22,17 +22,14 @@ import { AppState } from '../../lib/initialState';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      maxWidth: '80%',
+      width: '100%',
       marginBottom: '2rem',
       boxShadow: 'none',
-      [theme.breakpoints.down('xs')]: {
-        maxWidth: '100%'
-      },
     },
     table: {
       minWidth: 400,
       [theme.breakpoints.down('sm')]: {
-        minWidth: '100%'
+        minWidth: '100%',
       },
     },
     wrapper: {
@@ -45,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     total: {
       // color: '#fff',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     value: {
       color: '#101010',

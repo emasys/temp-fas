@@ -49,8 +49,7 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      minWidth: '80%',
-      maxWidth: '80%',
+      maxWidth: '50rem',
       padding: '2% 4%',
       [theme.breakpoints.down('xs')]: {
         maxWidth: '100vw',

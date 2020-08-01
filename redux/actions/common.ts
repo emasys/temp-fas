@@ -66,6 +66,10 @@ export const addInvoiceValue = (values: any[]) => (dispatch: Dispatch) => {
   dispatch(setValue(EActionTypes.ADD_INVOICE_VALUE, values));
 };
 
+export const setGlobalLoading = (status: boolean) => (dispatch: Dispatch) => {
+  dispatch(setValue(EActionTypes.IS_LOADING, status));
+};
+
 export const updateInvoiceValue = (values: {
   item: string;
   amount: string;

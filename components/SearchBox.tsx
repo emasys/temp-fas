@@ -87,14 +87,20 @@ const SearchBox: React.FC<Props> = (props) => {
   const handleSearch = () => {
     handleSubmit();
   };
-  console.log(errors, '=====');
+
+  const handleLocation = (e, value?:any) => {
+    handleChange(e);
+    if (value){
+      setFieldValue('search', value?.title ? value.title : '');
+    }
+  };
 
   return (
     <Grid container className={classes.container}>
       <SearchFields
         values={values}
         setFieldValue={setFieldValue}
-        handleChange={handleChange}
+        handleChange={handleLocation}
         handleSubmit={handleSubmit}
       />
       <Button

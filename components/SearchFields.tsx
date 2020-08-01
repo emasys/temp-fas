@@ -5,6 +5,7 @@ import {
   FilledInput,
   InputAdornment,
   IconButton,
+  TextField,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
@@ -13,6 +14,8 @@ import SelectInput from './SelectInput';
 import search from '../assets/search.svg';
 import { AppState } from '../lib/initialState';
 import { getLocations } from '../redux/selectors/locations';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { SearchRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,6 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       width: '1rem',
+      marginTop: '0.3rem'
     },
     formWrapper: {
       display: 'flex',
@@ -74,19 +78,19 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       [theme.breakpoints.down('xs')]: {
         marginTop: '1rem',
-        width: '100%'
+        width: '100%',
       },
     },
     selectBox: {
       marginRight: '1.5rem',
       [theme.breakpoints.down('xs')]: {
         marginRight: '1rem',
-        width: '100%'
+        width: '100%',
       },
     },
     selectBoxRight: {
       [theme.breakpoints.down('xs')]: {
-        width: '100%'
+        width: '100%',
       },
     },
     searchWrapper: {
@@ -123,12 +127,18 @@ const useStyles = makeStyles((theme: Theme) =>
         color: 'white',
       },
     },
+    popup: {
+      transform: 'none',
+    },
+    inputRoot: {
+      paddingTop: '0 !important',
+    },
   })
 );
 
 interface Props {
   setFieldValue: (field: string, value: any, validate?: boolean) => void;
-  handleChange: (e: any) => void;
+  handleChange: (e: any, value?: any) => void;
   handleSubmit: () => void;
   values: any;
 }
@@ -145,72 +155,47 @@ const SearchFields: React.FC<Props> = ({
   const locations = useSelector((state: AppState) => getLocations(state));
 
   const classes = useStyles();
-  const handleAutoChange = (value: any) => {
-    setFieldValue('search', value?.title ? value.title : '');
-  };
 
-  const {
-    getRootProps,
-    getInputProps,
-    getListboxProps,
-    getOptionProps,
-    groupedOptions,
-  } = useAutocomplete({
-    id: 'search',
-    options: searchOption,
-    getOptionLabel: (option) => option.title,
-    onChange: (_, value) => handleAutoChange(value),
-    freeSolo: false,
-    onInputChange: handleChange,
-  });
-  const handleSearch = () => {
-    handleSubmit();
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent<any>) => {
-    if (event.key === 'Enter') {
-      handleSubmit();
-    }
+  const handleAutoChange = (e, value: any) => {
+    handleChange(e, value);
   };
 
   const areaOptions = locations.find((loc) => loc.value === values.state);
 
+  const defaultProps = {
+    options: searchOption,
+    getOptionLabel: (option: any) => option.title ? option.title: option,
+    getOptionSelected: (option: any, value: any) => option.title === value,
+  };
+
   return (
     <Grid item xs={12} className={classes.formWrapper}>
       <FormControl variant='filled' className={classes.searchWrapper}>
-        <div>
-          <div {...getRootProps()}>
-            <FilledInput
+        <Autocomplete
+          {...defaultProps}
+          id='search-box'
+          disableClearable
+          autoHighlight
+          popupIcon={<img src={search} className={classes.icon} alt='search' />}
+          classes={{
+            popupIndicatorOpen: classes.popup,
+            inputRoot: classes.inputRoot,
+          }}
+          value={values.search}
+          onChange={(event: any, newValue: any) => {
+            handleAutoChange(event, newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
               id='search'
-              onKeyPress={handleKeyPress}
-              type={'text'}
-              name='search'
+              variant='filled'
               fullWidth
-              {...getInputProps()}
               placeholder='What service are you looking for?'
               className={classes.searchInput}
-              value={values.search}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={handleSearch}
-                    edge='end'
-                  >
-                    <img src={search} className={classes.icon} alt='search' />
-                  </IconButton>
-                </InputAdornment>
-              }
+              {...params}
             />
-          </div>
-          {groupedOptions.length > 0 ? (
-            <ul className={classes.listbox} {...getListboxProps()}>
-              {groupedOptions.map((option, index) => (
-                <li {...getOptionProps({ option, index })}>{option.title}</li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
+          )}
+        />
       </FormControl>
       <div className={classes.selectBoxes}>
         <div className={classes.selectBox}>
@@ -219,7 +204,7 @@ const SearchFields: React.FC<Props> = ({
             placeholder='State'
             className={classes.state}
             options={locations}
-            handleChange={handleChange}
+            handleChange={(e) => handleChange(e)}
             value={values.state}
           />
         </div>
@@ -229,7 +214,7 @@ const SearchFields: React.FC<Props> = ({
             placeholder='Area'
             className={classes.area}
             options={areaOptions?.areas || []}
-            handleChange={handleChange}
+            handleChange={(e) => handleChange(e)}
             value={values.area}
           />
         </div>

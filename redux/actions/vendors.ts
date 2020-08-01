@@ -1,6 +1,6 @@
 import { EActionTypes } from './types';
 import { Dispatch } from 'redux';
-import { setValue, handleAuthError, handleAuthModal } from './common';
+import { setValue, handleAuthError, handleAuthModal, setGlobalLoading } from './common';
 import { instance } from '../../config/axiosConfig';
 import { AppState } from '../../lib/initialState';
 import { ILocation, IVendor } from '../../interfaces';
@@ -49,6 +49,7 @@ export const searchVendors = (
   stateId?: any,
   areaId?: any
 ) => async (dispatch: Dispatch<any>) => {
+  dispatch(setGlobalLoading(true))
   let query = '';
   const isStateId = stateId?.length > 10;
   if (isStateId) query = `?stateId=${stateId}`;
@@ -57,7 +58,9 @@ export const searchVendors = (
   try {
     const { data } = await instance.get(url);
     dispatch(setValue(EActionTypes.SEARCH_VENDOR, data));
+    dispatch(setGlobalLoading(false))
   } catch (error) {
+    dispatch(setGlobalLoading(false))
     dispatch(handleAuthError(error));
   }
 };

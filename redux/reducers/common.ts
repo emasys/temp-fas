@@ -69,8 +69,14 @@ interface IUpdateJobReview {
   payload: any;
 }
 
+interface ILoading {
+  type: EActionTypes.IS_LOADING;
+  payload: boolean;
+}
+
 export type TCommonActions =
   | ISaveURI
+  | ILoading
   | IMakePayment
   | IAddInvoiceValue
   | IResetAction
@@ -89,7 +95,8 @@ export const initialCommonState = {
   tempUri: '',
   openAuthModal: false,
   isLogin: 'login',
-  tempEmail: '', 
+  tempEmail: '',
+  loading: false,
   drawerContent: null,
   drawerStatus: false,
   mobileDrawer: false,
@@ -106,6 +113,11 @@ export default function vendor(
       return {
         ...state,
         tempUri: action.payload,
+      };
+    case EActionTypes.IS_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     case EActionTypes.UPDATE_INVOICE_VALUE:
       return {

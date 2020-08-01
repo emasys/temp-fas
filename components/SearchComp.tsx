@@ -14,12 +14,11 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       [theme.breakpoints.up('xl')]: {
-        maxWidth: '87%'
+        maxWidth: '87%',
       },
     },
   })
 );
-
 
 interface Props {}
 
@@ -50,7 +49,7 @@ const SearchComp: React.FC<Props> = (props) => {
     validateOnChange: true,
     validateOnMount: true,
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values, fProps) => {
       const { search, area, state } = values;
       const matchServicesId = services.find(
         (service) => service.name === search
@@ -78,8 +77,15 @@ const SearchComp: React.FC<Props> = (props) => {
     dispatch(searchVendors(query.id, query.s, query.a));
   }, []);
 
-  const handleLocation = (e) => {
+  const handleLocation = (e, value?:any) => {
     handleChange(e);
+    if (value){
+      setFieldValue('search', value?.title ? value.title : '');
+    }
+    handleSubmit();
+  };
+
+  const onSubmit = () => {
     handleSubmit();
   };
 
@@ -89,7 +95,7 @@ const SearchComp: React.FC<Props> = (props) => {
         values={values}
         setFieldValue={setFieldValue}
         handleChange={handleLocation}
-        handleSubmit={handleSubmit}
+        handleSubmit={onSubmit}
       />
     </Grid>
   );

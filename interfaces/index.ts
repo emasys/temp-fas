@@ -26,6 +26,7 @@ interface IDrawerContent extends IJob {
   customer?: IAuth
 }
 export interface ICommon {
+  loading: boolean;
   tempUri: string;
   openAuthModal: boolean;
   isLogin: string;

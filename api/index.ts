@@ -85,7 +85,10 @@ export const createVendor = async (serviceId: string, data: ICreateVendor) => {
   }
 };
 
-export const updateVendorAPI = async (vendorId: string, data: ICreateVendor) => {
+export const updateVendorAPI = async (
+  vendorId: string,
+  data: ICreateVendor
+) => {
   try {
     const url = `vendors/${vendorId}`;
     const res = await instance.put(url, data);

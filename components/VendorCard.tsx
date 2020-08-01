@@ -6,11 +6,13 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 import Router, { useRouter } from 'next/router';
 import { formatMoney } from '../util';
 import Link from 'next/link';
 import bannerIcon from '../assets/banner.svg';
-
+import { useSelector } from 'react-redux';
+import { AppState } from '../lib/initialState';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,12 +40,12 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       opacity: '.1',
       right: '1rem',
-      bottom: '-2rem'
+      bottom: '-2rem',
     },
     imageWrapper: {
       height: '12rem',
       width: '20rem',
-      background: 'linear-gradient(93.74deg, #43CEA2 -0.25%, #3E72A3 97.83%)',
+      background: '#cac5dd',
       overflow: 'hidden',
       position: 'relative',
     },
@@ -82,28 +84,49 @@ interface Props {
 const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   const classes = useStyles();
   const router = useRouter();
+  const loading = useSelector((state: AppState) => state.common.loading);
   const handleClick = (e: any) => {
     e.preventDefault();
     router.push('/vendor/[id]', `/vendor/${id}`, {
       query: { serviceId: router.query.id },
     });
   };
-
+  console.log(loading, '========');
   return (
     <Grid container className={classes.container} onClick={handleClick}>
       <Grid item xs={12} className={classes.imageWrapper}>
-        <Typography variant='caption' className={classes.vendors}>
-          new
-        </Typography>
-        <img src={bannerIcon} alt='service-img' className={classes.image} />
+        {loading ? (
+          <Skeleton
+            animation='wave'
+            variant='rect'
+            width={'100%'}
+            height={'100%'}
+          />
+        ) : (
+          <>
+            <Typography variant='caption' className={classes.vendors}>
+              new
+            </Typography>
+            <img src={bannerIcon} alt='service-img' className={classes.image} />
+          </>
+        )}
       </Grid>
       <Grid item xs={12} className={classes.textWrapper}>
-        <Typography variant='body2' className={classes.title}>
-          {name}
-        </Typography>
-        <Typography variant='caption' className={classes.captions}>
-          {formatMoney(rate)}
-        </Typography>
+        {loading ? (
+          <>
+            <Skeleton animation='wave' />
+            <Skeleton animation='wave' width={'30%'} />
+          </>
+        ) : (
+          <>
+            <Typography variant='body2' className={classes.title}>
+              {name}
+            </Typography>
+            <Typography variant='caption' className={classes.captions}>
+              {formatMoney(rate)}
+            </Typography>
+          </>
+        )}
       </Grid>
     </Grid>
   );

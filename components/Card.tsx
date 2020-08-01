@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     imageWrapper: {
       height: '12rem',
       width: '20rem',
-      background: 'linear-gradient(93.74deg, #43CEA2 -0.25%, #3E72A3 97.83%)',
+      background: '#cac5dd',
       overflow: 'hidden',
       position: 'relative',
     },

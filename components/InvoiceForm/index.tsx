@@ -50,15 +50,22 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 'auto',
       outline: 'none',
       maxHeight: '95vh',
+      overflowX: 'hidden',
+      overflowY: 'auto',
       [theme.breakpoints.down('xs')]: {
-        width: '95%',
-        top: '2%',
+        width: '100%',
+        minHeight: '100%',
+        maxHeight: '100%',
+        top: '0',
       },
     },
     header: {
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '1rem'
+      },
     },
     form: {
       display: 'flex',
@@ -74,11 +81,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '.5rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
     },
     addButton: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
       color: '#636363',
     },
     inputBox: {
@@ -126,6 +133,11 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: '2rem',
       background: 'rgba(128, 0, 128, 0.04)',
     },
+    wrapper: {
+      height: 'auto',
+      overflowY: 'auto',
+      overflowX: 'hidden'
+    }
   })
 );
 
@@ -233,6 +245,7 @@ const InvoiceForm: React.FC<Props> = () => {
         </Typography>
         <div className={classes.divider} />
       </div>
+      <div className={classes.wrapper}>
       {values.items.map((input, index) => {
         if (input.item !== 'total') {
           return (
@@ -251,7 +264,7 @@ const InvoiceForm: React.FC<Props> = () => {
           className={classes.addButton}
           variant='outlined'
         >
-          Add more item
+          Add item
         </Button>
         <Button
           onClick={() => handleSubmit()}
@@ -276,6 +289,8 @@ const InvoiceForm: React.FC<Props> = () => {
           continuing.
         </Typography>
       </div>
+      </div>
+      
     </div>
   );
 };

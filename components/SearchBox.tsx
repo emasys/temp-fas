@@ -50,6 +50,7 @@ const SearchBox: React.FC<Props> = (props) => {
     handleChange,
     handleSubmit,
     values,
+    errors,
     isSubmitting,
     setSubmitting,
     isValid,
@@ -59,6 +60,7 @@ const SearchBox: React.FC<Props> = (props) => {
       search: '',
       state: '',
       area: '',
+      submit: ''
     },
     validateOnChange: true,
     validateOnMount: true,
@@ -69,6 +71,10 @@ const SearchBox: React.FC<Props> = (props) => {
         (service) => service.name === search
       )?.id;
       const url = `/services/${matchServicesId}?s=${state}&a=${area}`;
+      if(!matchServicesId) {
+        fProps.setSubmitting(false);
+        return fProps.setFieldError('submit', `${search} services not available`)
+      }
       fProps.setSubmitting(true);
       Router.push(url, url);
     },
@@ -81,6 +87,7 @@ const SearchBox: React.FC<Props> = (props) => {
   const handleSearch = () => {
     handleSubmit();
   };
+  console.log(errors, '=====');
 
   return (
     <Grid container className={classes.container}>
@@ -97,7 +104,7 @@ const SearchBox: React.FC<Props> = (props) => {
         disabled={!isValid || isSubmitting}
         fullWidth
       >
-        {isSubmitting ? 'Searching...' : `Find ${values.search} services`}
+        {isSubmitting ? 'Searching...' : errors.submit ? errors.submit : `Find ${values.search} services`}
       </Button>
     </Grid>
   );

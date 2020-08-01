@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '30%'
+        top: '10%',
       },
     },
     form: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '3rem',
       backgroundColor: '#fff',
       [theme.breakpoints.down('xs')]: {
-        padding: '3rem 1rem'
+        padding: '3rem 1rem',
       },
     },
     button: {

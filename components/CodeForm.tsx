@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '100%',
         overflowX: 'hidden',
         minHeight: '100%',
-        top: '20%'
+        top: '10%'
       },
     },
     header: {

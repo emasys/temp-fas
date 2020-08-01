@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
       alignItems: 'center',
       [theme.breakpoints.down('xs')]: {
-        // marginTop: '2rem',
+        marginTop: '2rem',
       },
     },
   })

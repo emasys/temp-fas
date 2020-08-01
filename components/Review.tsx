@@ -22,23 +22,27 @@ import { toggleModal, handleAuthModal } from "../redux/actions/common";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
     container: {
       display: "flex",
       flexDirection: "column",
-      padding: "3.1875rem 2.5rem",
+      padding: "1rem",
       background: "#F8FBFC",
-      height: "20rem",
-      borderRadius: ".2rem",
       width: "25rem",
+      borderRadius: ".2rem",
       borderWidth: 0,
       outline: 0,
-      [theme.breakpoints.down("sm")]: {},
+      [theme.breakpoints.down("xs")]: {
+        width: "100%",
+      },
     },
     active: {
       cursor: "pointer",
     },
-    chat: {
+    topSectionContainer: {
+      display: "flex",
+      width: "100%",
+    },
+    chatIconContainer: {
       background: "rgba(67, 206, 162, .05)",
       borderRadius: "50%",
       display: "flex",
@@ -47,32 +51,39 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "2.75rem",
       width: "2.75rem",
     },
-    text: {
-      fontSize: "1.5rem",
-      color: "#A9A9A9",
-      display: "flex",
+    ratingBoxContainer: {
+      marginLeft: "auto",
+    },
+    textContainer: {
       alignSelf: "center",
       marginTop: "1rem",
+      marginBottom: "2rem",
+      padding: "0 1.75rem",
+    },
+    text: {
+      fontSize: "1rem",
+      color: "#A9A9A9",
+      position: "relative",
       "&::before": {
         content: `url(${openQ})`,
-        display: "block",
-        height: 60,
-        marginTop: -27,
-        marginRight: "1rem",
+        position: "absolute",
+        top: "-20px",
+        left: "-20px",
       },
       "&::after": {
         content: `url(${closeQ})`,
-        display: "block",
-        height: 60,
-        marginTop: 35,
-        marginLeft: "1rem",
+        position: "absolute",
+        bottom: "-20px",
+        right: "-20px",
       },
       [theme.breakpoints.down("xs")]: {
         fontSize: "1rem",
       },
     },
     textNoRating: {
-      marginTop: "3rem",
+      marginTop: "5rem",
+      marginBottom: "7rem",
+      fontSize: "1.5rem",
     },
     dialogBtn: {
       minWidth: "64px",
@@ -82,10 +93,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     dialogActions: {
       paddingRight: "1.25rem",
-    },
-    ratingBoxContainer: {
-      marginLeft: "auto",
-      marginRight: "auto",
     },
   })
 );
@@ -152,33 +159,41 @@ const Review: React.FC<Props> = (props) => {
           props.isCustomer && !props.value && classes.active,
         ])}
       >
-        <div>
-          <div className={classes.chat}>
+        <div className={classes.topSectionContainer}>
+          <div className={classes.chatIconContainer}>
             <img src={bubble} alt="bubble" />
           </div>
+          {value && (
+            <Box
+              component="fieldset"
+              mb={2}
+              borderColor="transparent"
+              className={classes.ratingBoxContainer}
+              display="flex"
+            >
+              <Rating
+                size="large"
+                emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                value={value.rating}
+                readOnly
+              />
+            </Box>
+          )}
         </div>
-        {value && (
-          <Box
-            component="fieldset"
-            mb={2}
-            borderColor="transparent"
-            className={classes.ratingBoxContainer}
-            display="flex"
+        <div className={classes.textContainer}>
+          <Typography
+            variant="body2"
+            className={clsx([classes.text, !value && classes.textNoRating])}
           >
-            <Rating
-              size="large"
-              emptyIcon={<StarBorderIcon fontSize="inherit" />}
-              value={value.rating}
-              readOnly
-            />
-          </Box>
-        )}
-        <Typography
-          variant="body2"
-          className={clsx([classes.text, !value && classes.textNoRating])}
-        >
-          {!value ? "No review yet" : value.comment}
-        </Typography>
+            <span>
+              {value
+                ? value.comment
+                : canPost && isCustomer
+                ? "Click here to write a review"
+                : "No review yet"}
+            </span>
+          </Typography>
+        </div>
       </button>
     </>
   );

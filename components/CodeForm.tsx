@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
     },
     inputBox: {
       margin: '.5rem 0',

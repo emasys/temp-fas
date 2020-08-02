@@ -183,8 +183,8 @@ const BookingForm: React.FC<Props> = () => {
         return setSubmitting(false);
       }
       dispatch(updateUserJob(data));
-      dispatch(handleAuthModal(false));
       setSubmitting(false);
+      dispatch(handleAuthModal(false));
     },
   });
 

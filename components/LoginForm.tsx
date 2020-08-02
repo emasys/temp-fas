@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -136,8 +136,8 @@ const LoginForm: React.FC<Props> = () => {
           password: 'Invalid credential',
         });
       }
-      dispatch(login(data));
       setSubmitting(false);
+      dispatch(login(data));
     },
   });
   useEffect(() => {

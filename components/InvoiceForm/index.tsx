@@ -209,9 +209,9 @@ const InvoiceForm: React.FC<Props> = () => {
         return;
       }
       dispatch(updateJobInvoice(id, data.invoice));
+      setSubmitting(false);
       dispatch(handleAuthModal(false));
       dispatch(toggleModal('login'));
-      setSubmitting(false);
     },
   });
   useEffect(() => {

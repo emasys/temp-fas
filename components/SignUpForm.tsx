@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -147,8 +147,8 @@ const SignUpForm: React.FC<Props> = () => {
         });
       }
       dispatch(setValue(EActionTypes.SAVE_EMAIL, values.email));
-      dispatch(toggleModal('code'));
       setSubmitting(false);
+      dispatch(toggleModal('code'));
     },
   });
   useEffect(() => {

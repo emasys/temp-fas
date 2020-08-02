@@ -44,7 +44,6 @@ const Invoice: React.FC<Props> = (props) => {
     dispatch(toggleModal('invoice'));
     dispatch(handleAuthModal(true));
   };
-  console.log(!content?.invoice, '====>>>>>', isVendor)
   return (
     <>
       {!content?.invoice ? (
@@ -64,7 +63,7 @@ const Invoice: React.FC<Props> = (props) => {
       ) : (
         <div>
           <InvoiceTable />
-          {isVendor && (
+          {isVendor && content?.vendorStatus !== 'completed' && (
             <Button
               variant='contained'
               className={classes.invoice}

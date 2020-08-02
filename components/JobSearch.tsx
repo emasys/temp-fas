@@ -1,20 +1,8 @@
 import React from 'react';
-import {
-  Grid,
-  FormControl,
-  FilledInput,
-  InputAdornment,
-  IconButton,
-  TextField,
-} from '@material-ui/core';
+import { Grid, InputAdornment, IconButton, TextField } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
-import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import SelectInput from './SelectInput';
 import search from '../assets/search.svg';
-import { AppState } from '../lib/initialState';
-import { getLocations } from '../redux/selectors/locations';
-import { useFormik } from 'formik';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  handleChange: (e:any) => void;
+  handleChange: (e: any) => void;
   handleSubmit: () => void;
   values: any;
 }
@@ -72,7 +60,7 @@ const typeOption = [
   { label: 'Completed', value: 'completed' },
 ];
 
-const JobSearch: React.FC<Props> = ({handleChange, handleSubmit, values }) => {
+const JobSearch: React.FC<Props> = ({ handleChange, handleSubmit, values }) => {
   const classes = useStyles();
   const handleTypeChange = (e) => {
     handleChange(e);
@@ -97,7 +85,7 @@ const JobSearch: React.FC<Props> = ({handleChange, handleSubmit, values }) => {
           }}
           placeholder='Search'
           variant='filled'
-          name="search"
+          name='search'
           onChange={handleTypeChange}
           value={values.search}
           InputProps={{

@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import VendorLayout from '../components/VendorLayout';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
 import { AppState } from '../lib/initialState';
 import { handleAuthModal } from '../redux/actions/common';
 import { makeStyles, Theme, createStyles, Grid } from '@material-ui/core';
@@ -15,7 +16,8 @@ import JobsCard from '../components/JobsCard';
 import RequestCard from '../components/RequestCard';
 import PaymentCard from '../components/PaymentCard';
 import { IJob } from '../interfaces';
-import { useFormik } from 'formik';
+import noResult from '../assets/no-result.svg';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,6 +73,11 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    noResult: {
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
+    }
   })
 );
 
@@ -97,9 +104,7 @@ export default function Jobs({}: Props): ReactElement {
     enableReinitialize: true,
     validateOnChange: true,
     validateOnMount: true,
-    onSubmit: async (values, fProps) => {
-      console.log(values, '=====');
-    },
+    onSubmit: async (values, fProps) => {},
   });
   const dispatch = useDispatch();
   useEffect(() => {
@@ -195,19 +200,33 @@ export default function Jobs({}: Props): ReactElement {
               />
             </Grid>
           </Grid>
-          {entries.map((job) => (
-            <JobsRow
-              key={job?.id}
-              id={job?.id}
-              vendor={!!job?.customer?.fullName}
-              color={job?.color}
-              date={job?.createdAt}
-              name={job?.customer?.fullName || job?.vendor?.name}
-              amount={job.cost}
-              stage={job.stage}
-              status={job.status}
-            />
-          ))}
+          {entries.length ? (
+            entries.map((job) => (
+              <JobsRow
+                key={job?.id}
+                id={job?.id}
+                vendor={!!job?.customer?.fullName}
+                color={job?.color}
+                date={job?.createdAt}
+                name={job?.customer?.fullName || job?.vendor?.name}
+                amount={job.cost}
+                stage={job.stage}
+                status={job.status}
+              />
+            ))
+          ) : (
+            <Grid
+              item
+              xs={12}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <img
+                src={noResult}
+                alt='no result'
+                className={classes.noResult}
+              />
+            </Grid>
+          )}
         </>
       </VendorLayout>
     </div>

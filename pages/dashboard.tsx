@@ -15,6 +15,7 @@ import JobsCard from '../components/JobsCard';
 import RequestCard from '../components/RequestCard';
 import PaymentCard from '../components/PaymentCard';
 import { IJob } from '../interfaces';
+import { useFormik } from 'formik';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,6 +89,18 @@ export default function Jobs({}: Props): ReactElement {
     vendor: allOrders,
     user: allJobs,
   };
+  const { handleChange, handleSubmit, values, setFieldValue } = useFormik({
+    initialValues: {
+      search: '',
+      type: '',
+    },
+    enableReinitialize: true,
+    validateOnChange: true,
+    validateOnMount: true,
+    onSubmit: async (values, fProps) => {
+      console.log(values, '=====');
+    },
+  });
   const dispatch = useDispatch();
   useEffect(() => {
     if (!auth) {
@@ -98,6 +111,26 @@ export default function Jobs({}: Props): ReactElement {
       dispatch(fetchUserJobs());
     }
   }, [auth, open]);
+
+  let entries = type[userType];
+  if (values.search) {
+    entries = entries.filter(
+      (item: IJob) =>
+        item.customer?.fullName
+          ?.toLowerCase()
+          ?.includes(values.search.toLowerCase()) ||
+        item.vendor?.name?.toLowerCase()?.includes(values.search.toLowerCase())
+    );
+  }
+  if (values.type) {
+    if (values.type === '""') {
+      entries = [...entries];
+    } else {
+      entries = entries.filter(
+        (item: IJob) => item.vendorStatus?.toLowerCase() === values.type
+      );
+    }
+  }
 
   return (
     <div className={auth ? classes.container : classes.blur}>
@@ -112,7 +145,7 @@ export default function Jobs({}: Props): ReactElement {
                   className={classes.cards}
                   onClick={() => setType('vendor')}
                 >
-                  <JobsCard active={userType === 'vendor'}/>
+                  <JobsCard active={userType === 'vendor'} />
                 </Grid>
                 <Grid item xs={4} className={classes.cards}>
                   <PaymentCard />
@@ -123,22 +156,30 @@ export default function Jobs({}: Props): ReactElement {
                   className={classes.cards}
                   onClick={() => setType('user')}
                 >
-                  <RequestCard active={userType === 'user'}/>
+                  <RequestCard active={userType === 'user'} />
                 </Grid>
               </Grid>
               <Grid container className={classes.mobileWrapper}>
                 <Grid item xs={12} className={classes.cardWrapper}>
-                  <Grid item className={classes.cardsMobile} onClick={() => setType('vendor')}>
-                    <JobsCard active={userType === 'vendor'}/>
+                  <Grid
+                    item
+                    className={classes.cardsMobile}
+                    onClick={() => setType('vendor')}
+                  >
+                    <JobsCard active={userType === 'vendor'} />
                   </Grid>
                   <Grid item className={classes.cardsMobile}>
                     <PaymentCard />
                   </Grid>
-                  <Grid item className={classes.cardsMobile} onClick={() => setType('user')}>
-                    <RequestCard active={userType === 'user'}/>
+                  <Grid
+                    item
+                    className={classes.cardsMobile}
+                    onClick={() => setType('user')}
+                  >
+                    <RequestCard active={userType === 'user'} />
                   </Grid>
                   <Grid item className={classes.cardsMobile}>
-                    <div style={{ width: '2rem' }}/>
+                    <div style={{ width: '2rem' }} />
                   </Grid>
                 </Grid>
               </Grid>
@@ -147,10 +188,14 @@ export default function Jobs({}: Props): ReactElement {
 
           <Grid container className={classes.search}>
             <Grid item xs={12} sm={10} md={8} lg={6}>
-              <JobSearch />
+              <JobSearch
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                values={values}
+              />
             </Grid>
           </Grid>
-          {type[userType].map((job) => (
+          {entries.map((job) => (
             <JobsRow
               key={job?.id}
               id={job?.id}

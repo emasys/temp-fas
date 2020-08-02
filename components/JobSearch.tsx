@@ -14,6 +14,7 @@ import SelectInput from './SelectInput';
 import search from '../assets/search.svg';
 import { AppState } from '../lib/initialState';
 import { getLocations } from '../redux/selectors/locations';
+import { useFormik } from 'formik';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     state: {
-      width: '5.5rem',
+      width: '100%',
       [theme.breakpoints.down('sm')]: {
         width: '5rem',
       },
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         width: '100%',
         margin: 0,
-        paddingRight: '.5rem'
+        paddingRight: '.5rem',
       },
     },
     formWrapper: {
@@ -59,30 +60,34 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {}
+interface Props {
+  handleChange: (e:any) => void;
+  handleSubmit: () => void;
+  values: any;
+}
 
-const JobSearch: React.FC<Props> = (props) => {
+const typeOption = [
+  { label: 'Started', value: 'started' },
+  { label: 'Not started', value: 'not_started' },
+  { label: 'Completed', value: 'completed' },
+];
+
+const JobSearch: React.FC<Props> = ({handleChange, handleSubmit, values }) => {
   const classes = useStyles();
+  const handleTypeChange = (e) => {
+    handleChange(e);
+    handleSubmit();
+  };
   return (
     <Grid container className={classes.formWrapper}>
-      <Grid item xs={6} sm={3} className={classes.field}>
+      <Grid item xs={12} sm={4} className={classes.field}>
         <SelectInput
-          name='state'
+          name='type'
           placeholder='All'
           className={classes.state}
-          options={[]}
-          handleChange={(e) => {}}
-          value={''}
-        />
-      </Grid>
-      <Grid item xs={6} sm={3} className={classes.field}>
-        <SelectInput
-          name='area'
-          placeholder='This month'
-          className={classes.area}
-          options={[]}
-          handleChange={(e) => {}}
-          value={''}
+          options={typeOption}
+          handleChange={handleTypeChange}
+          value={values.type}
         />
       </Grid>
       <Grid item xs={12} sm={4} className={classes.field}>
@@ -92,6 +97,9 @@ const JobSearch: React.FC<Props> = (props) => {
           }}
           placeholder='Search'
           variant='filled'
+          name="search"
+          onChange={handleTypeChange}
+          value={values.search}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

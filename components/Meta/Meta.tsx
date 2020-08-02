@@ -4,11 +4,13 @@ import bicon from './apple-touch-icon.png';
 import micon from './favicon-32x32.png';
 import sicon from './favicon-16x16.png';
 import safari from './safari-pinned-tab.svg';
+import icon from './favicon.ico';
 
 function Meta() {
   return (
     <Head>
       <title>Find a service</title>
+      <link rel='shortcut icon' href={icon} />
       <link rel='apple-touch-icon' sizes='180x180' href={bicon} />
       <link rel='icon' type='image/png' sizes='32x32' href={micon} />
       <link rel='icon' type='image/png' sizes='16x16' href={sicon} />

@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'center',
       [theme.breakpoints.down('xs')]: {
-        left: '2rem'
+        left: '2rem',
       },
     },
   })
@@ -158,9 +158,9 @@ let validationSchema = Yup.object().shape({
   name: Yup.string().required('Provide a business name'),
   rate: Yup.string().required('Provide your average rates'),
   phoneNumber: Yup.string().required('Provide your phone number. ex - 070...'),
-  service: Yup.string().required(),
-  state: Yup.string().required(),
-  area: Yup.string(),
+  service: Yup.object().required(),
+  state: Yup.object().required(),
+  area: Yup.object(),
 });
 
 interface Props {}
@@ -170,7 +170,9 @@ const EditVendor: React.FC<Props> = () => {
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const vendor = useSelector((state: AppState) => state.vendor.activeVendor);
   const services = useSelector((state: AppState) => getServiceOptions(state));
-  const currentLocation = useSelector((state: AppState) => getOneLocation(state));
+  const currentLocation = useSelector((state: AppState) =>
+    getOneLocation(state)
+  );
   const locations = useSelector((state: AppState) => getLocations(state));
   const {
     handleChange,
@@ -188,27 +190,28 @@ const EditVendor: React.FC<Props> = () => {
       name: vendor.name || '',
       rate: vendor.rate || '',
       phoneNumber: vendor.phoneNumber || '',
-      state: currentLocation.state || '',
-      area: currentLocation.area || '',
-      service: services.find((service) => service.value === vendor.serviceId)?.value,
+      state: currentLocation.state || {value: ''},
+      area: currentLocation.area || {value: ''},
+      service: services.find((service) => service.value === vendor.serviceId),
     },
     validationSchema,
     validateOnBlur: true,
     validateOnChange: true,
     enableReinitialize: true,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
-      const { service, state, area, rate, ...rest } = values;
+      const { service, state, area, rate, phoneNumber, name } = values;
       const payload = {
-        ...rest,
-        serviceId: service,
+        name,
+        phoneNumber,
+        serviceId: service.value,
         rate: Number(rate),
-        locationId: area ? area : state,
+        locationId: area?.value ? area.value : state.value,
       };
-      const data = await  updateVendorAPI(vendor.id, payload);
+      const data = await updateVendorAPI(vendor.id, payload);
       setSubmitting(true);
       if (!data) {
         setErrors({
-          name: "We couldn't complete this operation"
+          name: "We couldn't complete this operation",
         });
         return setSubmitting(false);
       }
@@ -218,7 +221,7 @@ const EditVendor: React.FC<Props> = () => {
     },
   });
 
-  const areaOptions = locations.find((loc) => loc.value === values.state)
+  const areaOptions = locations.find((loc) => loc.value === values.state?.value)
     ?.areas;
 
   useEffect(() => {
@@ -227,6 +230,16 @@ const EditVendor: React.FC<Props> = () => {
 
   const handleClose = () => {
     dispatch(handleAuthModal(false));
+  };
+
+  const handleTextChange = (e: any, value?: any, name?: string) => {
+    handleChange(e);
+    if (value) {
+      setFieldValue(name, value?.title ? value.title : value || '');
+      if (name === 'state') {
+        setFieldValue('area', { value: '' });
+      }
+    }
   };
 
   return (
@@ -303,7 +316,7 @@ const EditVendor: React.FC<Props> = () => {
               placeholder='Service category'
               variant='filled'
               options={services}
-              handleChange={handleChange}
+              handleChange={handleTextChange}
               value={values.service}
             />
           </Grid>
@@ -313,7 +326,7 @@ const EditVendor: React.FC<Props> = () => {
               placeholder='State'
               variant='filled'
               options={locations}
-              handleChange={handleChange}
+              handleChange={handleTextChange}
               value={values.state}
             />
           </Grid>
@@ -323,7 +336,7 @@ const EditVendor: React.FC<Props> = () => {
               placeholder='Area'
               variant='filled'
               options={areaOptions || []}
-              handleChange={handleChange}
+              handleChange={handleTextChange}
               value={values.area}
             />
           </Grid>

@@ -91,7 +91,6 @@ const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
       query: { serviceId: router.query.id },
     });
   };
-  console.log(loading, '========');
   return (
     <Grid container className={classes.container} onClick={handleClick}>
       <Grid item xs={12} className={classes.imageWrapper}>

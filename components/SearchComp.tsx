@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
+import qs from 'querystring';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -35,15 +36,23 @@ const SearchComp: React.FC<Props> = (props) => {
   const searchOption = useSelector(
     (state: AppState) => state.services.searchOption
   );
+  const urlParams = new URLSearchParams(window?.location?.search);
+  const s = urlParams.get('s');
+  const a = urlParams.get('a');
   const services = useSelector((state: AppState) => state.services.allServices);
   const locations = useSelector((state: AppState) => getLocations(state));
-  let areaOptions = locations.find((loc) => loc.value === query.s);
+  let areaOptions = locations.find((loc) => loc.value === s);
   const { handleChange, handleSubmit, values, setFieldValue } = useFormik({
     initialValues: {
       search: searchOption.find((item) => item.id === query.id)?.title || '',
-      state: locations.find((item) => item.value === query.s)?.value || '',
-      area:
-        areaOptions?.areas?.find((item) => item.value === query.a)?.value || '',
+      state: {
+        ...(locations.find((item) => item.value === s) || { value: '' }),
+      },
+      area: {
+        ...(areaOptions?.areas?.find((item) => item.value === a) || {
+          value: '',
+        }),
+      },
     },
     enableReinitialize: true,
     validateOnChange: true,
@@ -55,15 +64,15 @@ const SearchComp: React.FC<Props> = (props) => {
         (service) => service.name === search
       )?.id;
       const dynamicArea = areaOptions?.areas?.find(
-        (item) => item.value === area
+        (item) => item.value === area?.value
       )?.value;
-      dispatch(searchVendors(matchServicesId, state, dynamicArea));
+      dispatch(searchVendors(matchServicesId, state.value, dynamicArea));
       const queryString = {
         state: '',
         area: '',
       };
-      const isStateId = state?.length > 10;
-      if (isStateId) queryString.state = `?s=${state}`;
+      const isStateId = state?.value?.length > 10;
+      if (isStateId) queryString.state = `?s=${state.value}`;
       if (dynamicArea?.length > 10 && isStateId)
         queryString.area = `&a=${dynamicArea}`;
       const url = `/services/${matchServicesId}${queryString.state}${queryString.area}`;
@@ -71,16 +80,16 @@ const SearchComp: React.FC<Props> = (props) => {
     },
   });
   if (values.state) {
-    areaOptions = locations.find((loc) => loc.value === values.state);
+    areaOptions = locations.find((loc) => loc.value === values.state?.value);
   }
   useEffect(() => {
-    dispatch(searchVendors(query.id, query.s, query.a));
+    dispatch(searchVendors(query.id, s, a));
   }, []);
 
-  const handleLocation = (e, value?:any) => {
+  const handleTextChange = (e, value?: any, name?: string) => {
     handleChange(e);
-    if (value){
-      setFieldValue('search', value?.title ? value.title : '');
+    if (value) {
+      setFieldValue(name, value?.title ? value.title : value || '');
     }
     handleSubmit();
   };
@@ -89,12 +98,19 @@ const SearchComp: React.FC<Props> = (props) => {
     handleSubmit();
   };
 
+  console.log(
+    locations.find((loc) => loc.value === values?.state?.value)?.areas[0] || {
+      value: '',
+    },
+   
+  );
+
   return (
     <Grid item xs={12} sm={12} lg={10} className={classes.root}>
       <SearchFields
         values={values}
         setFieldValue={setFieldValue}
-        handleChange={handleLocation}
+        handleChange={handleTextChange}
         handleSubmit={onSubmit}
       />
     </Grid>

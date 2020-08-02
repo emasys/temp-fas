@@ -18,7 +18,6 @@ import PaymentCard from '../components/PaymentCard';
 import { IJob } from '../interfaces';
 import noResult from '../assets/no-result.svg';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {},
@@ -75,9 +74,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     noResult: {
       [theme.breakpoints.down('xs')]: {
-        width: '100%'
+        width: '100%',
       },
-    }
+    },
   })
 );
 
@@ -99,7 +98,7 @@ export default function Jobs({}: Props): ReactElement {
   const { handleChange, handleSubmit, values, setFieldValue } = useFormik({
     initialValues: {
       search: '',
-      type: '',
+      type: { value: '' },
     },
     enableReinitialize: true,
     validateOnChange: true,
@@ -127,15 +126,22 @@ export default function Jobs({}: Props): ReactElement {
         item.vendor?.name?.toLowerCase()?.includes(values.search.toLowerCase())
     );
   }
-  if (values.type) {
-    if (values.type === '""') {
+  if (values.type.value) {
+    if (values.type.value === '""') {
       entries = [...entries];
     } else {
       entries = entries.filter(
-        (item: IJob) => item.vendorStatus?.toLowerCase() === values.type
+        (item: IJob) => item.vendorStatus?.toLowerCase() === values.type.value
       );
     }
   }
+
+  const handleTextChange = (e: any, value?: any, name?: string) => {
+    handleChange(e);
+    if (value) {
+      setFieldValue(name, value?.title ? value.title : value || '');
+    }
+  };
 
   return (
     <div className={auth ? classes.container : classes.blur}>
@@ -194,7 +200,7 @@ export default function Jobs({}: Props): ReactElement {
           <Grid container className={classes.search}>
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <JobSearch
-                handleChange={handleChange}
+                handleChange={handleTextChange}
                 handleSubmit={handleSubmit}
                 values={values}
               />

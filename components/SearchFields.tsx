@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       width: '1rem',
-      marginTop: '0.3rem'
+      marginTop: '0.3rem',
     },
     formWrapper: {
       display: 'flex',
@@ -137,8 +137,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  setFieldValue: (field: string, value: any, validate?: boolean) => void;
-  handleChange: (e: any, value?: any) => void;
+  setFieldValue?: (field: string, value: any, validate?: boolean) => void;
+  handleChange: (e: any, value?: any, name?: string) => void;
   handleSubmit: () => void;
   values: any;
 }
@@ -156,18 +156,17 @@ const SearchFields: React.FC<Props> = ({
 
   const classes = useStyles();
 
-  const handleAutoChange = (e, value: any) => {
-    handleChange(e, value);
+  const handleAutoChange = (e, value: any, name: string) => {
+    handleChange(e, value, name);
   };
 
-  const areaOptions = locations.find((loc) => loc.value === values.state);
+  const areaOptions = locations.find((loc) => loc.value === values.state.value);
 
   const defaultProps = {
     options: searchOption,
-    getOptionLabel: (option: any) => option.title ? option.title: option,
+    getOptionLabel: (option: any) => (option.title ? option.title : option),
     getOptionSelected: (option: any, value: any) => option.title === value,
   };
-
   return (
     <Grid item xs={12} className={classes.formWrapper}>
       <FormControl variant='filled' className={classes.searchWrapper}>
@@ -183,7 +182,7 @@ const SearchFields: React.FC<Props> = ({
           }}
           value={values.search}
           onChange={(event: any, newValue: any) => {
-            handleAutoChange(event, newValue);
+            handleAutoChange(event, newValue, 'search');
           }}
           renderInput={(params) => (
             <TextField
@@ -204,7 +203,7 @@ const SearchFields: React.FC<Props> = ({
             placeholder='State'
             className={classes.state}
             options={locations}
-            handleChange={(e) => handleChange(e)}
+            handleChange={handleAutoChange}
             value={values.state}
           />
         </div>
@@ -214,7 +213,7 @@ const SearchFields: React.FC<Props> = ({
             placeholder='Area'
             className={classes.area}
             options={areaOptions?.areas || []}
-            handleChange={(e) => handleChange(e)}
+            handleChange={handleAutoChange}
             value={values.area}
           />
         </div>

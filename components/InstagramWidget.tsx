@@ -107,11 +107,11 @@ export default function InstagramWidget({
     return (
       <div className={classes.connectWrapper}>
         <div className={classes.add}>
-          {ownVendor?.id === vendorId && (
+          {/* {ownVendor?.id === vendorId && (
             <IconButton onClick={onBtnClick}>
               <img src={plus} alt='add' className={classes.addIcon} />
             </IconButton>
-          )}
+          )} */}
         </div>
       </div>
     );

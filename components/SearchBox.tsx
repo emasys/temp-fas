@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: '1rem',
         overflow: 'hidden',
         width: '100%',
-        maxWidth: '100%'
+        maxWidth: '100%',
       },
     },
     button: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         marginTop: '1rem',
         minHeight: '0rem',
-        height: '3rem'
+        height: '3rem',
       },
     },
   })
@@ -58,9 +58,9 @@ const SearchBox: React.FC<Props> = (props) => {
   } = useFormik({
     initialValues: {
       search: '',
-      state: '',
-      area: '',
-      submit: ''
+      state: { value: '' },
+      area: { value: '' },
+      submit: '',
     },
     validateOnChange: true,
     validateOnMount: true,
@@ -70,10 +70,13 @@ const SearchBox: React.FC<Props> = (props) => {
       const matchServicesId = services.find(
         (service) => service.name === search
       )?.id;
-      const url = `/services/${matchServicesId}?s=${state}&a=${area}`;
-      if(!matchServicesId) {
+      const url = `/services/${matchServicesId}?s=${state.value}&a=${area.value}`;
+      if (!matchServicesId) {
         fProps.setSubmitting(false);
-        return fProps.setFieldError('submit', `${search} services not available`)
+        return fProps.setFieldError(
+          'submit',
+          `${search} services not available`
+        );
       }
       fProps.setSubmitting(true);
       Router.push(url, url);
@@ -88,10 +91,10 @@ const SearchBox: React.FC<Props> = (props) => {
     handleSubmit();
   };
 
-  const handleLocation = (e, value?:any) => {
+  const handleTextChange = (e, value?: any, name?: string) => {
     handleChange(e);
-    if (value){
-      setFieldValue('search', value?.title ? value.title : '');
+    if (value) {
+      setFieldValue(name, value?.title ? value.title : value || '');
     }
   };
 
@@ -100,7 +103,7 @@ const SearchBox: React.FC<Props> = (props) => {
       <SearchFields
         values={values}
         setFieldValue={setFieldValue}
-        handleChange={handleLocation}
+        handleChange={handleTextChange}
         handleSubmit={handleSubmit}
       />
       <Button
@@ -110,7 +113,11 @@ const SearchBox: React.FC<Props> = (props) => {
         disabled={!isValid || isSubmitting}
         fullWidth
       >
-        {isSubmitting ? 'Searching...' : errors.submit ? errors.submit : `Find ${values.search} services`}
+        {isSubmitting
+          ? 'Searching...'
+          : errors.submit
+          ? errors.submit
+          : `Find ${values.search} services`}
       </Button>
     </Grid>
   );

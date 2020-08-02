@@ -49,12 +49,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  handleChange: (e: any) => void;
+  handleChange: (e: any, value?: any, name?: string) => void;
   handleSubmit: () => void;
   values: any;
 }
 
 const typeOption = [
+  { label: 'All', value: '' },
   { label: 'Started', value: 'started' },
   { label: 'Not started', value: 'not_started' },
   { label: 'Completed', value: 'completed' },
@@ -62,10 +63,11 @@ const typeOption = [
 
 const JobSearch: React.FC<Props> = ({ handleChange, handleSubmit, values }) => {
   const classes = useStyles();
-  const handleTypeChange = (e) => {
-    handleChange(e);
+  const handleTypeChange = (e: any, value?: any, name?: string) => {
+    handleChange(e, value, name);
     handleSubmit();
   };
+
   return (
     <Grid container className={classes.formWrapper}>
       <Grid item xs={12} sm={4} className={classes.field}>

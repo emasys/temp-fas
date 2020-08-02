@@ -162,18 +162,20 @@ const BookingForm: React.FC<Props> = () => {
       address: '',
       dueDate: '',
       error: '',
-      state: '',
-      area: '',
+      state: { value: '' },
+      area: { value: '' },
     },
     validationSchema,
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
-      const { state, area, error, ...rest } = values;
+      const { state, area, address, dueDate, description } = values;
       const payload = {
-        ...rest,
+        address,
+        dueDate,
+        description,
         vendorId: vendor.id,
-        locationId: area ? area : state,
+        locationId: area?.value ? area.value : state.value,
       };
       const data = await createOrder(payload);
       setSubmitting(true);
@@ -188,7 +190,7 @@ const BookingForm: React.FC<Props> = () => {
     },
   });
 
-  const areaOptions = locations.find((loc) => loc.value === values.state)
+  const areaOptions = locations.find((loc) => loc.value === values.state?.value)
     ?.areas;
 
   useEffect(() => {
@@ -202,6 +204,13 @@ const BookingForm: React.FC<Props> = () => {
 
   const handleClose = () => {
     dispatch(handleAuthModal(false));
+  };
+
+  const handleTextChange = (e: any, value?: any, name?: string) => {
+    handleChange(e);
+    if (value) {
+      setFieldValue(name, value?.title ? value.title : value || '');
+    }
   };
 
   return (
@@ -281,7 +290,7 @@ const BookingForm: React.FC<Props> = () => {
           placeholder='State'
           variant='standard'
           options={locations}
-          handleChange={handleChange}
+          handleChange={handleTextChange}
           value={values.state}
         />
         <div className={classes.selectWrapper} />
@@ -290,7 +299,7 @@ const BookingForm: React.FC<Props> = () => {
           placeholder='Area'
           variant='standard'
           options={areaOptions || []}
-          handleChange={handleChange}
+          handleChange={handleTextChange}
           value={values.area}
         />
         <Typography variant='body2' className={classes.caption}>

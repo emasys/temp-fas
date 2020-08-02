@@ -158,13 +158,14 @@ const BAVForm: React.FC<Props> = () => {
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const services = useSelector((state: AppState) => getServiceOptions(state));
   const locations = useSelector((state: AppState) => getLocations(state));
-const router = useRouter();
+  const router = useRouter();
   const {
     handleChange,
     values,
     errors,
     isValid,
     touched,
+    setFieldValue,
     handleSubmit,
     handleBlur,
     isSubmitting,
@@ -174,21 +175,22 @@ const router = useRouter();
       name: '',
       rate: '',
       phoneNumber: '',
-      state: '',
-      area: '',
-      service: '',
+      state: { value: '' },
+      area: { value: '' },
+      service: { value: '' },
     },
     validationSchema,
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
-      const { service, state, area, rate, ...rest } = values;
+      const { service, state, area, rate, name, phoneNumber } = values;
       const payload = {
-        ...rest,
+        name,
+        phoneNumber,
         rate: Number(rate),
-        locationId: area ? area : state,
+        locationId: area?.value ? area.value : state.value,
       };
-      const data = await createVendor(service, payload);
+      const data = await createVendor(service.value, payload);
       setSubmitting(true);
       if (!data) {
         dispatch(validateToken());
@@ -210,12 +212,19 @@ const router = useRouter();
     dispatch(handleAuthModal(false));
   };
 
-  const areaOptions = locations.find((loc) => loc.value === values.state)
+  const areaOptions = locations.find((loc) => loc.value === values.state?.value)
     ?.areas;
 
   useEffect(() => {
     setSubmitting(false);
   }, [open]);
+
+  const handleTextChange = (e: any, value?: any, name?: string) => {
+    handleChange(e);
+    if (value) {
+      setFieldValue(name, value?.title ? value.title : value || '');
+    }
+  };
 
   return (
     <div className={classes.paper}>
@@ -279,7 +288,7 @@ const router = useRouter();
           placeholder='Service category'
           variant='standard'
           options={services}
-          handleChange={handleChange}
+          handleChange={handleTextChange}
           value={values.service}
         />
         <div className={classes.selectWrapper} />
@@ -288,7 +297,7 @@ const router = useRouter();
           placeholder='State'
           variant='standard'
           options={locations}
-          handleChange={handleChange}
+          handleChange={handleTextChange}
           value={values.state}
         />
         <div className={classes.selectWrapper} />
@@ -297,7 +306,7 @@ const router = useRouter();
           placeholder='Area'
           variant='standard'
           options={areaOptions || []}
-          handleChange={handleChange}
+          handleChange={handleTextChange}
           value={values.area}
         />
         <Button
@@ -306,7 +315,7 @@ const router = useRouter();
           disabled={isSubmitting || !isValid}
           variant='contained'
         >
-          Apply
+          {isSubmitting ? 'Submitting...' : 'Apply'}
         </Button>
       </div>
     </div>

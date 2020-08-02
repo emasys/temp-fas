@@ -5,7 +5,7 @@ const locations = (state: AppState) => state.locations;
 const vendor = (state: AppState) => state.vendor.activeVendor;
 
 export const getLocations = createSelector(locations, (data) => {
-  return data.map(({ name, areas, id }) => {
+  let options = data.map(({ name, areas, id }) => {
     const formatAreas = areas.map((state) => ({
       label: state.name,
       value: state.id,
@@ -17,6 +17,7 @@ export const getLocations = createSelector(locations, (data) => {
       areas: formatAreas,
     };
   });
+  return options;
 });
 
 export const getOneLocation = createSelector(
@@ -24,20 +25,29 @@ export const getOneLocation = createSelector(
   (data, vendor) => {
     const location: any = {
       state: '',
-      area: ''
+      area: '',
     };
     data.forEach(({ name, areas, id }) => {
       if (id === vendor.locationId) {
-        location.state = id;
+        location.state = {
+          label: name,
+          value: id,
+        };
         location.area = null;
       }
       areas.forEach((state) => {
         if (state.id === vendor.locationId) {
-          location.state = id;
-          location.area = state.id;
+          location.state = {
+            label: name,
+            value: id,
+          };
+          location.area = {
+            label: state.name,
+            value: state.id,
+          };
         }
       });
     });
-    return location
+    return location;
   }
 );

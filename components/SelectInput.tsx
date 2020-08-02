@@ -1,8 +1,9 @@
 import React from 'react';
-import { FormControl, Select, MenuItem } from '@material-ui/core';
+import { FormControl, Select, MenuItem, TextField } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import dropdown from '../assets/dropdown.svg';
 import clsx from 'clsx';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,12 +23,29 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: '0.5rem',
       marginRight: '0.5rem',
     },
+    inputRoot: {
+      paddingTop: '0 !important',
+    },
+    popupOpen: {
+      marginTop: '0.6rem',
+      marginLeft: '0.5rem',
+      marginRight: 0,
+    },
+    searchInput: {
+      width: '100%',
+      // [theme.breakpoints.down('sm')]: {
+      //   width: '17rem',
+      // },
+      // [theme.breakpoints.down('xs')]: {
+      //   width: '100%',
+      // },
+    },
   })
 );
 
 interface Props {
-  handleChange: (event: any) => void;
-  value: string;
+  handleChange: (event: any, value: any, name: string) => void;
+  value: { value: string; label?: string } | string;
   name: string;
   controlClass?: any;
   placeholder: string;
@@ -46,39 +64,46 @@ const SelectInput: React.FC<Props> = ({
   name,
 }) => {
   const classes = useStyles();
+  const defaultProps = {
+    options,
+    getOptionLabel: (option: any) => option.label || '',
+  };
+  const handleAutoChange = (e: any, value: any, name: string) => {
+    handleChange(e, value, name);
+  };
   return (
-    <FormControl
+    <form autoComplete="off">
+      <FormControl
       variant={variant ? variant : 'filled'}
       className={clsx(classes.formControl, controlClass)}
     >
-      <Select
-        labelId='custom-select'
-        id='custom-select'
-        name={name}
+      <Autocomplete
+        {...defaultProps}
+        disableClearable
         fullWidth
-        value={value || '""'}
+        popupIcon={<img src={dropdown} className={classes.icon}  alt='dropdown' />}
+        autoHighlight
         classes={{
-          root: className,
-          iconFilled: classes.icon,
+          popupIndicatorOpen: classes.popupOpen,
+          inputRoot: classes.inputRoot,
         }}
-        IconComponent={(props) => (
-          <img
-            src={dropdown}
-            alt='dropdown'
-            {...props}
-            className={props.className}
+        value={value}
+        onChange={(event: any, newValue: any) => {
+          handleAutoChange(event, newValue, name);
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant={variant ? variant : 'filled'}
+            fullWidth
+            placeholder={placeholder}
+            className={classes.searchInput}
           />
         )}
-        onChange={handleChange}
-      >
-        <MenuItem value={'""'}>{placeholder}</MenuItem>
-        {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </Select>
+      />
     </FormControl>
+    </form>
+    
   );
 };
 

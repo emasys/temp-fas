@@ -183,7 +183,7 @@ const LoginForm: React.FC<Props> = () => {
           disabled={isSubmitting || !isValid}
           variant='contained'
         >
-          Login
+          {isSubmitting ? 'Authenticating' : 'Login'}
         </Button>
       </div>
       <div className={classes.footer}>

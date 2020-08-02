@@ -45,6 +45,7 @@ import {
   KeyboardDatePicker,
   DatePicker,
 } from '@material-ui/pickers';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -310,7 +311,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       id: vendorId,
       name: vendorName,
       phoneNumber,
-      service: { name },
+      service: { name, id: serviceId },
     },
     review,
     stage,
@@ -349,7 +350,9 @@ const JobsDrawer: React.FC<IProps> = (props) => {
       <Grid container>
         <Grid item xs={12} className={classes.status}>
           <Typography variant='body2' className={classes.title}>
-            {name}
+            <Link href={`/services/${serviceId}`}>
+              <a>{name}</a>
+            </Link>
           </Typography>
           <IconButton className={classes.close} onClick={closeDrawer}>
             <CloseRounded />
@@ -358,7 +361,13 @@ const JobsDrawer: React.FC<IProps> = (props) => {
         <Grid item xs={12} className={classes.titleWrapper}>
           <Grid item xs={10}>
             <Typography variant='body2' className={classes.subtitle}>
-              {customer?.fullName || vendorName}
+              {!customer?.fullName ? (
+                <Link href={`/vendor/${id}`}>
+                  <a>{vendorName}</a>
+                </Link>
+              ) : (
+                customer?.fullName
+              )}
               {!isVendor && (
                 <>
                   <IconButton

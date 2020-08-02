@@ -362,7 +362,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           <Grid item xs={10}>
             <Typography variant='body2' className={classes.subtitle}>
               {!customer?.fullName ? (
-                <Link href={`/vendor/${id}`}>
+                <Link href={`/vendor/${vendorId}`}>
                   <a>{vendorName}</a>
                 </Link>
               ) : (

@@ -7,10 +7,14 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      minWidth: 120,
+      minWidth: 161,
       width: '100%',
+      [theme.breakpoints.down('sm')]: {
+        minWidth: 130,
+      },
       [theme.breakpoints.down('xs')]: {
-        width: '100%'
+        width: '100%',
+        minWidth: '100%',
       },
     },
     icon: {

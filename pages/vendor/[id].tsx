@@ -298,7 +298,7 @@ const Vendor: React.FC<Props> = () => {
             />
           ) : (
             <Grid item xs={12} className={classes.cardWrapper}>
-              {reviews.map((review) => (
+              {reviews?.map((review) => (
                 <Review value={review} key={review.id} />
               ))}
             </Grid>

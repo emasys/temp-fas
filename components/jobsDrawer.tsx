@@ -497,22 +497,24 @@ const JobsDrawer: React.FC<IProps> = (props) => {
             }`}
             noDefaultOpen
           >
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Typography variant='body2' className={classes.dateLabel}>
-                You can still modify the due date
-              </Typography>
-              <DatePicker
-                autoOk
-                minDate={dueDate ? dueDate : new Date()}
-                disableToolbar={isMobile}
-                orientation={isMobile ? 'portrait' : 'landscape'}
-                variant='static'
-                openTo='date'
-                className={classes.datePicker}
-                value={selectedDate}
-                onChange={handleDateChange}
-              />
-            </MuiPickersUtilsProvider>
+            {!isVendor && (
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Typography variant='body2' className={classes.dateLabel}>
+                  You can still modify the due date
+                </Typography>
+                <DatePicker
+                  autoOk
+                  minDate={dueDate ? dueDate : new Date()}
+                  disableToolbar={isMobile}
+                  orientation={isMobile ? 'portrait' : 'landscape'}
+                  variant='static'
+                  openTo='date'
+                  className={classes.datePicker}
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                />
+              </MuiPickersUtilsProvider>
+            )}
           </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>

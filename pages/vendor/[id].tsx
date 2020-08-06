@@ -26,12 +26,13 @@ import {
   toggleModal,
 } from '../../redux/actions/common';
 import { EActionTypes } from '../../redux/actions/types';
-import { fetchVendor } from '../../redux/actions/vendors';
+import { fetchVendor, fetchVendorReviews } from '../../redux/actions/vendors';
 import Review from '../../components/Review';
 import { getVendorStatus } from '../../redux/selectors/vendors';
 import { fetchUserJobs } from '../../redux/actions/jobs';
 import { getUserJobs } from '../../redux/selectors/jobs';
 import { getOneLocation } from '../../redux/selectors/locations';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -147,6 +148,16 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
       },
     },
+    cardWrapper: {
+      display: 'flex',
+      maxWidth: '100%',
+      height: 'auto',
+      overflow: 'scroll',
+      '-ms-overflow-style': 'none',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+    },
   })
 );
 
@@ -156,12 +167,11 @@ const Vendor: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state: AppState) => state.auth);
   const vendorObj = useSelector((state: AppState) => state.vendor.activeVendor);
+  const loading = useSelector((state: AppState) => state.common.loading);
+  const reviews = useSelector((state: AppState) => state.vendor.reviews);
   const { isBooked } = useSelector((state: AppState) => getUserJobs(state));
   const locationData = useSelector((state: AppState) => getOneLocation(state));
-  console.log(locationData, '=====');
-  const ownVendor = useSelector((state: AppState) =>
-    getVendorStatus(state)
-  );
+  const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
   const {
     query: { id },
   } = useRouter();
@@ -170,6 +180,7 @@ const Vendor: React.FC<Props> = () => {
     dispatch(fetchVendor(id));
     if (auth.auth) {
       dispatch(fetchUserJobs());
+      dispatch(fetchVendorReviews(id));
     }
   }, [auth]);
 
@@ -202,41 +213,69 @@ const Vendor: React.FC<Props> = () => {
         <Grid item xs={12}>
           <VendorBanner rate={vendorObj?.rate} phone={vendorObj?.phoneNumber} />
         </Grid>
-        <Grid item xs={12} className={classes.nameWrapper}>
-          <Grid item sm={6} xs={12}>
-            <Typography variant='body2' className={classes.name}>
-              {vendorObj?.name}
-              <img
-                src={verified}
-                className={classes.verifyIcon}
-                alt='verified'
+        {loading ? (
+          <>
+            <div style={{ marginTop: '1rem' }}>
+              <Skeleton
+                animation='wave'
+                variant='rect'
+                width={300}
+                height={16}
               />
-            </Typography>
-            <div className={classes.reviewWrapper}>
-              <Typography variant='body2' className={classes.reviewText}>
-                <img src={star} className={classes.icon} alt='star' /> no review
-              </Typography>
-              <Typography variant='body2' className={classes.reviewText}>
-                <img src={location} className={classes.icon} alt='location' />
-                {(`${locationData?.state?.label}, ${locationData?.area?.label}`) || 'Nil'}
-              </Typography>
             </div>
+            <div style={{ marginTop: '.5rem' }}>
+              <Skeleton
+                animation='wave'
+                variant='rect'
+                width={300}
+                height={16}
+              />
+            </div>
+          </>
+        ) : (
+          <Grid item xs={12} className={classes.nameWrapper}>
+            <Grid item sm={6} xs={12}>
+              <Typography variant='body2' className={classes.name}>
+                {vendorObj?.name}
+                <img
+                  src={verified}
+                  className={classes.verifyIcon}
+                  alt='verified'
+                />
+              </Typography>
+
+              <div className={classes.reviewWrapper}>
+                <Typography variant='body2' className={classes.reviewText}>
+                  <img src={star} className={classes.icon} alt='star' /> no
+                  review
+                </Typography>
+                <Typography variant='body2' className={classes.reviewText}>
+                  <img src={location} className={classes.icon} alt='location' />
+                  {`${locationData?.state?.label}, ${locationData?.area?.label}` ||
+                    'Nil'}
+                </Typography>
+              </div>
+            </Grid>
+            {isOwnPage ? (
+              <Button
+                variant='contained'
+                className={classes.button}
+                onClick={handleEdit}
+              >
+                Edit vendor
+              </Button>
+            ) : (
+              <Button
+                variant='contained'
+                onClick={handleBooking}
+                disabled={!!isBooked}
+                className={classes.button}
+              >
+                {isBooked ? 'Booked' : 'Book vendor'}
+              </Button>
+            )}
           </Grid>
-          {isOwnPage ? (
-            <Button variant='contained' className={classes.button} onClick={handleEdit}>
-              Edit vendor
-            </Button>
-          ) : (
-            <Button
-              variant='contained'
-              onClick={handleBooking}
-              disabled={!!isBooked}
-              className={classes.button}
-            >
-              {isBooked ? 'Booked' : 'Book vendor'}
-            </Button>
-          )}
-        </Grid>
+        )}
         <Grid item xs={12} className={classes.divider}>
           <Divider title='Instagram Feed' buttonText='' />
         </Grid>
@@ -250,7 +289,20 @@ const Vendor: React.FC<Props> = () => {
           <Divider title='Reviews' buttonText='' />
         </Grid>
         <Grid item xs={12} className={classes.reviews}>
-          <Review />
+          {loading ? (
+            <Skeleton
+              animation='wave'
+              variant='rect'
+              width={'25rem'}
+              height={'20rem'}
+            />
+          ) : (
+            <Grid item xs={12} className={classes.cardWrapper}>
+              {reviews.map((review) => (
+                <Review value={review} key={review.id} />
+              ))}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </VendorLayout>

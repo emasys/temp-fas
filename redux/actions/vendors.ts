@@ -64,3 +64,18 @@ export const searchVendors = (
     dispatch(handleAuthError(error));
   }
 };
+
+export const fetchVendorReviews = (
+  vendorId: any,
+) => async (dispatch: Dispatch<any>) => {
+  const url = `vendors/${vendorId}/reviews`;
+  dispatch(setGlobalLoading(true))
+  try {
+    const { data } = await instance.get(url);
+    dispatch(setValue(EActionTypes.FETCH_VENDOR_REVIEWS, data));
+    dispatch(setGlobalLoading(false))
+  } catch (error) {
+    dispatch(setGlobalLoading(false))
+    dispatch(handleAuthError(error));
+  }
+};

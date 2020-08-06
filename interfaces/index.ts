@@ -8,13 +8,28 @@ export interface IService {
   updatedAt: string;
 }
 
+export interface IReview {
+  id: string;
+  rating: number;
+  comment: string;
+  jobId: string;
+  createdAt: string;
+  updatedAt: string;
+  job: {
+    id: string;
+    vendorId: string;
+    customer: {
+      fullName: string;
+    };
+  };
+}
 export interface IVendor {
   id: string;
   name: string;
   serviceId: string;
   service?: IService;
   userId: string;
-  locationId: null| string;
+  locationId: null | string;
   instagramToken: null | string;
   updatedAt: string;
   createdAt: string;
@@ -23,7 +38,7 @@ export interface IVendor {
 }
 
 interface IDrawerContent extends IJob {
-  customer?: IAuth
+  customer?: IAuth;
 }
 export interface ICommon {
   loading: boolean;

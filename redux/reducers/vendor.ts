@@ -1,6 +1,6 @@
 import { EActionTypes } from '../actions/types';
 import { IResetAction } from './auth';
-import { IVendor } from '../../interfaces';
+import { IVendor, IReview } from '../../interfaces';
 
 interface ISaveVendor {
   type: EActionTypes.SAVE_VENDORS;
@@ -17,8 +17,14 @@ interface ISearchVendor {
   payload: IVendor[];
 }
 
+interface IFetchReviews {
+  type: EActionTypes.FETCH_VENDOR_REVIEWS;
+  payload: IReview[];
+}
+
 export type TVendorActions =
   | ISaveVendor
+  | IFetchReviews
   | IResetAction
   | IUpdateVendor
   | ISearchVendor;
@@ -27,11 +33,13 @@ export interface IVendors {
   allVendors: IVendor[];
   searchResult: IVendor[];
   activeVendor: IVendor;
+  reviews: IReview[];
 }
 
 export const initialVendorsState = {
   allVendors: [],
   searchResult: null,
+  reviews: [],
   activeVendor: {
     id: '',
     name: '',
@@ -71,6 +79,11 @@ export default function vendor(
       return {
         ...state,
         searchResult: action.payload,
+      };
+    case EActionTypes.FETCH_VENDOR_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
     case EActionTypes.RESET_STORE:
       return initialVendorsState;

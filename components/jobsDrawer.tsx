@@ -46,6 +46,7 @@ import {
   DatePicker,
 } from '@material-ui/pickers';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -264,6 +265,7 @@ interface IProps {}
 
 const JobsDrawer: React.FC<IProps> = (props) => {
   const classes = useStyles();
+  const router = useRouter();
   const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('xs'));
   const { total, netProceed, fee } = useSelector((state: AppState) =>
     getInvoice(state)
@@ -276,8 +278,10 @@ const JobsDrawer: React.FC<IProps> = (props) => {
   );
   const isVendor = !!content?.customer;
   const dispatch = useDispatch();
-  const closeDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
+  const closeDrawer = (event: any) => {
     dispatch(toggleDrawer(false));
+    const url = `/dashboard`;
+    router.push(url, undefined, { shallow: true });
   };
   const configData = {
     reference: content?.id,
@@ -337,8 +341,6 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     setSelectedDate(date);
     const data = await updateJobDate({ date: moment(date).format() }, id);
   };
-
-  console.log(content?.invoice, '>>>>>');
 
   return (
     <Drawer

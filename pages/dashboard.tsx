@@ -3,10 +3,14 @@ import VendorLayout from '../components/VendorLayout';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { AppState } from '../lib/initialState';
-import { handleAuthModal } from '../redux/actions/common';
+import { handleAuthModal, toggleDrawer } from '../redux/actions/common';
 import { makeStyles, Theme, createStyles, Grid } from '@material-ui/core';
 import JobSearch from '../components/JobSearch';
-import { fetchUserJobs, fetchVendorJobs } from '../redux/actions/jobs';
+import {
+  fetchUserJobs,
+  fetchVendorJobs,
+  setDrawerJob,
+} from '../redux/actions/jobs';
 import JobsRow from '../components/JobsRow';
 import { getUserJobs } from '../redux/selectors/jobs';
 import JobsDrawer from '../components/jobsDrawer';
@@ -17,6 +21,7 @@ import RequestCard from '../components/RequestCard';
 import PaymentCard from '../components/PaymentCard';
 import { IJob } from '../interfaces';
 import noResult from '../assets/no-result.svg';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,6 +89,7 @@ interface Props {}
 
 export default function Jobs({}: Props): ReactElement {
   const classes = useStyles();
+  const router = useRouter();
   const { auth, id } = useSelector((state: AppState) => state.auth);
   const open = useSelector((state: AppState) => state.common.openAuthModal);
   const { allOrders, allJobs } = useSelector((state: AppState) =>
@@ -135,6 +141,18 @@ export default function Jobs({}: Props): ReactElement {
       );
     }
   }
+
+  useEffect(() => {
+    if (router.query.tab) {
+      const job = [...allJobs, ...allOrders].find(
+        (job) => job.id === router.query.tab
+      );
+      if (job) {
+        dispatch(toggleDrawer(true));
+        dispatch(setDrawerJob(job.id, !!job?.customer?.fullName));
+      }
+    }
+  }, []);
 
   const handleTextChange = (e: any, value?: any, name?: string) => {
     handleChange(e);

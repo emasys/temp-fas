@@ -6,10 +6,6 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
-import Router, { useRouter } from 'next/router';
-import Furniture from '../assets/furniture.svg';
-import { formatMoney } from '../util';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import UserInfoForm from './UserInfoForm';

@@ -14,6 +14,7 @@ import { formatMoney } from '../util';
 import { useDispatch } from 'react-redux';
 import { toggleDrawer } from '../redux/actions/common';
 import { setDrawerJob } from '../redux/actions/jobs';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -149,9 +150,12 @@ const JobsRow: React.FC<IJobsRowProps> = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const router = useRouter();
   const handleDrawer = () => {
     dispatch(toggleDrawer(true));
     dispatch(setDrawerJob(id, vendor));
+    const url = `/dashboard?tab=${id}`;
+    router.push(url, undefined, { shallow: true });
   };
 
   const isPaid = stage === 'Payment completed';

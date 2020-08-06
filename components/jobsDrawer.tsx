@@ -338,6 +338,8 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     const data = await updateJobDate({ date: moment(date).format() }, id);
   };
 
+  console.log(content?.invoice, '>>>>>');
+
   return (
     <Drawer
       anchor='right'
@@ -387,7 +389,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 </>
               )}
             </Typography>
-            {!!total?.value && (
+            {!!total?.value && content?.invoice && (
               <Grid item xs={12}>
                 {isVendor ? (
                   <Button

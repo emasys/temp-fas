@@ -31,6 +31,7 @@ import Review from '../../components/Review';
 import { getVendorStatus } from '../../redux/selectors/vendors';
 import { fetchUserJobs } from '../../redux/actions/jobs';
 import { getUserJobs } from '../../redux/selectors/jobs';
+import { getOneLocation } from '../../redux/selectors/locations';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -156,6 +157,8 @@ const Vendor: React.FC<Props> = () => {
   const auth = useSelector((state: AppState) => state.auth);
   const vendorObj = useSelector((state: AppState) => state.vendor.activeVendor);
   const { isBooked } = useSelector((state: AppState) => getUserJobs(state));
+  const locationData = useSelector((state: AppState) => getOneLocation(state));
+  console.log(locationData, '=====');
   const ownVendor = useSelector((state: AppState) =>
     getVendorStatus(state)
   );
@@ -214,8 +217,8 @@ const Vendor: React.FC<Props> = () => {
                 <img src={star} className={classes.icon} alt='star' /> no review
               </Typography>
               <Typography variant='body2' className={classes.reviewText}>
-                <img src={location} className={classes.icon} alt='star' />
-                Nil
+                <img src={location} className={classes.icon} alt='location' />
+                {(`${locationData?.state?.label}, ${locationData?.area?.label}`) || 'Nil'}
               </Typography>
             </div>
           </Grid>

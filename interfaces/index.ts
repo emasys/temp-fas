@@ -1,4 +1,5 @@
 import { IAuth } from '../redux/reducers/auth';
+import { StringLocale } from 'yup';
 
 export interface IService {
   id: string;
@@ -22,6 +23,19 @@ export interface IReview {
       fullName: string;
     };
   };
+}
+
+export interface IPayment {
+  id: string;
+  jobId: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  job: {
+    cost: number;
+    id: string;
+    invoice: any
+  }
 }
 export interface IVendor {
   id: string;

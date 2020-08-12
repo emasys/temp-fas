@@ -79,3 +79,18 @@ export const fetchVendorReviews = (
     dispatch(handleAuthError(error));
   }
 };
+
+export const fetchVendorPayments = (vendorId: string) => async (
+  dispatch: Dispatch<any>
+) => {
+  const url = `vendors/${vendorId}/payments`
+  dispatch(setGlobalLoading(true))
+  try {
+    const { data } = await instance.get(url)
+    dispatch(setValue(EActionTypes.FETCH_VENDOR_PAYMENTS, data))
+  } catch (error) {
+    dispatch(handleAuthError(error))
+  } finally {
+    dispatch(setGlobalLoading(false))
+  }
+};

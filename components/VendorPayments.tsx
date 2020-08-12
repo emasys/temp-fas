@@ -50,7 +50,7 @@ export default function VendorPayments(): ReactElement {
         Payments
       </Typography>
       <div>
-        {payments.map((payment) => (
+        {payments?.map((payment) => (
           <PaymentRow payment={payment} />
         ))}
       </div>

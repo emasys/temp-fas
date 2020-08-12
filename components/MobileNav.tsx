@@ -168,7 +168,7 @@ const MobileNav: React.FC<Props> = (props) => {
                 <WorkRounded />
               </ListItemIcon>
               <Typography variant='body2' className={classes.link}>
-                Vendor profile
+                Vendor
               </Typography>
             </ListItem>
           )}

@@ -176,7 +176,7 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
           {ownVendor?.id && (
             <ListItem button onClick={handleVendorPage}>
               <Typography variant='body2' className={classes.menuItem}>
-                Vendor profile
+                Vendor
               </Typography>
             </ListItem>
           )}

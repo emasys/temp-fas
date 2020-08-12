@@ -98,13 +98,6 @@ const SearchComp: React.FC<Props> = (props) => {
     handleSubmit();
   };
 
-  console.log(
-    locations.find((loc) => loc.value === values?.state?.value)?.areas[0] || {
-      value: '',
-    },
-   
-  );
-
   return (
     <Grid item xs={12} sm={12} lg={10} className={classes.root}>
       <SearchFields

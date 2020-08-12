@@ -17,6 +17,7 @@ import { Router } from 'next/router';
 import { fetchUser } from '../redux/actions/auth';
 import Meta from './Meta/Meta';
 import logo from '../assets/logo.svg';
+// import logo from '../assets/fullLogo.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,11 +82,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     logo: {
       height: '1.5rem',
-      width: '2rem'
+      width: '2rem',
+      marginBottom: 4
     },
     logoText: {
       color: '#fff',
-      fontWeight: 400
+      fontWeight: 400,
+      fontFamily: 'Roboto',
+      fontSize: '1rem'
+    },
+    title: {
+      fontWeight: 300,
+      opacity: .6
     }
   })
 );
@@ -134,7 +142,7 @@ const Navbar: React.FC<Props> = (props) => {
         <Grid item sm={3} className={classes.logoWrapper}>
           <img src={logo} alt="logo" className={classes.logo} />
           <Typography variant='body2' className={classes.logoText}>
-            Find a service
+            Service <span className={classes.title}>Finder</span>
           </Typography>
         </Grid>
         {auth && (

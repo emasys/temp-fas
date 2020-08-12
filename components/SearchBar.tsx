@@ -145,8 +145,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
   };
   const goBack = (e: any) => {
     e.preventDefault();
-    if (!path) return Router.back();
-    Router.push(path);
+    Router.back();
   };
   const handleCreateVendor = () => {
     dispatch(triggerBAV(true));
@@ -174,7 +173,7 @@ const SearchBar: React.FC<Props> = ({ prevPageTitle, path }) => {
           <ArrowBackIosRounded className={classes.back} />
           <Typography variant='body1' className={classes.title}>
             {prevPageTitle}
-            <img src={logo} alt='logo' className={classes.logo} />
+            {/* <img src={logo} alt='logo' className={classes.logo} /> */}
           </Typography>
         </Grid>
         {auth ? (

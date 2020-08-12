@@ -7,19 +7,10 @@ import {
   makeStyles,
   Theme,
   createStyles,
-  Grid,
-  Typography,
-  Box,
   Tabs,
   Tab,
 } from '@material-ui/core';
-import JobSearch from '../components/JobSearch';
-import { fetchUserJobs, fetchVendorJobs } from '../redux/actions/jobs';
-import JobsRow from '../components/JobsRow';
-import { getUserJobs } from '../redux/selectors/jobs';
-import JobsDrawer from '../components/jobsDrawer';
-import { getVendorStatus } from '../redux/selectors/vendors';
-import { getInvoice } from '../redux/selectors/common';
+import { fetchUserJobs } from '../redux/actions/jobs';
 import {
   PersonRounded,
   AccountBalanceRounded,
@@ -28,6 +19,7 @@ import {
 } from '@material-ui/icons';
 import UserInfo from '../components/UserInfo';
 import BankDetails from '../components/BankDetails';
+import VendorPayments from "../components/VendorPayments";
 import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -215,7 +207,7 @@ export default function Profile({}: Props): ReactElement {
               className={classes.tabInner}
             />
             <Tab
-              label='Payment'
+              label='Payments'
               {...a11yProps(2)}
               classes={{
                 wrapper: classes.tabInner,
@@ -242,7 +234,7 @@ export default function Profile({}: Props): ReactElement {
             <BankDetails />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            payment
+            <VendorPayments />
           </TabPanel>
           <TabPanel value={value} index={3}>
             settings

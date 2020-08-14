@@ -5,6 +5,7 @@ import { getVendorStatus } from "../redux/selectors/vendors";
 import { fetchVendorPayments } from "../redux/actions/vendors";
 import PaymentRow from "./PaymentRow";
 import { makeStyles, Theme, Typography, Grid } from "@material-ui/core";
+import noResult from "../assets/no-result.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -30,6 +31,11 @@ const useStyles = makeStyles((theme: Theme) => ({
       display: "none",
     },
   },
+  noResultContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
 export default function VendorPayments(): ReactElement {
@@ -50,9 +56,13 @@ export default function VendorPayments(): ReactElement {
         Payments
       </Typography>
       <div>
-        {payments?.map((payment) => (
-          <PaymentRow payment={payment} />
-        ))}
+        {!payments || payments?.length === 0 ? (
+          <div className={classes.noResultContainer}>
+            <img src={noResult} alt="no result" />
+          </div>
+        ) : (
+          payments?.map((payment) => <PaymentRow payment={payment} />)
+        )}
       </div>
     </div>
   );

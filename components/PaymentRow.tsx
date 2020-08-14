@@ -160,7 +160,7 @@ const PaymentRow: React.FC<IPaymentRowProps> = ({
         <Link href={`/dashboard?tab=${jobId}`}>
           <a className={classes.jobLink}>
             <Typography variant="body2" className={classes.jobIdText}>
-              {formatJobId(jobId)}
+              View job
             </Typography>
           </a>
         </Link>

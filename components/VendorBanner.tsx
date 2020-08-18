@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
-  })
+  }),
 );
 
 interface Props {
@@ -131,41 +131,24 @@ interface Props {
 }
 const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
   const classes = useStyles();
-  const loading = useSelector((state: AppState) => state.common.loading);
   return (
-    <>
-      {loading ? (
-        <Skeleton
-          animation='wave'
-          variant='rect'
-          width={'100%'}
-          height={'14rem'}
-        />
-      ) : (
-        <Grid container className={classes.container}>
-          <img
-            src={bannerIcon}
-            alt='banner icon'
-            className={classes.bannerIcon}
-          />
-          <Grid item xs={12} className={classes.rateWrapper}>
-            <Typography variant='body2' className={classes.rate}>
-              {formatMoney(rate)} per job
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={7} md={6} className={classes.contactWrapper}>
-            <Typography variant='body1' className={classes.phone}>
-              <img src={phoneIcon} alt='phone' className={classes.phoneIcon} />
-              <a href={`tel:${phone}`}>{phone || 'Not available'}</a>
-            </Typography>
-            <Typography variant='body1' className={classes.chat}>
-              <img src={chat} alt='chat' className={classes.chatIcon} /> Chat
-              now
-            </Typography>
-          </Grid>
-        </Grid>
-      )}
-    </>
+    <Grid container className={classes.container}>
+      <img src={bannerIcon} alt="banner icon" className={classes.bannerIcon} />
+      <Grid item xs={12} className={classes.rateWrapper}>
+        <Typography variant="body2" className={classes.rate}>
+          {formatMoney(rate)} per job
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={7} md={6} className={classes.contactWrapper}>
+        <Typography variant="body1" className={classes.phone}>
+          <img src={phoneIcon} alt="phone" className={classes.phoneIcon} />
+          <a href={`tel:${phone}`}>{phone || 'Not available'}</a>
+        </Typography>
+        <Typography variant="body1" className={classes.chat}>
+          <img src={chat} alt="chat" className={classes.chatIcon} /> Chat now
+        </Typography>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -88,7 +88,7 @@ export const createVendor = async (serviceId: string, data: ICreateVendor) => {
 
 export const updateVendorAPI = async (
   vendorId: string,
-  data: ICreateVendor
+  data: ICreateVendor,
 ) => {
   try {
     const url = `vendors/${vendorId}`;
@@ -123,7 +123,7 @@ interface ICreateInvoice {
 export const createInvoice = async (
   vendorId: string,
   jobId: string,
-  data: ICreateInvoice
+  data: ICreateInvoice,
 ) => {
   try {
     const url = `vendors/${vendorId}/jobs/${jobId}/invoice`;
@@ -150,7 +150,7 @@ interface IVendorStatus {
 export const updateVendorStatus = async (
   data: IVendorStatus,
   jobId: string,
-  vendorId: string
+  vendorId: string,
 ) => {
   try {
     const url = `vendors/${vendorId}/jobs/${jobId}/status`;
@@ -176,7 +176,7 @@ export const postJobRating = async (
     rating: number;
     comment?: string;
   },
-  jobId: string
+  jobId: string,
 ) => {
   try {
     const res = await instance.post(`jobs/${jobId}/review`, data);
@@ -215,7 +215,7 @@ export const getLocation = async (id: string) => {
 
 export const cloudinaryUpload = async (file) => {
   try {
-    const url = `http://127.0.0.1:4000/user/upload`;
+    const url = `user/upload`;
     const res = await instance.post(url, file);
     return res.data;
   } catch (error) {

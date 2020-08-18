@@ -213,10 +213,36 @@ export const getLocation = async (id: string) => {
   }
 };
 
-export const cloudinaryUpload = async (file) => {
+export const profileImagUpload = async (file) => {
   try {
     const url = `user/upload`;
     const res = await instance.post(url, file);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const vendorLogoUpload = async (
+  file: { logoUrl: string },
+  id: string,
+) => {
+  try {
+    const url = `vendor/${id}/upload-logo`;
+    const res = await instance.put(url, file);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const vendorHeaderUpload = async (
+  file: { headerUrl: string },
+  id: string,
+) => {
+  try {
+    const url = `vendor/${id}/upload-header`;
+    const res = await instance.put(url, file);
     return res.data;
   } catch (error) {
     return false;

@@ -34,12 +34,16 @@ export interface IPayment {
   job: {
     cost: number;
     id: string;
-    invoice: any
-  }
+    invoice: any;
+  };
 }
 export interface IVendor {
   id: string;
   name: string;
+  logoUrl?: string;
+  headerImageUrl?: string;
+  logoId?: string;
+  headerImageId?: string;
   serviceId: string;
   service?: IService;
   userId: string;

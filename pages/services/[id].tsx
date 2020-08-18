@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
     vendor: {},
     noResult: {
       [theme.breakpoints.down('xs')]: {
-        width: '100%'
+        width: '100%',
       },
-    }
-  })
+    },
+  }),
 );
 
 interface Props {
@@ -49,7 +49,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const allVendors = useSelector(
-    (state: AppState) => state.vendor.searchResult
+    (state: AppState) => state.vendor.searchResult,
   );
   return (
     <VendorLayout title={'Vendors'} path={`/`}>
@@ -58,7 +58,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
           <MenuBar />
         </Grid>
         <Grid item xs={12}>
-          <Divider title='Vendors nearest to you' />
+          <Divider title="Vendors nearest to you" />
         </Grid>
         {allVendors && (
           <Grid container spacing={5} className={classes.vendorWrapper}>
@@ -70,7 +70,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
               >
                 <img
                   src={noResult}
-                  alt='no result'
+                  alt="no result"
                   className={classes.noResult}
                 />
               </Grid>
@@ -88,6 +88,7 @@ const VendorServices: React.FC<Props> = ({ vendors }) => {
                     name={vendor.name}
                     rate={vendor.rate}
                     id={vendor.id}
+                    logo={vendor.logoUrl}
                   />
                 </Grid>
               ))

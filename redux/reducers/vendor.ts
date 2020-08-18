@@ -24,7 +24,7 @@ interface IFetchReviews {
 
 interface IFetchPayments {
   type: EActionTypes.FETCH_VENDOR_PAYMENTS;
-  payload: IPayment[]
+  payload: IPayment[];
 }
 
 export type TVendorActions =
@@ -64,7 +64,7 @@ export const initialVendorsState = {
 
 export default function vendor(
   state: IVendors = initialVendorsState,
-  action: TVendorActions
+  action: TVendorActions,
 ): IVendors {
   switch (action.type) {
     case EActionTypes.SAVE_VENDORS:
@@ -78,7 +78,7 @@ export default function vendor(
         activeVendor: action.payload,
         allVendors: [
           ...state.allVendors.filter(
-            (vendor) => vendor.id !== action.payload.id
+            (vendor) => vendor.id !== action.payload.id,
           ),
           action.payload,
         ],
@@ -97,7 +97,7 @@ export default function vendor(
       return {
         ...state,
         payments: action.payload,
-      }
+      };
     case EActionTypes.RESET_STORE:
       return initialVendorsState;
     default:

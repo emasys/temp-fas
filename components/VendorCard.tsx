@@ -73,15 +73,16 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#181818',
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 interface Props {
   name: string;
   rate: number;
   id: string;
+  logo: string;
 }
-const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
+const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
   const classes = useStyles();
   const router = useRouter();
   const loading = useSelector((state: AppState) => state.common.loading);
@@ -93,35 +94,50 @@ const VendorCard: React.FC<Props> = ({ name, rate, id }) => {
   };
   return (
     <Grid container className={classes.container} onClick={handleClick}>
-      <Grid item xs={12} className={classes.imageWrapper}>
+      <Grid
+        item
+        xs={12}
+        className={classes.imageWrapper}
+        style={{
+          backgroundImage: `url(${logo})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+        }}
+      >
         {loading ? (
           <Skeleton
-            animation='wave'
-            variant='rect'
+            animation="wave"
+            variant="rect"
             width={'100%'}
             height={'100%'}
           />
         ) : (
           <>
-            <Typography variant='caption' className={classes.vendors}>
+            <Typography variant="caption" className={classes.vendors}>
               new
             </Typography>
-            <img src={bannerIcon} alt='service-img' className={classes.image} />
+            {!logo && (
+              <img
+                src={bannerIcon}
+                alt="service-img"
+                className={classes.image}
+              />
+            )}
           </>
         )}
       </Grid>
       <Grid item xs={12} className={classes.textWrapper}>
         {loading ? (
           <>
-            <Skeleton animation='wave' />
-            <Skeleton animation='wave' width={'30%'} />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" width={'30%'} />
           </>
         ) : (
           <>
-            <Typography variant='body2' className={classes.title}>
+            <Typography variant="body2" className={classes.title}>
               {name}
             </Typography>
-            <Typography variant='caption' className={classes.captions}>
+            <Typography variant="caption" className={classes.captions}>
               {formatMoney(rate)}
             </Typography>
           </>

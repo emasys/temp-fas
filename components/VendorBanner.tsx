@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       display: 'flex',
       background: 'linear-gradient(93.74deg, #43CEA2 -0.25%, #3E72A3 97.83%)',
-      // backgroundRepeat: 'no-repeat',
-      // backgroundPosition: 'center center',
-      // backgroundSize: 'cover',
       height: '14.4375rem',
       marginTop: '1.75rem',
       [theme.breakpoints.down('sm')]: {
@@ -131,9 +128,24 @@ interface Props {
 }
 const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
   const classes = useStyles();
+  const vendorObj = useSelector((state: AppState) => state.vendor.activeVendor);
   return (
-    <Grid container className={classes.container}>
-      <img src={bannerIcon} alt="banner icon" className={classes.bannerIcon} />
+    <Grid
+      container
+      className={classes.container}
+      style={{
+        backgroundImage: `url(${vendorObj.headerImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+      }}
+    >
+      {!vendorObj.headerImageUrl && (
+        <img
+          src={bannerIcon}
+          alt="banner icon"
+          className={classes.bannerIcon}
+        />
+      )}
       <Grid item xs={12} className={classes.rateWrapper}>
         <Typography variant="body2" className={classes.rate}>
           {formatMoney(rate)} per job

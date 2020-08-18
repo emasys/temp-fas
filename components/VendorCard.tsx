@@ -99,7 +99,7 @@ const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
         xs={12}
         className={classes.imageWrapper}
         style={{
-          backgroundImage: `url(${logo})`,
+          backgroundImage: `url(${loading ? '' : logo})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
         }}

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
     },
     captions: {
-      color: '#717171',
+      color: '#272727',
       fontSize: '0.725rem',
       lineHeight: '0.6rem',
       fontFamily: 'Lato',
@@ -138,7 +138,7 @@ const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
               {name}
             </Typography>
             <Typography variant="caption" className={classes.captions}>
-              {formatMoney(rate)}
+              Average rate of {formatMoney(rate)} per job
             </Typography>
           </>
         )}

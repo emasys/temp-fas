@@ -46,7 +46,7 @@ const PasswordField: React.FC<Props> = (props) => {
       value={value}
       className={classes.inputBox}
       name='password'
-      id='filled-error-helper-text'
+      id='password-error-helper-text'
       label={label}
       helperText={touched.password && errors.password}
       InputProps={{

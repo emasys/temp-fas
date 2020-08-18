@@ -190,7 +190,7 @@ const SignUpForm: React.FC<Props> = () => {
           value={values.email}
           className={classes.inputBox}
           name='email'
-          id='filled-error-helper-text'
+          id='email-error-helper-text'
           label='Email'
           helperText={errors.email}
         />

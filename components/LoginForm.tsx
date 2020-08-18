@@ -165,7 +165,7 @@ const LoginForm: React.FC<Props> = () => {
           onBlur={handleBlur}
           className={classes.inputBox}
           name='email'
-          id='filled-error-helper-text'
+          id='email-error-helper-text'
           label='Email'
           helperText={touched.email && errors.email}
         />

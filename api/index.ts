@@ -1,7 +1,8 @@
 import { instance } from '../config/axiosConfig';
 import { ILogin } from '../redux/actions/auth';
-import { AxiosError } from 'axios';
+import Axios, { AxiosError } from 'axios';
 import { IBank } from '../redux/reducers/user';
+import config from '../config';
 
 export const fetchServices = async () => {
   try {
@@ -206,6 +207,16 @@ export const updateBankApi = async (data: IBank) => {
 export const getLocation = async (id: string) => {
   try {
     const res = await instance.get(`locations/${id}`);
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const cloudinaryUpload = async (file) => {
+  try {
+    const url = `http://127.0.0.1:4000/user/upload`;
+    const res = await instance.post(url, file);
     return res.data;
   } catch (error) {
     return false;

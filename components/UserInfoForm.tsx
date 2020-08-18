@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
     },
     inputBox: {
       margin: '.5rem 0',
@@ -176,7 +175,7 @@ const UserInfoForm: React.FC<Props> = () => {
           onBlur={handleBlur}
           className={classes.inputBox}
           name='fullName'
-          id='filled-error-helper-text'
+          id='full-name-error-helper-text'
           placeholder='Full name'
           helperText={touched.fullName && errors.fullName}
         />
@@ -192,7 +191,7 @@ const UserInfoForm: React.FC<Props> = () => {
           onBlur={handleBlur}
           className={classes.inputBox}
           name='email'
-          id='filled-error-helper-text'
+          id='email-error-helper-text'
           placeholder='Email'
           helperText={touched.email && errors.email}
         />

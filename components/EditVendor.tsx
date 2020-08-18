@@ -274,7 +274,7 @@ const EditVendor: React.FC<Props> = () => {
               onBlur={handleBlur}
               className={classes.inputBox}
               name='name'
-              id='filled-error-helper-text'
+              id='name-error-helper-text'
               placeholder='Business name'
               helperText={touched.name && errors.name}
             />
@@ -302,7 +302,7 @@ const EditVendor: React.FC<Props> = () => {
               value={values.phoneNumber}
               className={classes.inputBox}
               name='phoneNumber'
-              id='filled-error-helper-text'
+              id='phone-error-helper-text'
               placeholder='Phone number'
               InputProps={{
                 inputComponent: phoneInput,

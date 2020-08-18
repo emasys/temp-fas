@@ -216,6 +216,7 @@ const SearchBox: React.FC<Props> = (props) => {
               onClick={() => {
                 setFieldValue('search', service.name);
               }}
+              key={service.name}
               variant='contained'
               className={clsx([
                 classes.serviceBtn,

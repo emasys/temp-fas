@@ -3,7 +3,11 @@ const env: IEnv = process.env.NODE_ENV;
 
 const config = {
   development: {
-    backendURL: 'https://fas-web-api.herokuapp.com/',
+    backendURL: 'http://localhost:4000/',
+    // backendURL: 'https://fas-web-api.herokuapp.com/',
+    cloudinary: {
+      cloudName: 'fasng',
+    },
     instagram: {
       redirectUri: 'https://dc69ad3bf600.ngrok.io/auth',
       client_id: '254441985981155',
@@ -32,6 +36,9 @@ const config = {
   production: {
     backendURL: 'https://fas-web-api.herokuapp.com/',
     paystack_key: 'pk_test_816babf83855d729c4343b81ddc93988e4d9a889',
+    cloudinary: {
+      cloudName: 'fasng',
+    },
     instagram: {
       redirectUri: 'https://fas.now.sh/auth',
       client_id: '254441985981155',

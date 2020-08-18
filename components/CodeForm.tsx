@@ -226,7 +226,7 @@ const CodeForm: React.FC<Props> = () => {
           value={values.token}
           className={classes.inputBox}
           name='token'
-          id='filled-error-helper-text'
+          id='token-error-helper-text'
           label='Code'
           InputProps={{
             inputComponent: CodeInput,
@@ -244,7 +244,7 @@ const CodeForm: React.FC<Props> = () => {
           value={values.fullName}
           className={classes.inputBox}
           name='fullName'
-          id='filled-error-helper-text'
+          id='fname-error-helper-text'
           label='Full name'
           helperText={touched.fullName && errors.fullName}
         />
@@ -259,7 +259,7 @@ const CodeForm: React.FC<Props> = () => {
           value={values.email}
           className={classes.inputBox}
           name='email'
-          id='filled-error-helper-text'
+          id='email-error-helper-text'
           label='Email'
           helperText={touched.email && errors.email}
         />

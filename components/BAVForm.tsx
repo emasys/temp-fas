@@ -252,7 +252,7 @@ const BAVForm: React.FC<Props> = () => {
           onBlur={handleBlur}
           className={classes.inputBox}
           name='name'
-          id='filled-error-helper-text'
+          id='name-error-helper-text'
           label='Business name'
           helperText={touched.name && errors.name}
         />
@@ -275,7 +275,7 @@ const BAVForm: React.FC<Props> = () => {
           value={values.phoneNumber}
           className={classes.inputBox}
           name='phoneNumber'
-          id='filled-error-helper-text'
+          id='phone-error-helper-text'
           label='Phone number'
           InputProps={{
             inputComponent: phoneInput,

@@ -4,6 +4,7 @@ import App from 'next/app';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import 'react-image-crop/dist/ReactCrop.css';
 import withReduxStore from '../lib/with-redux-store';
 import '../styles/index.css';
 import theme from '../styles/primary';

@@ -14,6 +14,7 @@ export interface IUser {
   bankDetails?: IBank;
   vendorProfile?: IVendor;
   fullName: string;
+  profileImage?: string;
   email: string;
   id: string;
 }

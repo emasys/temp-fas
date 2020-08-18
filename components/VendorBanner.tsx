@@ -134,7 +134,9 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
       container
       className={classes.container}
       style={{
-        backgroundImage: `url(${vendorObj.headerImageUrl})`,
+        backgroundImage: vendorObj.headerImageUrl
+          ? `url(${vendorObj.headerImageUrl})`
+          : `linear-gradient(93.74deg, #43CEA2 -0.25%, #3E72A3 97.83%)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
       }}

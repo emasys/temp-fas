@@ -250,9 +250,10 @@ const Vendor: React.FC = () => {
                 </Typography>
                 <Typography variant="body2" className={classes.reviewText}>
                   <img src={location} className={classes.icon} alt="location" />
-                  {`${locationData?.state?.label}, ${
-                    locationData?.area?.label || '-'
-                  }` || 'Nil'}
+                  {locationData?.state?.label}
+                  {locationData?.area?.label
+                    ? `, ${locationData?.area?.label}`
+                    : ''}
                 </Typography>
               </div>
             </Grid>

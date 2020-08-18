@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Avatar,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
@@ -87,14 +88,20 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       minHeight: '2rem',
     },
-  })
+    avatar: {
+      width: '4rem',
+      height: '4rem',
+    },
+  }),
 );
 
-interface Props {}
-const MobileNav: React.FC<Props> = (props) => {
+const MobileNav: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { auth, id, fullName } = useSelector((state: AppState) => state.auth);
+  const { auth } = useSelector((state: AppState) => state.auth);
+  const { fullName, profileImage } = useSelector(
+    (state: AppState) => state.user,
+  );
   const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
   const classes = useStyles();
 
@@ -138,26 +145,35 @@ const MobileNav: React.FC<Props> = (props) => {
 
   return (
     <Fragment>
-      <Grid container justify='space-between' className={classes.root}>
+      <Grid container justify="space-between" className={classes.root}>
         <Grid item xs={12} className={classes.header}>
           <CloseRounded onClick={closeDrawer} />
         </Grid>
         {auth && (
           <Grid item xs={12} className={classes.titleWrapper}>
             <div className={classes.iconWrapper}>
-              <AccountCircleRounded className={classes.profileIcon} />
+              {profileImage ? (
+                <Avatar
+                  alt={fullName}
+                  src={profileImage}
+                  className={classes.avatar}
+                  classes={{ img: classes.avatar }}
+                />
+              ) : (
+                <AccountCircleRounded className={classes.profileIcon} />
+              )}
             </div>
-            <Typography variant='body2'>{fullName}</Typography>
+            <Typography variant="body2">{fullName}</Typography>
           </Grid>
         )}
-        <List aria-label='profile home' style={{ width: '100%' }}>
+        <List aria-label="profile home" style={{ width: '100%' }}>
           <Divider style={{ marginBottom: '.5rem' }} />
-          <Link href='/'>
+          <Link href="/">
             <ListItem button onClick={closeDrawer}>
               <ListItemIcon className={classes.link}>
                 <HomeRounded />
               </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 Home
               </Typography>
             </ListItem>
@@ -167,7 +183,7 @@ const MobileNav: React.FC<Props> = (props) => {
               <ListItemIcon className={classes.link}>
                 <WorkRounded />
               </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 Vendor
               </Typography>
             </ListItem>
@@ -176,7 +192,7 @@ const MobileNav: React.FC<Props> = (props) => {
             <ListItemIcon className={classes.link}>
               <SupervisorAccountRounded />
             </ListItemIcon>
-            <Typography variant='body2' className={classes.link}>
+            <Typography variant="body2" className={classes.link}>
               Dashboard
             </Typography>
           </ListItem>
@@ -185,24 +201,24 @@ const MobileNav: React.FC<Props> = (props) => {
               <ListItemIcon className={classes.link}>
                 <PersonRounded />
               </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 Profile
               </Typography>
             </ListItem>
           )}
           {!ownVendor?.id && (
             <ListItem button onClick={handleCreateVendor}>
-              <Button variant='contained' className={classes.button} fullWidth>
+              <Button variant="contained" className={classes.button} fullWidth>
                 Become a vendor
               </Button>
             </ListItem>
           )}
-          <Link href='/'>
+          <Link href="/">
             <ListItem button onClick={closeDrawer}>
               <ListItemIcon className={classes.link}>
                 <InfoRounded />
               </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 About
               </Typography>
             </ListItem>
@@ -213,7 +229,7 @@ const MobileNav: React.FC<Props> = (props) => {
               <ListItemIcon className={classes.link}>
                 <ExitToAppRounded />
               </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 Sign out
               </Typography>
             </ListItem>
@@ -222,7 +238,7 @@ const MobileNav: React.FC<Props> = (props) => {
               <ListItemIcon className={classes.link}>
                 <ExitToAppRounded />
               </ListItemIcon>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 Sign in
               </Typography>
             </ListItem>

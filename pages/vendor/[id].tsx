@@ -158,11 +158,10 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
-  })
+  }),
 );
 
-interface Props {}
-const Vendor: React.FC<Props> = () => {
+const Vendor: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const auth = useSelector((state: AppState) => state.auth);
@@ -217,16 +216,16 @@ const Vendor: React.FC<Props> = () => {
           <>
             <div style={{ marginTop: '1rem' }}>
               <Skeleton
-                animation='wave'
-                variant='rect'
+                animation="wave"
+                variant="rect"
                 width={300}
                 height={16}
               />
             </div>
             <div style={{ marginTop: '.5rem' }}>
               <Skeleton
-                animation='wave'
-                variant='rect'
+                animation="wave"
+                variant="rect"
                 width={300}
                 height={16}
               />
@@ -235,30 +234,31 @@ const Vendor: React.FC<Props> = () => {
         ) : (
           <Grid item xs={12} className={classes.nameWrapper}>
             <Grid item sm={6} xs={12}>
-              <Typography variant='body2' className={classes.name}>
+              <Typography variant="body2" className={classes.name}>
                 {vendorObj?.name}
                 <img
                   src={verified}
                   className={classes.verifyIcon}
-                  alt='verified'
+                  alt="verified"
                 />
               </Typography>
 
               <div className={classes.reviewWrapper}>
-                <Typography variant='body2' className={classes.reviewText}>
-                  <img src={star} className={classes.icon} alt='star' /> no
+                <Typography variant="body2" className={classes.reviewText}>
+                  <img src={star} className={classes.icon} alt="star" /> no
                   review
                 </Typography>
-                <Typography variant='body2' className={classes.reviewText}>
-                  <img src={location} className={classes.icon} alt='location' />
-                  {`${locationData?.state?.label}, ${locationData?.area?.label}` ||
-                    'Nil'}
+                <Typography variant="body2" className={classes.reviewText}>
+                  <img src={location} className={classes.icon} alt="location" />
+                  {`${locationData?.state?.label}, ${
+                    locationData?.area?.label || '-'
+                  }` || 'Nil'}
                 </Typography>
               </div>
             </Grid>
             {isOwnPage ? (
               <Button
-                variant='contained'
+                variant="contained"
                 className={classes.button}
                 onClick={handleEdit}
               >
@@ -266,7 +266,7 @@ const Vendor: React.FC<Props> = () => {
               </Button>
             ) : (
               <Button
-                variant='contained'
+                variant="contained"
                 onClick={handleBooking}
                 disabled={!!isBooked}
                 className={classes.button}
@@ -277,7 +277,7 @@ const Vendor: React.FC<Props> = () => {
           </Grid>
         )}
         <Grid item xs={12} className={classes.divider}>
-          <Divider title='Instagram Feed' buttonText='' />
+          <Divider title="Instagram Feed" buttonText="" />
         </Grid>
         <Grid item xs={12} className={classes.instaWrapper}>
           <InstagramWidget
@@ -286,13 +286,13 @@ const Vendor: React.FC<Props> = () => {
           />
         </Grid>
         <Grid item xs={12} className={classes.divider}>
-          <Divider title='Reviews' buttonText='' />
+          <Divider title="Reviews" buttonText="" />
         </Grid>
         <Grid item xs={12} className={classes.reviews}>
           {loading ? (
             <Skeleton
-              animation='wave'
-              variant='rect'
+              animation="wave"
+              variant="rect"
               width={'25rem'}
               height={'20rem'}
             />

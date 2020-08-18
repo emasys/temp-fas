@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       textTransform: 'capitalize',
       alignItems: 'center',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1.5rem',
+      },
       [theme.breakpoints.down('xs')]: {
         fontSize: '1rem',
       },

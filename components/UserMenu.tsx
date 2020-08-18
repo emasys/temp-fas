@@ -1,19 +1,8 @@
 import React from 'react';
-import {
-  Grid,
-  Typography,
-  Button,
-  IconButton,
-  Popover,
-  List,
-  ListItem,
-  ListItemText,
-} from '@material-ui/core';
+import { Typography, Popover, List, ListItem, Avatar } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
   AccountCircle,
-  ArrowDropDown,
-  ArrowDropUp,
   ArrowDropUpRounded,
   ArrowDropDownRounded,
 } from '@material-ui/icons';
@@ -71,20 +60,25 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#546380',
       fontSize: '0.75rem',
     },
-  })
+    avatar: {
+      width: '2rem',
+      height: '2rem',
+    },
+  }),
 );
 
 interface Props {
   dark?: boolean;
 }
 const UserMenu: React.FC<Props> = ({ dark }) => {
-  const { fullName } = useSelector((state: AppState) => state.user);
+  const { fullName, profileImage } = useSelector(
+    (state: AppState) => state.user,
+  );
   const dispatch = useDispatch();
   const classes = useStyles();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const ownVendor = useSelector((state: AppState) => getVendorStatus(state));
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -124,27 +118,36 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
   return (
     <div className={classes.container}>
       <div className={classes.iconWrapper}>
-        <AccountCircle
-          className={classes.icon}
-          style={{ color: dark ? '#5C5C5C' : '#c9c7e2' }}
-        />
+        {profileImage ? (
+          <Avatar
+            alt={fullName}
+            src={profileImage}
+            className={classes.avatar}
+            classes={{ img: classes.avatar }}
+          />
+        ) : (
+          <AccountCircle
+            className={classes.icon}
+            style={{ color: dark ? '#5C5C5C' : '#c9c7e2' }}
+          />
+        )}
       </div>
       <Typography
-        aria-describedby='menu'
-        variant='body1'
+        aria-describedby="menu"
+        variant="body1"
         className={classes.link}
         style={{ color: dark ? '#5C5C5C' : '#c9c7e2' }}
         onClick={handleClick}
       >
         {fullName || 'Hi there '}{' '}
         {open ? (
-          <ArrowDropUpRounded fontSize='large' />
+          <ArrowDropUpRounded fontSize="large" />
         ) : (
-          <ArrowDropDownRounded fontSize='large' />
+          <ArrowDropDownRounded fontSize="large" />
         )}
       </Typography>
       <Popover
-        id='menu'
+        id="menu"
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -160,38 +163,38 @@ const UserMenu: React.FC<Props> = ({ dark }) => {
           horizontal: 'right',
         }}
       >
-        <List component='nav' className={classes.linkWrapper}>
+        <List component="nav" className={classes.linkWrapper}>
           <ListItem button onClick={handleHome}>
-            <Typography variant='body2' className={classes.menuItem}>
+            <Typography variant="body2" className={classes.menuItem}>
               Home
             </Typography>
           </ListItem>
           {!ownVendor?.id && (
             <ListItem button onClick={handleBAV}>
-              <Typography variant='body2' className={classes.menuItem}>
+              <Typography variant="body2" className={classes.menuItem}>
                 Become a vendor
               </Typography>
             </ListItem>
           )}
           {ownVendor?.id && (
             <ListItem button onClick={handleVendorPage}>
-              <Typography variant='body2' className={classes.menuItem}>
+              <Typography variant="body2" className={classes.menuItem}>
                 Vendor
               </Typography>
             </ListItem>
           )}
           <ListItem button onClick={handleDashboard}>
-            <Typography variant='body2' className={classes.menuItem}>
+            <Typography variant="body2" className={classes.menuItem}>
               Dashboard
             </Typography>
           </ListItem>
           <ListItem button onClick={handleProfile}>
-            <Typography variant='body2' className={classes.menuItem}>
+            <Typography variant="body2" className={classes.menuItem}>
               Profile
             </Typography>
           </ListItem>
           <ListItem button onClick={handleLogOut}>
-            <Typography variant='body2' className={classes.menuItem}>
+            <Typography variant="body2" className={classes.menuItem}>
               Sign out
             </Typography>
           </ListItem>

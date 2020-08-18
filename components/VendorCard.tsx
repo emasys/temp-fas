@@ -130,7 +130,7 @@ const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
         {loading ? (
           <>
             <Skeleton animation="wave" />
-            <Skeleton animation="wave" width={'30%'} />
+            <Skeleton animation="wave" width={'80%'} />
           </>
         ) : (
           <>

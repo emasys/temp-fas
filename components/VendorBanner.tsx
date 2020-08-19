@@ -5,6 +5,7 @@ import {
   createStyles,
   makeStyles,
   Theme,
+  Button,
 } from '@material-ui/core';
 import vendorImg from '../assets/vendorBanner.svg';
 import { formatMoney } from '../util';
@@ -90,15 +91,16 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       borderRadius: '1.75rem',
       background: '#43CEA2',
-      padding: '.5rem 1.5rem',
       fontWeight: 'normal',
       fontFamily: 'Lato',
       color: '#fff',
+      minHeight: '1rem',
       fontSize: '0.9375rem',
       marginLeft: '0.75rem',
       [theme.breakpoints.down('xs')]: {
         fontSize: '0.7rem',
-        padding: '.3rem 1rem',
+        padding: '.3rem 0',
+        minWidth: '5rem',
       },
     },
     chatIcon: {
@@ -158,9 +160,15 @@ const VendorBanner: React.FC<Props> = ({ rate, phone }) => {
           <img src={phoneIcon} alt="phone" className={classes.phoneIcon} />
           <a href={`tel:${phone}`}>{phone || 'Not available'}</a>
         </Typography>
-        <Typography variant="body1" className={classes.chat}>
+        <Button
+          variant="text"
+          className={classes.chat}
+          href={`http://api.whatsapp.com/send?phone=+234${phone}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src={chat} alt="chat" className={classes.chatIcon} /> Chat now
-        </Typography>
+        </Button>
       </Grid>
     </Grid>
   );

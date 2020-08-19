@@ -178,6 +178,12 @@ const useStyles = makeStyles((theme: Theme) =>
         minWidth: '10rem',
       },
     },
+    closeButton: {
+      background: '#546380',
+      color: '#fff',
+      margin: '1rem',
+      padding: '.2rem',
+    },
   }),
 );
 
@@ -322,7 +328,7 @@ const EditVendor: React.FC = () => {
         }}
       >
         <div className={classes.header}>
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={handleClose} className={classes.closeButton}>
             <CloseRounded />
           </IconButton>
         </div>

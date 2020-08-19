@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '16px 10px 16px 24px',
     },
     closeButton: {
-      color: theme.palette.grey[500],
+      background: '#fff',
+      padding: '.2rem',
     },
     actions: {
       padding: '16px 24px',
@@ -160,6 +161,7 @@ const UploadModal: React.FC<Props> = (props) => {
     const croppedImage = generateImage(previewCanvasRef.current, completedCrop);
     const data = await uploadAPI(croppedImage);
     setLoading(false);
+    setCrop(cropConfig);
     handleClose();
     return data;
   };

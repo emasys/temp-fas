@@ -19,6 +19,7 @@ import { AppState } from '../lib/initialState';
 import UserInfoForm from './UserInfoForm';
 import { profileImagUpload } from '../api';
 import { updateUser } from '../redux/actions/auth';
+import UploadModal from './UploadModal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,95 +85,17 @@ const cropConfig = {
   aspect: 1 / 1,
 };
 
-const pixelRatio = 4;
-
-function getResizedCanvas(canvas, newWidth, newHeight) {
-  const tmpCanvas = document.createElement('canvas');
-  tmpCanvas.width = newWidth;
-  tmpCanvas.height = newHeight;
-
-  const ctx = tmpCanvas.getContext('2d');
-  ctx.drawImage(
-    canvas,
-    0,
-    0,
-    canvas.width,
-    canvas.height,
-    0,
-    0,
-    newWidth,
-    newHeight,
-  );
-
-  return tmpCanvas;
-}
-
-function generateImage(previewCanvas, crop) {
-  if (!crop || !previewCanvas) {
-    return;
-  }
-  const canvas = getResizedCanvas(previewCanvas, crop.width, crop.height);
-  return canvas.toDataURL();
-}
-
 const UserInfo: React.FC = () => {
   const classes = useStyles();
   const user = useSelector((state: AppState) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const [upImg, setUpImg] = useState<any>();
-  const [loading, setLoading] = useState(false);
-  const imgRef = useRef(null);
-  const previewCanvasRef = useRef(null);
-  const [crop, setCrop] = useState<any>(cropConfig);
-  const [completedCrop, setCompletedCrop] = useState(null);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onLoad = useCallback((img) => {
-    imgRef.current = img;
-  }, []);
-
-  useEffect(() => {
-    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
-      return;
-    }
-    const image = imgRef.current;
-    const canvas = previewCanvasRef.current;
-    const crop = completedCrop;
-
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = crop.width * pixelRatio;
-    canvas.height = crop.height * pixelRatio;
-
-    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    ctx.imageSmoothingEnabled = false;
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height,
-    );
-  }, [completedCrop]);
-
-  const handleUpload = async () => {
-    setLoading(true);
-    const croppedImage = generateImage(previewCanvasRef.current, completedCrop);
-    const data = await profileImagUpload({ profileImage: croppedImage });
+  const handleUpload = async (file: string) => {
+    const data = await profileImagUpload({ profileImage: file });
     if (data) dispatch(updateUser(data));
-    setLoading(false);
-    handleClose();
+    return data;
   };
 
   const onSelectFile = (e) => {
@@ -195,49 +118,13 @@ const UserInfo: React.FC = () => {
             backgroundPosition: 'center center',
           }}
         >
-          <div>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                <Typography variant="body2">Crop and save image</Typography>
-              </DialogTitle>
-              <DialogContent>
-                <ReactCrop
-                  src={upImg}
-                  crop={crop}
-                  onImageLoaded={onLoad}
-                  onChange={(c) => setCrop(c)}
-                  onComplete={(c) => setCompletedCrop(c)}
-                />
-                <div style={{ display: 'none' }}>
-                  <canvas
-                    ref={previewCanvasRef}
-                    style={{
-                      width: completedCrop?.width ?? 0,
-                      height: completedCrop?.height ?? 0,
-                    }}
-                  />
-                </div>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  variant="contained"
-                  className={classes.cropBtn}
-                  fullWidth
-                  disabled={
-                    !completedCrop?.width || !completedCrop?.height || loading
-                  }
-                  onClick={handleUpload}
-                >
-                  {loading ? 'Uploading...' : 'Save'}
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
+          <UploadModal
+            open={open}
+            setStatus={setOpen}
+            cropConfig={cropConfig}
+            upImg={upImg}
+            uploadAPI={handleUpload}
+          />
           <input
             accept="image/*"
             value=""

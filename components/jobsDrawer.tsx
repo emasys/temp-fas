@@ -11,8 +11,6 @@ import {
   Button,
   IconButton,
   useMediaQuery,
-  Paper,
-  ThemeProvider,
   capitalize,
 } from '@material-ui/core';
 import moment from 'moment';
@@ -22,29 +20,13 @@ import { toggleDrawer, updateInvoiceValue } from '../redux/actions/common';
 import { formatMoney } from '../util';
 import Collapsible from './Collapsible';
 import Review from './Review';
-import phoneIcon from '../assets/phone.svg';
-import chat from '../assets/chat.svg';
-import {
-  CloseRounded,
-  Phone,
-  PhoneRounded,
-  WhatsApp,
-} from '@material-ui/icons';
+import { CloseRounded, PhoneRounded, WhatsApp } from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
 import config from '../config';
 import { handleJobPayment, updateVendorStatus, updateJobDate } from '../api';
-import {
-  updateUserJob,
-  fetchUserJobs,
-  fetchVendorJobs,
-  makeJobPayment,
-} from '../redux/actions/jobs';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  DatePicker,
-} from '@material-ui/pickers';
+import { fetchVendorJobs, makeJobPayment } from '../redux/actions/jobs';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -258,31 +240,32 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#181818',
       marginBottom: '.5rem',
     },
-  })
+  }),
 );
 
-interface IProps {}
-
-const JobsDrawer: React.FC<IProps> = (props) => {
+const JobsDrawer: React.FC = () => {
   const classes = useStyles();
   const router = useRouter();
   const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('xs'));
-  const { total, netProceed, fee } = useSelector((state: AppState) =>
-    getInvoice(state)
+  const { total, netProceed } = useSelector((state: AppState) =>
+    getInvoice(state),
   );
   const status = useSelector((state: AppState) => state.common.drawerStatus);
   const { email } = useSelector((state: AppState) => state.auth);
   const content = useSelector((state: AppState) => state.common.drawerContent);
   const [selectedDate, setSelectedDate] = React.useState(
-    content?.dueDate ? content?.dueDate : new Date()
+    content?.dueDate ? content?.dueDate : new Date(),
   );
   const isVendor = !!content?.customer;
   const dispatch = useDispatch();
+
   const closeDrawer = (event: any) => {
+    event.preventDefault();
     dispatch(toggleDrawer(false));
     const url = `/dashboard`;
     router.push(url, undefined, { shallow: true });
   };
+
   const configData = {
     reference: content?.id,
     amount: total?.value * 100,
@@ -330,7 +313,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     const data = await updateVendorStatus(
       { status: vendorStatusDates?.startedDate ? 'completed' : 'started' },
       id,
-      vendorId
+      vendorId,
     );
     dispatch(fetchVendorJobs(vendorId));
     // temp
@@ -344,7 +327,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       classes={{
         paper: classes.container,
       }}
@@ -353,18 +336,18 @@ const JobsDrawer: React.FC<IProps> = (props) => {
     >
       <Grid container>
         <Grid item xs={12} className={classes.status}>
-          <Typography variant='body2' className={classes.title}>
+          <Typography variant="body2" className={classes.title}>
             <Link href={`/services/${serviceId}`}>
               <a>{name}</a>
             </Link>
           </Typography>
           <IconButton className={classes.close} onClick={closeDrawer}>
-            <CloseRounded />
+            <CloseRounded onClick={closeDrawer} />
           </IconButton>
         </Grid>
         <Grid item xs={12} className={classes.titleWrapper}>
           <Grid item xs={10}>
-            <Typography variant='body2' className={classes.subtitle}>
+            <Typography variant="body2" className={classes.subtitle}>
               {!customer?.fullName ? (
                 <Link href={`/vendor/${vendorId}`}>
                   <a>{vendorName}</a>
@@ -383,8 +366,8 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   <IconButton
                     className={classes.wAIcon}
                     href={`http://api.whatsapp.com/send?phone=+234${phoneNumber}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <WhatsApp style={{ fontSize: '1rem', color: '#fff' }} />
                   </IconButton>
@@ -395,7 +378,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
               <Grid item xs={12}>
                 {isVendor ? (
                   <Button
-                    variant='contained'
+                    variant="contained"
                     className={classes.payment}
                     disabled={!!vendorStatusDates?.completedDate}
                     onClick={startJob}
@@ -406,7 +389,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   </Button>
                 ) : (
                   <Button
-                    variant='contained'
+                    variant="contained"
                     disabled={!!vendorStatusDates?.paymentDate}
                     className={classes.payment}
                     onClick={() => payment(onSuccess)}
@@ -418,7 +401,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
             )}
           </Grid>
           <div>
-            <Typography variant='body2' className={classes.money}>
+            <Typography variant="body2" className={classes.money}>
               {invoice
                 ? formatMoney(isVendor ? netProceed?.value : total?.value)
                 : '--'}
@@ -426,9 +409,9 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           </div>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='ACTIVITY' noDefaultOpen>
+          <Collapsible title="ACTIVITY" noDefaultOpen>
             <Grid>
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 <span
                   className={classes.indicator}
                   style={{ background: '#FF8515' }}
@@ -440,7 +423,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 </span>
               </Typography>
               {vendorStatusDates && (
-                <Typography variant='body2' className={classes.link}>
+                <Typography variant="body2" className={classes.link}>
                   <span
                     className={classes.indicator}
                     style={{ background: '#574497' }}
@@ -448,12 +431,12 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   <span style={{ marginLeft: '.5rem' }}>
                     {`${customer ? customer.fullName : 'You'} made payment on
                 ${moment(vendorStatusDates.paymentDate).format(
-                  'MMMM Do YYYY'
+                  'MMMM Do YYYY',
                 )}`}
                   </span>
                 </Typography>
               )}
-              <Typography variant='body2' className={classes.link}>
+              <Typography variant="body2" className={classes.link}>
                 <span
                   className={classes.indicator}
                   style={{ background: '#574497' }}
@@ -466,7 +449,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                 </span>
               </Typography>
               {vendorStatusDates?.completedDate && (
-                <Typography variant='body2' className={classes.link}>
+                <Typography variant="body2" className={classes.link}>
                   <span
                     className={classes.indicator}
                     style={{ background: 'rgba(0, 155, 106)' }}
@@ -474,7 +457,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   <span style={{ marginLeft: '.5rem' }}>
                     Completed on{' '}
                     {moment(vendorStatusDates?.completedDate).format(
-                      'MMMM Do YYYY'
+                      'MMMM Do YYYY',
                     )}
                   </span>
                 </Typography>
@@ -483,12 +466,12 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='INVOICE' download={true}>
+          <Collapsible title="INVOICE" download={true}>
             <Invoice />
           </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='DESCRIPTION' body={description} />
+          <Collapsible title="DESCRIPTION" body={description} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
           <Collapsible
@@ -499,7 +482,7 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           >
             {!isVendor && (
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Typography variant='body2' className={classes.dateLabel}>
+                <Typography variant="body2" className={classes.dateLabel}>
                   You can still modify the due date
                 </Typography>
                 <DatePicker
@@ -507,8 +490,8 @@ const JobsDrawer: React.FC<IProps> = (props) => {
                   minDate={dueDate ? dueDate : new Date()}
                   disableToolbar={isMobile}
                   orientation={isMobile ? 'portrait' : 'landscape'}
-                  variant='static'
-                  openTo='date'
+                  variant="static"
+                  openTo="date"
                   className={classes.datePicker}
                   value={selectedDate}
                   onChange={handleDateChange}
@@ -518,10 +501,10 @@ const JobsDrawer: React.FC<IProps> = (props) => {
           </Collapsible>
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='DELIVERY ADDRESS' body={address} />
+          <Collapsible title="DELIVERY ADDRESS" body={address} />
         </Grid>
         <Grid item xs={12} className={classes.desc}>
-          <Collapsible title='REVIEW'>
+          <Collapsible title="REVIEW">
             <Review
               value={review}
               isCustomer={!isVendor}

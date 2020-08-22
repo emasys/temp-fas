@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { usePaystackPayment } from 'react-paystack';
 import DateFnsUtils from '@date-io/date-fns';
@@ -322,7 +323,7 @@ const JobsDrawer: React.FC = () => {
 
   const handleDateChange = async (date: Date | null) => {
     setSelectedDate(date);
-    const data = await updateJobDate({ date: moment(date).format() }, id);
+    await updateJobDate({ date: moment(date).format() }, id);
   };
 
   return (

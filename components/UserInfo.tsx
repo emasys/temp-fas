@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from 'react';
 import {
   Grid,
   createStyles,
@@ -6,15 +7,9 @@ import {
   Theme,
   Typography,
   IconButton,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { EditRounded } from '@material-ui/icons';
-import ReactCrop from 'react-image-crop';
 import { AppState } from '../lib/initialState';
 import UserInfoForm from './UserInfoForm';
 import { profileImagUpload } from '../api';

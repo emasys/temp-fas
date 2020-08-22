@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
-import Header from '../../components/Header';
-import { instance } from '../../config/axiosConfig';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import React from 'react';
 import { GetStaticProps } from 'next';
-import Services from '../../components/Services';
 import { createStyles, makeStyles, Theme, Grid } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import { setValue } from '../../redux/actions/common';
-import Navbar from '../../components/Navbar';
+import { useSelector } from 'react-redux';
 import VendorLayout from '../../components/VendorLayout';
 import MenuBar from '../../components/MenuBar';
 import Divider from '../../components/Divider';
 import { AppState } from '../../lib/initialState';
 import VendorCard from '../../components/VendorCard';
 import { IService, IVendor } from '../../interfaces';
-import { EActionTypes } from '../../redux/actions/types';
 import { fetchServices, fetchVendors } from '../../api';
 import noResult from '../../assets/no-result.svg';
 
@@ -45,9 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   vendors: IVendor[];
 }
-const VendorServices: React.FC<Props> = ({ vendors }) => {
+const VendorServices: React.FC<Props> = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const allVendors = useSelector(
     (state: AppState) => state.vendor.searchResult,
   );

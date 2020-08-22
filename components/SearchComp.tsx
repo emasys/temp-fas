@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
-import qs from 'querystring';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -57,7 +56,7 @@ const SearchComp: React.FC = () => {
     validateOnChange: true,
     validateOnMount: true,
     validationSchema,
-    onSubmit: async (values, fProps) => {
+    onSubmit: async (values) => {
       const { search, area, state } = values;
       const matchServicesId = services.find(
         (service) => service.name === search,

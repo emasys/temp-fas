@@ -7,14 +7,12 @@ import {
   Theme,
   Button,
 } from '@material-ui/core';
-import vendorImg from '../assets/vendorBanner.svg';
 import { formatMoney } from '../util';
 import phoneIcon from '../assets/phone.svg';
 import chat from '../assets/chat.svg';
 import bannerIcon from '../assets/banner.svg';
 import { useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -101,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: '0.7rem',
         padding: '.3rem 0',
         minWidth: '5rem',
+        maxHeight: '1.7rem',
       },
     },
     chatIcon: {

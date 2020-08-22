@@ -17,15 +17,7 @@ import star from '../../assets/Star.svg';
 import location from '../../assets/location.svg';
 import Divider from '../../components/Divider';
 import InstagramWidget from '../../components/InstagramWidget';
-import { GetStaticProps } from 'next';
-import { instance } from '../../config/axiosConfig';
-import { IService, IVendor } from '../../interfaces';
-import {
-  setValue,
-  handleAuthModal,
-  toggleModal,
-} from '../../redux/actions/common';
-import { EActionTypes } from '../../redux/actions/types';
+import { handleAuthModal, toggleModal } from '../../redux/actions/common';
 import { fetchVendor, fetchVendorReviews } from '../../redux/actions/vendors';
 import Review from '../../components/Review';
 import { getVendorStatus } from '../../redux/selectors/vendors';
@@ -248,8 +240,9 @@ const Vendor: React.FC = () => {
 
               <div className={classes.reviewWrapper}>
                 <Typography variant="body2" className={classes.reviewText}>
-                  <img src={star} className={classes.icon} alt="star" /> no
-                  review
+                  <img src={star} className={classes.icon} alt="star" />{' '}
+                  {reviews.length ? reviews.length : 0} review
+                  {reviews.length > 1 ? 's' : ''}
                 </Typography>
                 <Typography variant="body2" className={classes.reviewText}>
                   <img src={location} className={classes.icon} alt="location" />

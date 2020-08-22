@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: '1.5rem',
       [theme.breakpoints.down('xs')]: {
         marginTop: '1rem',
+        marginLeft: 0,
         width: '100%',
       },
     },

@@ -5,6 +5,7 @@ import {
   makeStyles,
   Typography,
   Theme,
+  useMediaQuery,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useRouter } from 'next/router';
@@ -117,6 +118,9 @@ interface Props {
 const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
   const classes = useStyles();
   const router = useRouter();
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('xs'),
+  );
   const [hover, setHover] = useState(false);
   const loading = useSelector((state: AppState) => state.common.loading);
   const handleClick = (e) => {
@@ -179,7 +183,7 @@ const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
         ) : (
           <>
             <Typography variant="body2" title={name} className={classes.title}>
-              {truncateString(name, 20)}
+              {truncateString(name, isMobile ? 30 : 20)}
             </Typography>
             <Typography variant="caption" className={classes.captions}>
               Average rate of {formatMoney(rate)} per job

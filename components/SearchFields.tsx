@@ -144,7 +144,6 @@ const SearchFields: React.FC<Props> = ({ handleChange, values }) => {
   const locations = useSelector((state: AppState) => getLocations(state));
 
   const classes = useStyles();
-
   const handleAutoChange = (e, value: any, name: string) => {
     handleChange(e, value, name);
   };

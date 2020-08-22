@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import qs from 'querystring';
@@ -18,23 +19,21 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '87%',
       },
     },
-  })
+  }),
 );
 
-interface Props {}
-
-let validationSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   search: Yup.string().trim().required('This field is required'),
   state: Yup.string(),
   area: Yup.string(),
 });
 
-const SearchComp: React.FC<Props> = (props) => {
+const SearchComp: React.FC = () => {
   const classes = useStyles();
   const { query } = useRouter();
   const dispatch = useDispatch();
   const searchOption = useSelector(
-    (state: AppState) => state.services.searchOption
+    (state: AppState) => state.services.searchOption,
   );
   const urlParams = new URLSearchParams(window?.location?.search);
   const s = urlParams.get('s');
@@ -61,10 +60,10 @@ const SearchComp: React.FC<Props> = (props) => {
     onSubmit: async (values, fProps) => {
       const { search, area, state } = values;
       const matchServicesId = services.find(
-        (service) => service.name === search
+        (service) => service.name === search,
       )?.id;
       const dynamicArea = areaOptions?.areas?.find(
-        (item) => item.value === area?.value
+        (item) => item.value === area?.value,
       )?.value;
       dispatch(searchVendors(matchServicesId, state.value, dynamicArea));
       const queryString = {
@@ -99,7 +98,7 @@ const SearchComp: React.FC<Props> = (props) => {
   };
 
   return (
-    <Grid item xs={12} sm={12} lg={10} className={classes.root}>
+    <Grid item xs={12} className={classes.root}>
       <SearchFields
         values={values}
         setFieldValue={setFieldValue}

@@ -1,20 +1,13 @@
-import React, { useEffect } from 'react';
-import {
-  Grid,
-  createStyles,
-  makeStyles,
-  Theme,
-  Typography,
-} from '@material-ui/core';
+import React from 'react';
+import { Grid, createStyles, makeStyles, Typography } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { formatMoney } from '../util';
-import Link from 'next/link';
 import bannerIcon from '../assets/banner.svg';
 import { useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     container: {
       width: '100%',
@@ -23,6 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       paddingBottom: '1rem',
       borderRadius: '2px',
+      // transition: 'all 400ms',
+      // '&:hover': {
+      //   transform: 'scale(.99)',
+      // },
       '&:last-of-type': {
         marginRight: 0,
       },
@@ -86,7 +83,7 @@ const VendorCard: React.FC<Props> = ({ name, rate, id, logo }) => {
   const classes = useStyles();
   const router = useRouter();
   const loading = useSelector((state: AppState) => state.common.loading);
-  const handleClick = (e: any) => {
+  const handleClick = (e) => {
     e.preventDefault();
     router.push('/vendor/[id]', `/vendor/${id}`, {
       query: { serviceId: router.query.id },

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import SearchComp from './SearchComp';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: 'flex',
@@ -17,15 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
       fontSize: '0.7813rem',
     },
-  })
+  }),
 );
 
-interface Props {}
-const Navbar: React.FC<Props> = (props) => {
+const Navbar: React.FC = () => {
   const classes = useStyles();
   return (
-    <Grid container justify='space-between' className={classes.root}>
-      <Grid item xs={12} sm={9} lg={7}>
+    <Grid container justify="space-between" className={classes.root}>
+      <Grid item xs={12}>
         <SearchComp />
       </Grid>
     </Grid>

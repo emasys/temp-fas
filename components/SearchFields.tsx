@@ -1,21 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import {
-  Grid,
-  FormControl,
-  FilledInput,
-  InputAdornment,
-  IconButton,
-  TextField,
-} from '@material-ui/core';
+import { Grid, FormControl, TextField } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import SelectInput from './SelectInput';
 import search from '../assets/search.svg';
 import { AppState } from '../lib/initialState';
 import { getLocations } from '../redux/selectors/locations';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { SearchRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formWrapper: {
       display: 'flex',
-      justifyContent: 'space-between',
+      // justifyContent: 'space-between',
       alignItems: 'center',
       [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
@@ -76,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     selectBoxes: {
       display: 'flex',
+      marginLeft: '1.5rem',
       [theme.breakpoints.down('xs')]: {
         marginTop: '1rem',
         width: '100%',
@@ -133,24 +126,19 @@ const useStyles = makeStyles((theme: Theme) =>
     inputRoot: {
       paddingTop: '0 !important',
     },
-  })
+  }),
 );
 
 interface Props {
-  setFieldValue?: (field: string, value: any, validate?: boolean) => void;
-  handleChange: (e: any, value?: any, name?: string) => void;
+  setFieldValue?: (field: string, value, validate?: boolean) => void;
+  handleChange: (e, value?, name?: string) => void;
   handleSubmit: () => void;
   values: any;
 }
 
-const SearchFields: React.FC<Props> = ({
-  setFieldValue,
-  handleChange,
-  handleSubmit,
-  values,
-}) => {
+const SearchFields: React.FC<Props> = ({ handleChange, values }) => {
   const searchOption = useSelector(
-    (state: AppState) => state.services.searchOption
+    (state: AppState) => state.services.searchOption,
   );
   const locations = useSelector((state: AppState) => getLocations(state));
 
@@ -169,13 +157,13 @@ const SearchFields: React.FC<Props> = ({
   };
   return (
     <Grid item xs={12} className={classes.formWrapper}>
-      <FormControl variant='filled' className={classes.searchWrapper}>
+      <FormControl variant="filled" className={classes.searchWrapper}>
         <Autocomplete
           {...defaultProps}
-          id='search-box'
+          id="search-box"
           disableClearable
           autoHighlight
-          popupIcon={<img src={search} className={classes.icon} alt='search' />}
+          popupIcon={<img src={search} className={classes.icon} alt="search" />}
           classes={{
             popupIndicatorOpen: classes.popup,
             inputRoot: classes.inputRoot,
@@ -186,10 +174,10 @@ const SearchFields: React.FC<Props> = ({
           }}
           renderInput={(params) => (
             <TextField
-              id='search'
-              variant='filled'
+              id="search"
+              variant="filled"
               fullWidth
-              placeholder='What service are you looking for?'
+              placeholder="What service are you looking for?"
               className={classes.searchInput}
               {...params}
             />
@@ -199,8 +187,8 @@ const SearchFields: React.FC<Props> = ({
       <div className={classes.selectBoxes}>
         <div className={classes.selectBox}>
           <SelectInput
-            name='state'
-            placeholder='State'
+            name="state"
+            placeholder="State"
             className={classes.state}
             options={locations}
             handleChange={handleAutoChange}
@@ -209,8 +197,8 @@ const SearchFields: React.FC<Props> = ({
         </div>
         <div className={classes.selectBoxRight}>
           <SelectInput
-            name='area'
-            placeholder='Area'
+            name="area"
+            placeholder="Area"
             className={classes.area}
             options={areaOptions?.areas || []}
             handleChange={handleAutoChange}

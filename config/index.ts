@@ -3,7 +3,8 @@ const env: IEnv = process.env.NODE_ENV;
 
 const config = {
   development: {
-    backendURL: 'http://localhost:4000/',
+    backendURL: 'https://fas-web-api.herokuapp.com/',
+    // backendURL: 'http://localhost:4000/',
     cloudinary: {
       cloudName: 'fasng',
     },

@@ -7,9 +7,9 @@ import {
   createStyles,
   Typography,
   IconButton,
+  Button,
 } from '@material-ui/core';
 import NavigateNextRoundedIcon from '@material-ui/icons/NavigateNextRounded';
-import moment from 'moment';
 import { formatMoney } from '../util';
 import { useDispatch } from 'react-redux';
 import { toggleDrawer } from '../redux/actions/common';
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       height: '6rem',
       marginBottom: '1rem',
+      justifyContent: 'space-between',
       borderRadius: '0.2rem',
       background: '#fbfbfb',
       // background: 'linear-gradient(90.81deg, rgb(225 239 234 / 10%) 0.44%, rgb(216 228 241 / 10%) 98.43%)',
@@ -104,6 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       height: '2.2262rem',
       width: 'auto',
+      minHeight: 0,
       color: '#fff',
       padding: '0 2rem',
       display: 'flex',
@@ -127,49 +129,41 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface IJobsRowProps {
-  date: string;
+interface Props {
   id: string;
-  name: string;
   amount: any;
-  vendor?: boolean;
   status: string;
-  color: string;
-  stage: string;
 }
 
-const JobsRow: React.FC<IJobsRowProps> = ({
-  date,
-  name,
-  amount,
-  status,
-  vendor,
-  stage,
-  color,
-  id,
-}) => {
+const FundsRow: React.FC<Props> = ({ amount, status, id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const isWithdrawable = status === 'withdrawable';
   const router = useRouter();
   const handleDrawer = () => {
     dispatch(toggleDrawer(true));
-    dispatch(setDrawerJob(id, vendor));
+    dispatch(setDrawerJob(id, true));
     const url = `/dashboard?tab=${id}`;
     router.push(url, undefined, { shallow: true });
   };
 
-  const isPaid = stage === 'Payment completed';
+  const handleWithdraw = () => {
+    if (!isWithdrawable) return;
+  };
+
   return (
     <Grid container className={classes.row}>
       <Grid item xs={1} sm={3} md={2} className={classes.pdfWrapper}>
         <div
           className={classes.indicator}
-          style={{ backgroundColor: color || '#574497' }}
+          style={{
+            backgroundColor: isWithdrawable ? '#43cea2' : '#f98417',
+          }}
         />
         <div
           className={classes.pdf}
           style={{
-            backgroundColor: isPaid
+            backgroundColor: isWithdrawable
               ? 'rgba(25, 183, 182, 0.1)'
               : 'rgba(255, 133, 21, 0.1)',
           }}
@@ -178,50 +172,31 @@ const JobsRow: React.FC<IJobsRowProps> = ({
             variant="body2"
             className={classes.pdfText}
             style={{
-              color: isPaid ? '#007777' : 'rgb(249 132 23)',
+              color: isWithdrawable ? '#007777' : 'rgb(249 132 23)',
             }}
           >
-            {stage}
+            {isWithdrawable ? 'Processed' : 'Processing'}
           </Typography>
         </div>
       </Grid>
-      <Grid item xs={2} onClick={handleDrawer} className={classes.date}>
-        <Typography variant="body2">
-          {moment(date).format('yyyy-MM-DD')}
-        </Typography>
-      </Grid>
-      <Grid item xs={4} sm={3} onClick={handleDrawer}>
+      <Grid item onClick={handleDrawer}>
         <Typography variant="body2" className={classes.name}>
-          {name}
+          {formatMoney(amount)}
         </Typography>
       </Grid>
-      <Grid item xs={2} md={1} onClick={handleDrawer}>
-        <Typography
-          variant="body2"
-          className={classes.amount}
-          onClick={handleDrawer}
-        >
-          {amount ? formatMoney(amount) : 'Awaiting invoice'}
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        sm={4}
-        md={4}
-        className={classes.statusWrapper}
-        onClick={handleDrawer}
-      >
-        <Typography
-          variant="body2"
+      <Grid item xs={3} sm={4} md={4} className={classes.statusWrapper}>
+        <Button
+          variant="contained"
           className={classes.status}
+          disabled={!isWithdrawable}
+          onClick={handleWithdraw}
           style={{
-            background: color || '#574497',
+            background: '#43cea2',
           }}
         >
-          {status || 'Not started'}
-        </Typography>
-        <IconButton className={classes.statusBtn}>
+          Withdraw now
+        </Button>
+        <IconButton className={classes.statusBtn} onClick={handleDrawer}>
           <NavigateNextRoundedIcon />
         </IconButton>
       </Grid>
@@ -229,4 +204,4 @@ const JobsRow: React.FC<IJobsRowProps> = ({
   );
 };
 
-export default JobsRow;
+export default FundsRow;

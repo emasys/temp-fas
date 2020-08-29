@@ -1,10 +1,10 @@
-import { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { getVendorStatus } from '../redux/selectors/vendors';
 import { fetchVendorPayments } from '../redux/actions/vendors';
 import PaymentRow from './PaymentRow';
-import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
+import { makeStyles, Theme, Typography } from '@material-ui/core';
 import noResult from '../assets/no-result.svg';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -52,13 +52,13 @@ export default function VendorPayments(): ReactElement {
 
   return (
     <div className={classes.container}>
-      <Typography className={classes.textHeader} variant='h5'>
+      <Typography className={classes.textHeader} variant="h5">
         Payments
       </Typography>
       <div>
         {!payments || payments?.length === 0 ? (
           <div className={classes.noResultContainer}>
-            <img src={noResult} alt='no result' />
+            <img src={noResult} alt="no result" />
           </div>
         ) : (
           payments?.map((payment) => (

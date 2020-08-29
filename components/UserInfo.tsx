@@ -68,6 +68,15 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       display: 'none',
     },
+    textHeader: {
+      marginBottom: '1rem',
+      borderBottom: '1px solid #00000038',
+      paddingBottom: '.25rem',
+      fontWeight: 100,
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
   }),
 );
 
@@ -104,6 +113,11 @@ const UserInfo: React.FC = () => {
 
   return (
     <Grid container className={classes.container}>
+      <Grid item xs={12}>
+        <Typography variant="h5" className={classes.textHeader}>
+          Personal info
+        </Typography>
+      </Grid>
       <Grid item xs={12} lg={3} className={classes.imageContainer}>
         <div
           className={classes.imageWrapper}

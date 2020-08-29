@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Grid,
   createStyles,
@@ -6,8 +6,6 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import { AppState } from '../lib/initialState';
 import BankDetailsForm from './BankDetailsForm';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       padding: '3rem',
       [theme.breakpoints.down('sm')]: {
-        padding: '1rem'
+        padding: '1rem',
       },
     },
     imageWrapper: {
@@ -24,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '13rem',
       height: '13rem',
       marginBottom: '1rem',
-
     },
     imageContainer: {
       display: 'flex',
@@ -32,18 +29,30 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       [theme.breakpoints.down('sm')]: {
-        marginBottom: '1.5rem'
+        marginBottom: '1.5rem',
       },
-    }
-  })
+    },
+    textHeader: {
+      marginBottom: '1rem',
+      borderBottom: '1px solid #00000038',
+      paddingBottom: '.25rem',
+      fontWeight: 100,
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+  }),
 );
 
-interface Props {}
-const BankDetails: React.FC<Props> = (props) => {
+const BankDetails: React.FC = () => {
   const classes = useStyles();
-  const user = useSelector((state: AppState) => state.user);
   return (
     <Grid container className={classes.container}>
+      <Grid item xs={12}>
+        <Typography variant="h5" className={classes.textHeader}>
+          Bank details
+        </Typography>
+      </Grid>
       <Grid item xs={12} lg={10}>
         <div>
           <BankDetailsForm />

@@ -1,25 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactElement, useEffect } from 'react';
 import VendorLayout from '../components/VendorLayout';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { handleAuthModal } from '../redux/actions/common';
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core';
 import { fetchUserJobs } from '../redux/actions/jobs';
-import {
-  PersonRounded,
-  AccountBalanceRounded,
-  PaymentRounded,
-  SettingsRounded,
-} from '@material-ui/icons';
+import { PersonRounded, AccountBalanceRounded } from '@material-ui/icons';
 import UserInfo from '../components/UserInfo';
 import BankDetails from '../components/BankDetails';
-import VendorPayments from "../components/VendorPayments";
 import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -94,10 +83,8 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '90%',
       },
     },
-  })
+  }),
 );
-
-interface Props {}
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -112,7 +99,7 @@ function TabPanel(props: TabPanelProps) {
   return (
     <div
       className={classes.content}
-      role='tabpanel'
+      role="tabpanel"
       hidden={value !== index}
       id={`profile-tabpanel-${index}`}
       aria-labelledby={`profile-tab-${index}`}
@@ -137,7 +124,7 @@ const mapIndex = {
   settings: 3,
 };
 
-export default function Profile({}: Props): ReactElement {
+export default function Profile(): ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -150,7 +137,10 @@ export default function Profile({}: Props): ReactElement {
         : 'user' || 'user'
     ];
   const [value, setValue] = React.useState(index);
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    newValue: number,
+  ) => {
     setValue(newValue);
   };
   useEffect(() => {
@@ -176,18 +166,18 @@ export default function Profile({}: Props): ReactElement {
       <VendorLayout title={'User profile'}>
         <div className={classes.root}>
           <Tabs
-            orientation='vertical'
+            orientation="vertical"
             value={value}
             classes={{
               flexContainer: classes.tabContainer,
               indicator: classes.tabIndicator,
             }}
             onChange={handleChange}
-            aria-label='profile tabs'
+            aria-label="profile tabs"
             className={classes.tabs}
           >
             <Tab
-              label='User info'
+              label="User info"
               {...a11yProps(0)}
               classes={{
                 wrapper: classes.tabInner,
@@ -197,7 +187,7 @@ export default function Profile({}: Props): ReactElement {
               className={classes.tabInner}
             />
             <Tab
-              label='Bank details'
+              label="Bank details"
               {...a11yProps(1)}
               classes={{
                 wrapper: classes.tabInner,
@@ -206,8 +196,8 @@ export default function Profile({}: Props): ReactElement {
               icon={<AccountBalanceRounded className={classes.tabIcon} />}
               className={classes.tabInner}
             />
-            <Tab
-              label='Payments'
+            {/* <Tab
+              label="Payments"
               {...a11yProps(2)}
               classes={{
                 wrapper: classes.tabInner,
@@ -217,7 +207,7 @@ export default function Profile({}: Props): ReactElement {
               className={classes.tabInner}
             />
             <Tab
-              label='Settings'
+              label="Settings"
               {...a11yProps(3)}
               classes={{
                 wrapper: classes.tabInner,
@@ -225,7 +215,7 @@ export default function Profile({}: Props): ReactElement {
               onClick={() => handleTab('settings')}
               icon={<SettingsRounded className={classes.tabIcon} />}
               className={classes.tabInner}
-            />
+            /> */}
           </Tabs>
           <TabPanel value={value} index={0}>
             <UserInfo />
@@ -233,12 +223,12 @@ export default function Profile({}: Props): ReactElement {
           <TabPanel value={value} index={1}>
             <BankDetails />
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          {/* <TabPanel value={value} index={2}>
             <VendorPayments />
           </TabPanel>
           <TabPanel value={value} index={3}>
             settings
-          </TabPanel>
+          </TabPanel> */}
         </div>
       </VendorLayout>
     </div>

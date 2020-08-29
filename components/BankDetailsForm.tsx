@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -6,34 +6,17 @@ import {
   createStyles,
   makeStyles,
   Theme,
-  Typography,
-  Modal,
-  TextField,
   Button,
-  Divider,
   Collapse,
   IconButton,
 } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import Furniture from '../assets/furniture.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  login,
-  updateUser,
-  updateUserBankDetails,
-} from '../redux/actions/auth';
+import { updateUserBankDetails } from '../redux/actions/auth';
 import { AppState } from '../lib/initialState';
-import {
-  setValue,
-  handleAuthModal,
-  toggleModal,
-} from '../redux/actions/common';
-import { EActionTypes } from '../redux/actions/types';
-import { updateUserApi, updateBankApi } from '../api';
-import PasswordInput from './PasswordField';
 import Alert from '@material-ui/lab/Alert';
 import { CloseRounded } from '@material-ui/icons';
 import ToggleField from './ToggleField';
+import { updateBankApi } from '../api';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: '2rem',
-      borderRadius: '2rem',
+      borderRadius: '.2rem',
       width: '5rem',
       minHeight: '2rem',
     },
@@ -94,10 +77,10 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       color: '#43CEA2',
     },
-  })
+  }),
 );
 
-let validationSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   bankName: Yup.string().required('This field is required'),
   accountName: Yup.string().required('This field is required'),
   accountNumber: Yup.string()
@@ -105,8 +88,7 @@ let validationSchema = Yup.object().shape({
     .required('This field is required'),
 });
 
-interface Props {}
-const BankDetailsForm: React.FC<Props> = () => {
+const BankDetailsForm: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [show, setOpen] = React.useState(false);
@@ -161,18 +143,18 @@ const BankDetailsForm: React.FC<Props> = () => {
       <div className={classes.form}>
         <Collapse in={show}>
           <Alert
-            severity='success'
+            severity="success"
             style={{ marginBottom: '.5rem' }}
             action={
               <IconButton
-                aria-label='close'
-                color='inherit'
-                size='small'
+                aria-label="close"
+                color="inherit"
+                size="small"
                 onClick={() => {
                   setOpen(false);
                 }}
               >
-                <CloseRounded fontSize='inherit' />
+                <CloseRounded fontSize="inherit" />
               </IconButton>
             }
           >
@@ -187,8 +169,8 @@ const BankDetailsForm: React.FC<Props> = () => {
               handleBlur={handleBlur}
               editStatus={edit}
               handleChange={handleChange}
-              name='bankName'
-              label='Bank name'
+              name="bankName"
+              label="Bank name"
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -198,8 +180,8 @@ const BankDetailsForm: React.FC<Props> = () => {
               handleBlur={handleBlur}
               editStatus={edit}
               handleChange={handleChange}
-              name='accountName'
-              label='Account name'
+              name="accountName"
+              label="Account name"
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -207,11 +189,11 @@ const BankDetailsForm: React.FC<Props> = () => {
               error={touched.accountNumber && errors.accountNumber}
               value={values.accountNumber}
               handleBlur={handleBlur}
-              fieldType='number'
+              fieldType="number"
               editStatus={edit}
               handleChange={handleChange}
-              name='accountNumber'
-              label='Account Number'
+              name="accountNumber"
+              label="Account Number"
             />
           </Grid>
         </Grid>
@@ -220,7 +202,7 @@ const BankDetailsForm: React.FC<Props> = () => {
           onClick={() => handleSubmit()}
           className={classes.button}
           disabled={isSubmitting || !isValid}
-          variant='contained'
+          variant="contained"
         >
           Save changes
         </Button>

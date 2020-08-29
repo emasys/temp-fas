@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
       },
     },
+    payment: {
+      marginTop: '3rem',
+    },
   }),
 );
 
@@ -237,15 +240,17 @@ export default function Jobs(): ReactElement {
             </>
           )}
 
-          <Grid container className={classes.search}>
-            <Grid item xs={12} sm={10} md={8} lg={6}>
-              <JobSearch
-                handleChange={handleTextChange}
-                handleSubmit={handleSubmit}
-                values={values}
-              />
+          {!payment && (
+            <Grid container className={classes.search}>
+              <Grid item xs={12} sm={10} md={8} lg={6}>
+                <JobSearch
+                  handleChange={handleTextChange}
+                  handleSubmit={handleSubmit}
+                  values={values}
+                />
+              </Grid>
             </Grid>
-          </Grid>
+          )}
           {!!entries.length &&
             !payment &&
             entries.map((job) => (
@@ -261,15 +266,17 @@ export default function Jobs(): ReactElement {
                 status={job.status}
               />
             ))}
-          {payment &&
-            payments.map((item) => (
-              <FundsRow
-                key={item.id}
-                id={item.jobId}
-                status={item.status}
-                amount={item.job.cost}
-              />
-            ))}
+          <Grid item xs={12} className={classes.payment}>
+            {payment &&
+              payments.map((item) => (
+                <FundsRow
+                  key={item.id}
+                  id={item.jobId}
+                  status={item.status}
+                  amount={item.job.cost}
+                />
+              ))}
+          </Grid>
           {!!!entries.length ||
             (!!!payments.length && (
               <Grid

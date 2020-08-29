@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       borderRadius: '0.2rem',
       background: '#fbfbfb',
-      // background: 'linear-gradient(90.81deg, rgb(225 239 234 / 10%) 0.44%, rgb(216 228 241 / 10%) 98.43%)',
       boxSizing: 'border-box',
       [theme.breakpoints.down('xs')]: {
         height: '3rem',
@@ -114,13 +113,17 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       borderRadius: '1.113rem',
       [theme.breakpoints.down('xs')]: {
-        display: 'none',
+        minWidth: '7rem',
+        padding: 0,
+        height: '2rem',
       },
     },
     name: {
       textTransform: 'capitalize',
+      textAlign: 'center',
       [theme.breakpoints.down('xs')]: {
         fontSize: '0.7rem',
+        textAlign: 'left',
       },
     },
     amount: {
@@ -179,7 +182,7 @@ const FundsRow: React.FC<Props> = ({ amount, status, id }) => {
           </Typography>
         </div>
       </Grid>
-      <Grid item onClick={handleDrawer}>
+      <Grid item xs={6} sm={5} onClick={handleDrawer}>
         <Typography variant="body2" className={classes.name}>
           {formatMoney(amount)}
         </Typography>
@@ -190,9 +193,6 @@ const FundsRow: React.FC<Props> = ({ amount, status, id }) => {
           className={classes.status}
           disabled={!isWithdrawable}
           onClick={handleWithdraw}
-          style={{
-            background: '#43cea2',
-          }}
         >
           Withdraw now
         </Button>

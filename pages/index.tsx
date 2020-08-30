@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: 'flex',
       flexDirection: 'column',
-      background: 'linear-gradient(91.7deg, #43CEA2 0.44%, #185A9D 98.43%)',
+      background: 'linear-gradient(91.7deg, #43CEA2 0.44%, #185A9D 155%)',
       height: '100vh',
       width: '100vw',
       padding: '3% 4%',

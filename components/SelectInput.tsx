@@ -20,17 +20,18 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     icon: {
-      marginTop: '0.6rem',
-      marginLeft: '0.5rem',
-      marginRight: '0.5rem',
+      // marginTop: '0.6rem',
+      // marginLeft: '0.5rem',
+      // marginRight: '0.5rem',
+      padding: '0.625rem',
     },
     inputRoot: {
       paddingTop: '0 !important',
     },
     popupOpen: {
-      marginTop: '0.6rem',
-      marginLeft: '0.5rem',
-      marginRight: 0,
+      // marginTop: '0.6rem',
+      // marginLeft: '0.5rem',
+      // marginRight: 0,
     },
     searchInput: {
       width: '100%',

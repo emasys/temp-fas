@@ -165,6 +165,7 @@ const SearchBox: React.FC = () => {
   };
 
   const handleAutoChange = (e: any, value: any, name: string) => {
+    if (name === 'state') setFieldValue('area', '');
     handleChange(e);
     if (value) {
       setFieldValue(name, value?.title ?? value ?? '');

@@ -41,15 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
         top: 0,
       },
     },
-    bg: {
-      // backgroundImage: `url(${bg})`,
-      // backgroundSize: 'cover',
-      // backgroundPosition: 'center center',
-      // backgroundRepeat: 'no-repeat',
-      height: 'auto',
-      minHeight: '100vh',
-      width: '100%',
-    },
     searchBox: {
       margin: 'auto 0',
       width: '100%',
@@ -74,8 +65,7 @@ const Home: React.FC<Props> = ({ services, locations }) => {
   }, []);
   return (
     <div className={classes.container}>
-      {/* <div className={classes.bg} /> */}
-      <div>
+      <div style={{ zIndex: 22 }}>
         <Navbar />
       </div>
       <div className={classes.searchBox}>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import {
   Grid,
@@ -103,18 +104,16 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
-  })
+  }),
 );
 
-let validationSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   search: Yup.string().trim().required('This field is required'),
   state: Yup.string(),
   area: Yup.string(),
 });
 
-interface Props {}
-
-const SearchBox: React.FC<Props> = (props) => {
+const SearchBox: React.FC = () => {
   const classes = useStyles();
   const services = useSelector((state: AppState) => state.services.allServices);
   const locations = useSelector((state: AppState) => getLocations(state));
@@ -141,14 +140,14 @@ const SearchBox: React.FC<Props> = (props) => {
     onSubmit: (values, fProps) => {
       const { search, area, state } = values;
       const matchServicesId = services.find(
-        (service) => service.name === search
+        (service) => service.name === search,
       )?.id;
       const url = `/services/${matchServicesId}?s=${state.value}&a=${area.value}`;
       if (!matchServicesId) {
         fProps.setSubmitting(false);
         return fProps.setFieldError(
           'submit',
-          `${search} services not available`
+          `${search} services not available`,
         );
       }
       fProps.setSubmitting(true);
@@ -165,7 +164,7 @@ const SearchBox: React.FC<Props> = (props) => {
     handleSubmit();
   };
 
-  const handleAutoChange = (e, value: any, name: string) => {
+  const handleAutoChange = (e: any, value: any, name: string) => {
     handleChange(e);
     if (value) {
       setFieldValue(name, value?.title ?? value ?? '');
@@ -180,16 +179,16 @@ const SearchBox: React.FC<Props> = (props) => {
 
   return (
     <div className={classes.container}>
-      <Typography variant='h5' className={classes.leadTitle}>
+      <Typography variant="h5" className={classes.leadTitle}>
         Find a trusted business near you.
       </Typography>
-      <FormControl variant='filled' className={classes.searchWrapper}>
+      <FormControl variant="filled" className={classes.searchWrapper}>
         <Autocomplete
           {...defaultProps}
-          id='search-box'
+          id="search-box"
           disableClearable
           autoHighlight
-          popupIcon={<img src={search} className={classes.icon} alt='search' />}
+          popupIcon={<img src={search} className={classes.icon} alt="search" />}
           classes={{
             popupIndicatorOpen: classes.popup,
             inputRoot: classes.inputRoot,
@@ -200,10 +199,10 @@ const SearchBox: React.FC<Props> = (props) => {
           }}
           renderInput={(params) => (
             <TextField
-              id='search'
-              variant='filled'
+              id="search"
+              variant="filled"
               fullWidth
-              placeholder='What service are you looking for?'
+              placeholder="What service are you looking for?"
               {...params}
             />
           )}
@@ -217,7 +216,7 @@ const SearchBox: React.FC<Props> = (props) => {
                 setFieldValue('search', service.name);
               }}
               key={service.name}
-              variant='contained'
+              variant="contained"
               className={clsx([
                 classes.serviceBtn,
                 service.name !== values.search && classes.serviceBtnUnselected,
@@ -231,8 +230,8 @@ const SearchBox: React.FC<Props> = (props) => {
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <SelectInput
-            name='state'
-            placeholder='State'
+            name="state"
+            placeholder="State"
             options={locations}
             handleChange={handleAutoChange}
             value={values.state}
@@ -240,8 +239,8 @@ const SearchBox: React.FC<Props> = (props) => {
         </Grid>
         <Grid item xs={6}>
           <SelectInput
-            name='area'
-            placeholder='Area'
+            name="area"
+            placeholder="Area"
             options={areaOptions?.areas || []}
             handleChange={handleAutoChange}
             value={values.area}
@@ -249,7 +248,7 @@ const SearchBox: React.FC<Props> = (props) => {
         </Grid>
       </Grid>
       <Button
-        variant='contained'
+        variant="contained"
         className={classes.button}
         onClick={handleSearch}
         disabled={!isValid || isSubmitting}

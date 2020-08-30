@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/no-unescaped-entities */
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
-  Grid,
   createStyles,
   makeStyles,
   Theme,
   Typography,
-  Modal,
   TextField,
   Button,
-  Divider,
 } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import Furniture from '../assets/furniture.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/actions/auth';
 import { AppState } from '../lib/initialState';
-import {
-  setValue,
-  handleAuthModal,
-  toggleModal,
-} from '../redux/actions/common';
-import { EActionTypes } from '../redux/actions/types';
+import { toggleModal } from '../redux/actions/common';
 import { loginAPI } from '../api';
 import PasswordInput from './PasswordField';
 
@@ -95,16 +86,15 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       color: '#43CEA2',
     },
-  })
+  }),
 );
 
-let validationSchema = Yup.object().shape({
-  email: Yup.string().email().required(),
-  password: Yup.string().required(),
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email().lowercase().trim().required(),
+  password: Yup.string().trim().required(),
 });
 
-interface Props {}
-const LoginForm: React.FC<Props> = () => {
+const LoginForm: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const open = useSelector((state: AppState) => state.common.openAuthModal);
@@ -151,7 +141,7 @@ const LoginForm: React.FC<Props> = () => {
   return (
     <div className={classes.paper}>
       <div className={classes.form}>
-        <Typography variant='body1' className={classes.title}>
+        <Typography variant="body1" className={classes.title}>
           Sign in
         </Typography>
         <TextField
@@ -159,18 +149,18 @@ const LoginForm: React.FC<Props> = () => {
           classes={{
             root: classes.inputRoot,
           }}
-          variant='standard'
+          variant="standard"
           onChange={handleChange}
           value={values.email}
           onBlur={handleBlur}
           className={classes.inputBox}
-          name='email'
-          id='email-error-helper-text'
-          label='Email'
+          name="email"
+          id="email-error-helper-text"
+          label="Email"
           helperText={touched.email && errors.email}
         />
         <PasswordInput
-          label='password'
+          label="password"
           value={values.password}
           handleChange={handleChange}
           handleBlur={handleBlur}
@@ -181,14 +171,14 @@ const LoginForm: React.FC<Props> = () => {
           onClick={() => handleSubmit()}
           className={classes.button}
           disabled={isSubmitting || !isValid}
-          variant='contained'
+          variant="contained"
         >
           {isSubmitting ? 'Authenticating' : 'Login'}
         </Button>
       </div>
       <div className={classes.footer}>
         <div className={classes.divider} />
-        <Typography variant='body2'>
+        <Typography variant="body2">
           Don't have an account?{' '}
           <span onClick={handleSignUp} className={classes.signIn}>
             Sign up

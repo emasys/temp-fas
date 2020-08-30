@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
-  Grid,
   createStyles,
   makeStyles,
   Theme,
   Typography,
-  Modal,
   TextField,
   Button,
-  Divider,
   IconButton,
 } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import Furniture from '../assets/furniture.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/actions/auth';
 import { AppState } from '../lib/initialState';
 import {
   setValue,
@@ -24,7 +18,7 @@ import {
   toggleModal,
 } from '../redux/actions/common';
 import { EActionTypes } from '../redux/actions/types';
-import { loginAPI, signUpAPI } from '../api';
+import { signUpAPI } from '../api';
 import { ArrowBackIosRounded, CloseRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -112,15 +106,14 @@ const useStyles = makeStyles((theme: Theme) =>
     backBtn: {
       fontSize: '1.3rem',
     },
-  })
+  }),
 );
 
-let validationSchema = Yup.object().shape({
-  email: Yup.string().email().required(),
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email().lowercase().trim().required(),
 });
 
-interface Props {}
-const SignUpForm: React.FC<Props> = () => {
+const SignUpForm: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const open = useSelector((state: AppState) => state.common.openAuthModal);
@@ -169,7 +162,7 @@ const SignUpForm: React.FC<Props> = () => {
         <IconButton onClick={handleSignIn}>
           <ArrowBackIosRounded className={classes.backBtn} />
         </IconButton>
-        <Typography variant='body1' className={classes.title}>
+        <Typography variant="body1" className={classes.title}>
           Create an account
         </Typography>
         <IconButton onClick={handleClose}>
@@ -177,7 +170,7 @@ const SignUpForm: React.FC<Props> = () => {
         </IconButton>
       </div>
       <div className={classes.form}>
-        <Typography variant='body2' className={classes.subtitle}>
+        <Typography variant="body2" className={classes.subtitle}>
           Provide a valid email address to continue your registration process
         </Typography>
         <TextField
@@ -185,27 +178,27 @@ const SignUpForm: React.FC<Props> = () => {
           classes={{
             root: classes.inputRoot,
           }}
-          variant='standard'
+          variant="standard"
           onChange={handleChange}
           value={values.email}
           className={classes.inputBox}
-          name='email'
-          id='email-error-helper-text'
-          label='Email'
+          name="email"
+          id="email-error-helper-text"
+          label="Email"
           helperText={errors.email}
         />
         <Button
           onClick={() => handleSubmit()}
           className={classes.button}
           disabled={isSubmitting || !isValid}
-          variant='contained'
+          variant="contained"
         >
           Continue
         </Button>
       </div>
       <div className={classes.footer}>
         <div className={classes.divider} />
-        <Typography variant='body2'>
+        <Typography variant="body2">
           Already have an account?{' '}
           <span className={classes.signIn} onClick={handleSignIn}>
             Sign in

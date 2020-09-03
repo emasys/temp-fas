@@ -225,7 +225,7 @@ const BookingForm: React.FC<Props> = () => {
           Book vendor
         </Typography>
         <Typography variant='body2' className={classes.subtitle}>
-          Please provide an explicit description of what you want to help the
+          Please provide an explicit description of what you want. This will enable the
           vendor prepare a comprehensive invoice for you.
         </Typography>
         {errors.error && (

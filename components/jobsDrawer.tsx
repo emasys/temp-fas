@@ -18,10 +18,15 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../lib/initialState';
 import { toggleDrawer, updateInvoiceValue } from '../redux/actions/common';
-import { formatMoney } from '../util';
+import { formatMoney, formatPhoneNumber } from '../util';
 import Collapsible from './Collapsible';
 import Review from './Review';
-import { CloseRounded, PhoneRounded, WhatsApp } from '@material-ui/icons';
+import {
+  CloseRounded,
+  NavigateNextRounded,
+  PhoneRounded,
+  WhatsApp,
+} from '@material-ui/icons';
 import Invoice from './Invoice';
 import { getInvoice } from '../redux/selectors/common';
 import config from '../config';
@@ -241,6 +246,22 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#181818',
       marginBottom: '.5rem',
     },
+    nextWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+    },
+    next: {
+      fontSize: '2rem',
+      marginLeft: '1rem',
+    },
+    contact: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    contactIcon: {
+      color: '#43cea2',
+    },
   }),
 );
 
@@ -351,12 +372,15 @@ const JobsDrawer: React.FC = () => {
             <Typography variant="body2" className={classes.subtitle}>
               {!customer?.fullName ? (
                 <Link href={`/vendor/${vendorId}`}>
-                  <a>{vendorName}</a>
+                  <a className={classes.nextWrapper}>
+                    {vendorName}
+                    <NavigateNextRounded className={classes.next} />
+                  </a>
                 </Link>
               ) : (
                 customer?.fullName
               )}
-              {!isVendor && (
+              {/* {!isVendor && (
                 <>
                   <IconButton
                     className={classes.phoneIcon}
@@ -373,8 +397,19 @@ const JobsDrawer: React.FC = () => {
                     <WhatsApp style={{ fontSize: '1rem', color: '#fff' }} />
                   </IconButton>
                 </>
-              )}
+              )} */}
             </Typography>
+            {!isVendor && (
+              <Typography variant="body2" className={classes.link}>
+                <span
+                  className={classes.indicator}
+                  style={{ background: 'rgba(0, 155, 106)' }}
+                />
+                <span style={{ marginLeft: '.5rem' }}>
+                  Contact vendor {formatPhoneNumber(phoneNumber)}
+                </span>
+              </Typography>
+            )}
             {!!total?.value && content?.invoice && (
               <Grid item xs={12}>
                 {isVendor ? (

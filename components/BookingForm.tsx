@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import DateFnsUtils from '@date-io/date-fns';
@@ -18,18 +19,10 @@ import {
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../lib/initialState';
-import {
-  setValue,
-  handleAuthModal,
-  validateToken,
-} from '../redux/actions/common';
-import { EActionTypes } from '../redux/actions/types';
-import { createVendor, createOrder } from '../api';
-import NumberFormat from 'react-number-format';
+import { handleAuthModal, validateToken } from '../redux/actions/common';
+import { createOrder } from '../api';
 import SelectInput from './SelectInput';
 import { getLocations } from '../redux/selectors/locations';
-import { getServiceOptions } from '../redux/selectors/services';
-import MoneyInput from './MoneyInput';
 import { updateUserJob } from '../redux/actions/jobs';
 import { CloseRounded } from '@material-ui/icons';
 
@@ -126,10 +119,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginTop: '2rem',
       },
     },
-  })
+  }),
 );
 
-let validationSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   description: Yup.string().required(),
   address: Yup.string().required(),
   dueDate: Yup.string().required(),
@@ -137,8 +130,7 @@ let validationSchema = Yup.object().shape({
   area: Yup.string(),
 });
 
-interface Props {}
-const BookingForm: React.FC<Props> = () => {
+const BookingForm: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const open = useSelector((state: AppState) => state.common.openAuthModal);
@@ -221,16 +213,16 @@ const BookingForm: React.FC<Props> = () => {
         </IconButton>
       </div>
       <div className={classes.form}>
-        <Typography variant='body1' className={classes.title}>
+        <Typography variant="body1" className={classes.title}>
           Book vendor
         </Typography>
-        <Typography variant='body2' className={classes.subtitle}>
-          Please provide an explicit description of what you want. This will enable the
-          vendor prepare a comprehensive invoice for you.
+        <Typography variant="body2" className={classes.subtitle}>
+          Please provide an explicit description of what you want. This will
+          enable the vendor prepare a comprehensive invoice for you.
         </Typography>
         {errors.error && (
-          <Alert severity='error'>
-            Unfortunately we couldn't complete this booking.
+          <Alert severity="error">
+            Unfortunately we couldn&apos;t complete this booking.
           </Alert>
         )}
         <TextField
@@ -238,29 +230,29 @@ const BookingForm: React.FC<Props> = () => {
           classes={{
             root: classes.inputRoot,
           }}
-          variant='outlined'
+          variant="outlined"
           onChange={handleChange}
           value={values.description}
           onBlur={handleBlur}
           className={classes.inputBox}
-          name='description'
+          name="description"
           multiline
           rows={4}
           rowsMax={8}
-          id='description'
-          label='Description'
+          id="description"
+          label="Description"
           helperText={touched.description && errors.description}
         />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
             disableToolbar
             disablePast
-            variant='inline'
+            variant="inline"
             className={classes.datePicker}
-            format='MM/dd/yyyy'
-            margin='normal'
-            id='date-picker-inline'
-            label='Select a due date'
+            format="MM/dd/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="Select a due date"
             value={selectedDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{
@@ -274,42 +266,42 @@ const BookingForm: React.FC<Props> = () => {
           classes={{
             root: classes.inputRoot,
           }}
-          variant='standard'
+          variant="standard"
           onChange={handleChange}
           value={values.address}
           onBlur={handleBlur}
           className={classes.inputBox}
-          name='address'
-          id='address'
-          label='Full address'
+          name="address"
+          id="address"
+          label="Full address"
           helperText={touched.address && errors.address}
         />
         <div className={classes.selectWrapper} />
         <SelectInput
-          name='state'
-          placeholder='State'
-          variant='standard'
+          name="state"
+          placeholder="State"
+          variant="standard"
           options={locations}
           handleChange={handleTextChange}
           value={values.state}
         />
         <div className={classes.selectWrapper} />
         <SelectInput
-          name='area'
-          placeholder='Area'
-          variant='standard'
+          name="area"
+          placeholder="Area"
+          variant="standard"
           options={areaOptions || []}
           handleChange={handleTextChange}
           value={values.area}
         />
-        <Typography variant='body2' className={classes.caption}>
+        <Typography variant="body2" className={classes.caption}>
           Please select an area closest to your address.
         </Typography>
         <Button
           onClick={() => handleSubmit()}
           className={classes.button}
           disabled={isSubmitting || !isValid}
-          variant='contained'
+          variant="contained"
         >
           Book vendor
         </Button>
